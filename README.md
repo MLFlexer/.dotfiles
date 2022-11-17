@@ -1,7 +1,7 @@
 # .dotfiles
 
 ## Install
-Neovim: Copy /neovim-directory to ~/.config/
+Neovim: Copy /neovim-directory to ~/.config/  
 everything else goes in ~/
 
 ## NeoVim
