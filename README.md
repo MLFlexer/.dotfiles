@@ -1,4 +1,6 @@
 # .dotfiles
 
 ## NeoVim
-Current nvim setup uses NVChad as a base config, with some ekstra plugins.
+Use :checkhealth to see what needs to be installed for Mason to work.
+
+I'm using xclip to copy from nvim and tmux to the system clipboard.
