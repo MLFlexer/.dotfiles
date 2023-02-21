@@ -26,7 +26,7 @@ done
 mkdir $back_up_dir/.config
 
 declare -a conf_arr
-conf_arr=( "alacritty" )
+conf_arr=("alacritty" "nvim")
 
 for dir in ${conf_arr[@]}
 do
