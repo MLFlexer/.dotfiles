@@ -109,6 +109,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ember_env="source ~/.virtualenvs/ember/bin/activate"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -122,3 +123,4 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH=$HOME/julia-1.8.1/bin:$PATH
 export PATH=$HOME//home/hotdog2c/fsharp-language-server/src/FSharpLanguageServer/bin/Release/net6.0:$PATH
+
