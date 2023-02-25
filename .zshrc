@@ -123,4 +123,4 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH=$HOME/julia-1.8.1/bin:$PATH
 export PATH=$HOME//home/hotdog2c/fsharp-language-server/src/FSharpLanguageServer/bin/Release/net6.0:$PATH
-
+export PATH=$HOME/linuxbrew/.linuxbrew/bin:$PATH
