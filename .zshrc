@@ -84,6 +84,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+source $HOME/.zprofile
+export BAT_THEME="TwoDark"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -122,5 +125,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH=$HOME/julia-1.8.1/bin:$PATH
-export PATH=$HOME//home/hotdog2c/fsharp-language-server/src/FSharpLanguageServer/bin/Release/net6.0:$PATH
 export PATH=$HOME/linuxbrew/.linuxbrew/bin:$PATH
+
