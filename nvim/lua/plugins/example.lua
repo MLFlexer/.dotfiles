@@ -28,7 +28,7 @@ return {
   },
 
   -- disable trouble
-  { "folke/trouble.nvim", enabled = false },
+  { "folke/trouble.nvim", enabled = true },
 
   -- add symbols-outline
   {
@@ -168,8 +168,8 @@ return {
     opts = function(_, opts)
       -- add tsx and treesitter
       vim.list_extend(opts.ensure_installed, {
-          "tsx",
-          "typescript",
+        "tsx",
+        "typescript",
       })
     end,
   },
@@ -208,7 +208,8 @@ return {
         "stylua",
         "shellcheck",
         "shfmt",
-        "flake8",
+        -- "flake8",
+        -- "rust_analyzer",
       },
     },
   },

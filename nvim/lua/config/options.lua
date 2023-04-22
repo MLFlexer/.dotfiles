@@ -5,3 +5,9 @@ local opt = vim.opt
 
 opt.scrolloff = 0
 opt.wrap = true -- enable text wrapping
+
+vim.diagnostic.config({
+  virtual_text = { spacing = 4, prefix = "●" },
+  -- Works after fix in neovim v9.0
+  virtual_lines = { only_current_line = true },
+})
