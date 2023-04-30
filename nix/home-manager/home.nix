@@ -8,9 +8,30 @@
     homeDirectory = "/home/mlflexer";
     username = "mlflexer";
     packages = with pkgs; [
-      cowsay
+      bat
+      delta
+      difftastic
+      erdtree
+      exa
+      fd
+      fselect
+      fx
+      fzf
+      gh
+      git
+      grex
+      lazygit
+      neovim
+      ntfy-sh
+      ripgrep
+      ripgrep-all
+      sd
+      tealdeer
+      tmux
+      xsv
+      zoxide
+      zsh
     ];
-
   };
 
   nixpkgs.config = {
