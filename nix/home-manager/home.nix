@@ -8,7 +8,7 @@
     homeDirectory = "/home/mlflexer";
     username = "mlflexer";
     packages = with pkgs; [
-      bat
+      cowsay
     ];
 
   };
