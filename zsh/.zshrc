@@ -1,3 +1,5 @@
+if [ -e /home/mlflexer/.nix-profile/etc/profile.d/nix.sh ]; then . /home/mlflexer/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -79,12 +81,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh-autosuggestions
+#  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
+source ~/.zsh_functions/joshuto
 
-source $HOME/.zprofile
+# source $HOME/.zprofile
 export BAT_THEME="TwoDark"
 
 # User configuration
@@ -112,10 +115,10 @@ export BAT_THEME="TwoDark"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ember_env="source ~/.virtualenvs/ember/bin/activate"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:$PATH
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go/bin:$PATH
@@ -124,6 +127,22 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH=$HOME/julia-1.8.1/bin:$PATH
 export PATH=$HOME/linuxbrew/.linuxbrew/bin:$PATH
-
+export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/mlflexer/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/mlflexer/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/mlflexer/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/mlflexer/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+eval "$(zoxide init zsh)"
+. "$HOME/.cargo/env"
