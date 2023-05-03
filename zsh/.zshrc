@@ -86,6 +86,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 source ~/.zsh_functions/joshuto
+source $HOME/.config/zsh/.aliases
 
 # source $HOME/.zprofile
 export BAT_THEME="TwoDark"
