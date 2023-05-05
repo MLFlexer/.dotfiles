@@ -85,7 +85,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source ~/.zsh_functions/joshuto
+# source ~/.zsh_functions/joshuto
 source $HOME/.config/zsh/.aliases
 
 # source $HOME/.zprofile
@@ -144,6 +144,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-fpath+=${ZDOTDIR:-~}/.zsh_functions
+
+# autoload functions
+export ALIASES_FILE="$ZDOTDIR/.aliases"
+autoload -U $HOME/.config/zsh/functions/*
 eval "$(zoxide init zsh)"
 . "$HOME/.cargo/env"
