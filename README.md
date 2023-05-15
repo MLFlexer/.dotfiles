@@ -1,12 +1,6 @@
 # .dotfiles
 
 ## Install
-run the install.sh script to backup old configs and create symlinks to the files in this directory.
-
-
-    bash install.sh
-
-### Nix Flake
 1. Install nix
 ```
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
@@ -30,7 +24,12 @@ nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPa
 ```
 7. Activate the flake
 ```
-home-manager switch --flake '$HOME/.config/nix/home-manager/#mlflexer'
+home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
+```
+## Optional
+Change the shell to zsh for the current user
+```
+sudo usermod -s $(which zsh) $USER
 ```
 
 
