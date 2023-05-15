@@ -22,7 +22,7 @@ git clone https://github.com/MLFlexer/.dotfiles.git
 ```
 5. Symlink the configuration files
 ```
-cd .dotfiles && .dotfiles/symlink_config.sh
+cd .dotfiles && ./symlink_config.sh
 ```
 6. Apply configuration flake
 ```
