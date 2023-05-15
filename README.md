@@ -8,18 +8,30 @@ run the install.sh script to backup old configs and create symlinks to the files
 
 ### Nix Flake
 1. Install nix
-    sh <(curl -L https://nixos.org/nix/install) --no-daemon
+```
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
+```
 2. Restart the shell
 3. Temporarily install git via. nix:
-    nix-shell -p git
+```
+nix-shell -p git
+```
 4. Clone this repo
-    git clone https://github.com/MLFlexer/.dotfiles.git
+```
+git clone https://github.com/MLFlexer/.dotfiles.git
+```
 5. Symlink the configuration files
-    ./.dotfiles/symlink_config.sh
+```
+./.dotfiles/symlink_config.sh
+```
 6. Apply configuration flake
-    nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
+```
+nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
+```
 7. Activate the flake
-    home-manager switch --flake '$HOME/.config/nix/home-manager/#mlflexer'
+```
+home-manager switch --flake '$HOME/.config/nix/home-manager/#mlflexer'
+```
 
 
 
