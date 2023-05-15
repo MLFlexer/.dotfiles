@@ -23,6 +23,7 @@ done
 # symlink .config-directories:
 
 mkdir $back_up_dir/.config
+mkdir $HOME/.config
 
 declare -a conf_arr
 conf_arr=("alacritty" "nvim" "zsh" "nix" "tmux")
