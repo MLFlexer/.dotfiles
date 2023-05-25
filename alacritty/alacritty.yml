@@ -192,38 +192,41 @@ font:
 draw_bold_text_with_bright_colors: true
 #---------------------------------------------------------------------------------------------------------------------
 # 0x From the Ubuntu terminal color palette
-colors:
-  # 0x Default colors
-  primary:
-    background: '#171421'
-    foreground: '0xeeeeec'
+# colors:
+#   # 0x Default colors
+#   primary:
+#     background: '#171421'
+#     foreground: '0xeeeeec'
+#
+#   # 0x Colors the cursor will use if `custom_cursor_colors` is true
+#   cursor:
+#     text: '#D0CFCC'
+#     cursor: '0xb4d5ff'
+#
+#   # 0x Normal colors
+#   normal:
+#     black:   '0x2e3436'
+#     red:     '#C01C28'
+#     green:   '#26A269'
+#     yellow:  '#A2734C'
+#     blue:    '#12488B'
+#     magenta: '#A347BA'
+#     cyan:    '#2AA1B3'
+#     white:   '#D0CFCC'
+#
+#   # 0x Bright colors
+#   bright:
+#     black:   '#5E5C64'
+#     red:     '#F66151'
+#     green:   '#33D17A'
+#     yellow:  '#E9AD0C'
+#     blue:    '#2A7BDE'
+#     magenta: '#C061CB'
+#     cyan:    '#33C7DE'
+#     white:   '#FFFFFF'
 
-  # 0x Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '#D0CFCC'
-    cursor: '0xb4d5ff'
-
-  # 0x Normal colors
-  normal:
-    black:   '0x2e3436'
-    red:     '#C01C28'
-    green:   '#26A269'
-    yellow:  '#A2734C'
-    blue:    '#12488B'
-    magenta: '#A347BA'
-    cyan:    '#2AA1B3'
-    white:   '#D0CFCC'
-
-  # 0x Bright colors
-  bright:
-    black:   '#5E5C64'
-    red:     '#F66151'
-    green:   '#33D17A'
-    yellow:  '#E9AD0C'
-    blue:    '#2A7BDE'
-    magenta: '#C061CB'
-    cyan:    '#33C7DE'
-    white:   '#FFFFFF'
+import:
+  - ~/repos/tokyonight.nvim/extras/alacritty/tokyonight_storm.yml
 #---------------------------------------------------------------------------------------------------------------------
   # Cursor colors
   #
