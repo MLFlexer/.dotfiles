@@ -1,2 +1,1 @@
-alias sp="source ~/.venv/bsc/bin/activate"
-alias sma="source ~/.config/zsh/functions/manage_aliases"
+alias v="nvim"
