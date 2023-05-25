@@ -1,3 +1,4 @@
 tmux/plugins
 zsh/.zcompdump*
 nix/home-manager/result
+nvim/lazy-lock.json
