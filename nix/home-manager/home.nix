@@ -9,8 +9,12 @@
     username = "mlflexer";
     packages = with pkgs; [
       bat
+      broot
+      choose
+      comma
       delta
       difftastic
+      du-dust
       erdtree
       exa
       fd
@@ -23,10 +27,13 @@
       lazygit
       neovim
       ntfy-sh
+      procs
       ripgrep
       ripgrep-all
       sd
+      starship
       tealdeer
+      gitmux
       tmux
       xsv
       zoxide
