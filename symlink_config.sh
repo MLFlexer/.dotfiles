@@ -8,7 +8,7 @@ fi
 mkdir $HOME/old_dotfiles
 back_up_dir="$HOME/old_dotfiles"
 
-# symlink dotfiles:
+# symlink dotfiles in home:
 declare -a dot_arr
 dot_arr=(".gitconfig" ".zshenv")
 
@@ -34,4 +34,16 @@ for dir in ${conf_arr[@]}; do
 		mv $HOME/.config/$dir $back_up_dir/.config/$dir
 	fi
 	ln -s $PWD/$dir $HOME/.config/$dir
+done
+
+# symlink dotfiles in .config:
+declare -a conf_files
+conf_files=("starship.toml")
+
+for file in ${conf_files[@]}; do
+	if [ -f "$HOME/.config/$file" ]; then
+		echo "moving $file to $HOME/old_dotfiles/.config/"
+		mv $HOME/$file $back_up_dir/.config/$file
+	fi
+	ln -s $PWD/$file $HOME/.config/$file
 done
