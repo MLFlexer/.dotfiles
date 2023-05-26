@@ -1,4 +1,5 @@
 # .dotfiles
+![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/d63500ce-e57f-43bc-9889-a5a6c34e5d0b)
 
 ## Install
 1. Install nix
@@ -41,8 +42,3 @@ If it does not work, then use the following:
 nix build ~/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
 $HOME/.config/nix/home-manager/result/activate
 ```
-
-## NeoVim
-Use :checkhealth to see what needs to be installed for plugins to work.
-
-I'm using xclip to copy from nvim and tmux to the system clipboard.
