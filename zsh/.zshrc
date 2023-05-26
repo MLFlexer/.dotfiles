@@ -15,7 +15,7 @@ autoload -U $HOME/.config/zsh/functions/*
 # Set p10k theme
 source $ZDOTDIR/.p10k.zsh
 POWERLEVEL9K_CONFIG_FILE="$ZDOTDIR/.p10k.zsh"
-source $HOME/powerlevel10k/powerlevel10k.zsh-theme
+source $NIX_PROFILE/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
 # Add t to path
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH

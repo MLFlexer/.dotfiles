@@ -30,6 +30,7 @@
       neovim
       ntfy-sh
       procs
+      zsh-powerlevel10k
       ripgrep
       ripgrep-all
       rustup
