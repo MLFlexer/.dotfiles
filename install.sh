@@ -4,6 +4,7 @@ echo Intalling git to the current nix shell
 nix-shell -p git
 
 echo Cloning repo
+cd $HOME
 git clone https://github.com/MLFlexer/.dotfiles.git $HOME/.dotfiles
 
 echo Symlinking config
@@ -16,4 +17,4 @@ echo Activating flake
 home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
 
 echo Installing tmux plugin manager
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm
