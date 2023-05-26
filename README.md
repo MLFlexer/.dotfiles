@@ -26,27 +26,21 @@ nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPa
 ```
 home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
 ```
-## Optional
+### Optional
 Change the shell to zsh for the current user
 ```
 sudo usermod -s $(which zsh) $USER
 ```
 
-
-
-
-6. Build flake
-    nix build ~/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
-7. Activate flake
-    ~/.config/nix/home-manager/result/activate
-
-2. copy everything in /nix/ to .config/nix/
-3. restart the shell
-4. 
-
-    nix build ~/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
-    ~/.config/nix/home-manager/result/activate
-
+## Updating home.nix
+```
+home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
+```
+If it does not work, then use the following:
+```
+nix build ~/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
+$HOME/.config/nix/home-manager/result/activate
+```
 
 ## NeoVim
 Use :checkhealth to see what needs to be installed for plugins to work.
