@@ -23,6 +23,8 @@
       fzf
       gh
       git
+      gitmux
+      go
       grex
       lazygit
       neovim
@@ -30,14 +32,18 @@
       procs
       ripgrep
       ripgrep-all
+      rustup
       sd
       starship
       tealdeer
-      gitmux
       tmux
       xsv
       zoxide
       zsh
+      zsh-autosuggestions
+      zsh-completions
+      zsh-fzf-tab
+      zsh-syntax-highlighting
     ];
   };
 
