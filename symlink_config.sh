@@ -21,7 +21,6 @@ for file in ${dot_arr[@]}; do
 done
 
 # symlink .config-directories:
-
 mkdir $back_up_dir/.config
 mkdir $HOME/.config
 

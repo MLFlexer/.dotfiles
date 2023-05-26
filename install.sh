@@ -1,36 +1,16 @@
 #!/bin/bash
 
-if [ -d "$HOME/old_dotfiles" ]; then
-	echo "removing $HOME/old_dotfiles/"
-	rm -rfd "$HOME/old_dotfiles"
-fi
+echo Intalling git to the current nix shell
+nix-shell -p git
 
-mkdir $HOME/old_dotfiles
-back_up_dir="$HOME/old_dotfiles"
+echo Cloning repo
+git clone https://github.com/MLFlexer/.dotfiles.git
 
-# symlink dotfiles:
-declare -a dot_arr
-dot_arr=(".gitconfig" ".zshenv")
+echo Symlinking config
+cd .dotfiles && ./symlink_config.sh
 
-for file in ${dot_arr[@]}; do
-	if [ -f "$HOME/$file" ]; then
-		echo "moving $file to $HOME/old_dotfiles/"
-		mv $HOME/$file $back_up_dir/$file
-	fi
-	ln -s $PWD/$file $HOME/$file
-done
+echo Installing flake
+nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
 
-# symlink .config-directories:
-
-mkdir $back_up_dir/.config
-
-declare -a conf_arr
-conf_arr=("alacritty" "nvim" "zsh" "nix" "tmux")
-
-for dir in ${conf_arr[@]}; do
-	if [ -d "$HOME/.config/$dir/" ]; then
-		echo "moving $dir to $HOME/old_dotfiles/.config/"
-		mv $HOME/.config/$dir $back_up_dir/.config/$dir
-	fi
-	ln -s $PWD/$dir $HOME/.config/$dir
-done
+echo Activating flake
+home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
