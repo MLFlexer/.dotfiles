@@ -4,6 +4,7 @@ echo Intalling git to the current nix shell
 nix-shell -p git
 
 echo Cloning repo
+cd $HOME
 git clone https://github.com/MLFlexer/.dotfiles.git
 
 echo Symlinking config
