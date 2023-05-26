@@ -18,3 +18,8 @@ home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
 
 echo Installing tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm
+
+echo
+echo
+echo
+echo Install tmux plugins by pressing CTRL + SPACE followed by I \(Uppercase\)

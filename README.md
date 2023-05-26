@@ -7,6 +7,14 @@
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 ```
 2. Restart the shell
+
+### Install via. curl
+3. Install via. install.sh
+```
+curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/90594c0dcc65ac360e238d7513669cf3687d70c9/install.sh | bash
+```
+
+### Install manually
 3. Temporarily install git via. nix:
 ```
 nix-shell -p git
@@ -27,6 +35,18 @@ nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPa
 ```
 home-manager switch --flake "$HOME/.config/nix/home-manager/#mlflexer"
 ```
+8. Install tmux plugin manager
+```
+git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm
+```
+
+### Install tmux plugins
+Start a tmux session
+```
+tmux
+```
+press CTRL+SPACE followed by an uppercase I to install the plugins
+
 ### Optional
 Change the shell to zsh for the current user
 ```
