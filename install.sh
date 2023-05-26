@@ -7,7 +7,7 @@ echo Cloning repo
 git clone https://github.com/MLFlexer/.dotfiles.git $HOME/.dotfiles
 
 echo Symlinking config
-cd .dotfiles && $HOME/.dotfiles/symlink_config.sh
+cd $HOME/.dotfiles && $HOME/.dotfiles/symlink_config.sh
 
 echo Installing flake
 nix run $HOME/.config/nix/home-manager/#homeConfigurations.mlflexer.activationPackage
