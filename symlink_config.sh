@@ -25,7 +25,7 @@ mkdir $back_up_dir/.config
 mkdir $HOME/.config
 
 declare -a conf_arr
-conf_arr=("alacritty" "nvim" "zsh" "nix" "tmux")
+conf_arr=("alacritty" "nvim" "zsh" "nix" "tmux" "wezterm")
 
 for dir in ${conf_arr[@]}; do
 	if [ -d "$HOME/.config/$dir/" ]; then
