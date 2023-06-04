@@ -25,6 +25,8 @@
       git
       gitmux
       go
+      yarn
+      nodejs_20
       grex
       lazygit
       neovim
