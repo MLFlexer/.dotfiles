@@ -14,6 +14,7 @@
       comma
       delta
       difftastic
+      zig
       du-dust
       erdtree
       exa
