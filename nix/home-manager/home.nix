@@ -14,7 +14,6 @@
       comma
       delta
       difftastic
-      zig
       du-dust
       erdtree
       exa
@@ -26,14 +25,12 @@
       git
       gitmux
       go
-      yarn
-      nodejs_20
       grex
       lazygit
       neovim
+      nodejs_20
       ntfy-sh
       procs
-      zsh-powerlevel10k
       ripgrep
       ripgrep-all
       rustup
@@ -43,11 +40,14 @@
       tmux
       xclip
       xsv
+      yarn
+      zig
       zoxide
       zsh
       zsh-autosuggestions
       zsh-completions
       zsh-fzf-tab
+      zsh-powerlevel10k
       zsh-syntax-highlighting
     ];
   };
