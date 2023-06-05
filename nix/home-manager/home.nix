@@ -41,6 +41,7 @@
       starship
       tealdeer
       tmux
+      xclip
       xsv
       zoxide
       zsh
