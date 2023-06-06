@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local config = {
 	-- uncomment if on windows with wsl
-	-- default_prog = { 'wsl', '-d', 'Ubuntu', '--cd' , '~' },
+	-- default_domain = 'WSL:Ubuntu'
 	
 	font = wezterm.font("MesloLGLDZ Nerd Font Mono"),
 	font_size = 12.0,
