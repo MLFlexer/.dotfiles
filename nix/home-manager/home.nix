@@ -38,6 +38,7 @@
       starship
       tealdeer
       tmux
+      vscodium
       xclip
       xsv
       yarn
