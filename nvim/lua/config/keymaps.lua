@@ -2,6 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local map = vim.keymap.set
+
 -- function to toggle "normal" diagnostics or lsp-lines diagnostics.
 local function toggle_diagnostics()
   local diagnostics_on = require("lsp_lines").toggle()
@@ -17,7 +19,16 @@ local function toggle_diagnostics()
   end
 end
 
-vim.keymap.set("n", "<Leader>dl", toggle_diagnostics, { desc = "Toggle [l]ine diagnostic type" })
+map("n", "<Leader>uD", toggle_diagnostics, { desc = "Toggle line [D]iagnostic type" })
 
-vim.keymap.set("n", "<Leader>dn", vim.diagnostic.goto_next, { desc = "Go to [n]ext diagnostic" })
-vim.keymap.set("n", "<Leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [p]rev diagnostic" })
+map("n", "<Leader>_", ":vs<CR>", { desc = "Vertical split" })
+map("n", "<CR>", "ciw", { desc = "Change word" })
+
+-- Yanking text makes the cursor stay at the current position
+map("v", "y", "may`a", { desc = "Yank visual selection" })
+
+map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
+map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
+
+map("n", "p", "p=`]")
+map("n", "P", "P=`]")
