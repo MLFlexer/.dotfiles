@@ -35,7 +35,6 @@
       ripgrep-all
       rustup
       sd
-      starship
       tealdeer
       tmux
       vscodium
