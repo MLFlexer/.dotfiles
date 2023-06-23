@@ -3,6 +3,11 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
+local function vim_fn(vim_cmd, args)
+  return function()
+    return vim.fn[vim_cmd](args)
+  end
+end
 
 -- function to toggle "normal" diagnostics or lsp-lines diagnostics.
 local function toggle_diagnostics()
@@ -51,3 +56,9 @@ map({ "v" }, "<leader>as", ":'<,'>ChatGPTRun summarize<CR>", { desc = "Summarize
 map({ "v" }, "<leader>ab", ":'<,'>ChatGPTRun fix_bugs<CR>", { desc = "Fix bugs" })
 map({ "v" }, "<leader>aR", ":'<,'>ChatGPTRun roxygen_edit<CR>", { desc = "Roxygen edit" })
 map({ "v" }, "<leader>ar", ":'<,'>ChatGPTRun code_readability_analysis<CR>", { desc = "Analyse code readability" })
+
+-- Codeium keybinds
+map("i", "<C-l>", vim.fn["codeium#Accept"], { desc = "Accept Codeium", expr = true })
+map("i", "<C-j>", vim_fn("codeium#CycleCompletions", 1), { desc = "Cycle completions", expr = true })
+map("i", "<C-k>", vim_fn("codeium#CycleCompletions", -1), { desc = "Cycle completions back", expr = true })
+map("i", "<C-x>", vim.fn["codeium#Clear"], { desc = "Clear Codeium", expr = true })
