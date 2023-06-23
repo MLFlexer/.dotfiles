@@ -30,5 +30,24 @@ map("v", "y", "may`a", { desc = "Yank visual selection" })
 map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
 map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
 
+-- Paste with correct indent
 map("n", "p", "p=`]")
 map("n", "P", "P=`]")
+
+-- ChatGPT keybinds
+local chatgpt = require("chatgpt")
+map({ "n", "v" }, "<leader>aa", chatgpt.openChat, { desc = "Open ChatGPT promt" })
+map({ "n", "v" }, "<leader>aA", chatgpt.selectAwesomePrompt, { desc = "Chat with a choosen actor" })
+map({ "n", "v" }, "<leader>aE", chatgpt.edit_with_instructions, { desc = "Edit with ChatGPT" })
+-- Run commands
+map({ "v" }, "<leader>ac", ":'<,'>ChatGPTRun complete_code<CR>", { desc = "Complete code" })
+map({ "v" }, "<leader>ae", ":'<,'>ChatGPTRun explain_code<CR>", { desc = "Explain code" })
+map({ "v" }, "<leader>ag", ":'<,'>ChatGPTRun grammar_correction<CR>", { desc = "Correct grammar" })
+map({ "v" }, "<leader>ak", ":'<,'>ChatGPTRun keywords<CR>", { desc = "Get keywords in text" })
+map({ "v" }, "<leader>ad", ":'<,'>ChatGPTRun docstring<CR>", { desc = "Create docstring" })
+map({ "v" }, "<leader>at", ":'<,'>ChatGPTRun add_tests<CR>", { desc = "Add tests" })
+map({ "v" }, "<leader>ao", ":'<,'>ChatGPTRun optimize_code<CR>", { desc = "Optimize code" })
+map({ "v" }, "<leader>as", ":'<,'>ChatGPTRun summarize<CR>", { desc = "Summarize" })
+map({ "v" }, "<leader>ab", ":'<,'>ChatGPTRun fix_bugs<CR>", { desc = "Fix bugs" })
+map({ "v" }, "<leader>aR", ":'<,'>ChatGPTRun roxygen_edit<CR>", { desc = "Roxygen edit" })
+map({ "v" }, "<leader>ar", ":'<,'>ChatGPTRun code_readability_analysis<CR>", { desc = "Analyse code readability" })
