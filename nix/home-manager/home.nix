@@ -10,6 +10,7 @@
     packages = with pkgs; [
       bat
       broot
+      cabal-install # Haskell
       choose
       comma
       delta
@@ -22,10 +23,12 @@
       fx
       fzf
       gh
+      ghc # Haskell
       git
       gitmux
       go
       grex
+      haskell-language-server
       lazygit
       neovim
       nodejs_20
