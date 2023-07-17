@@ -19,6 +19,7 @@
       erdtree
       exa
       fd
+      firefox
       fselect
       fx
       fzf
