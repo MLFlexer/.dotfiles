@@ -24,6 +24,8 @@ local config = {
 	},
 	scrollback_lines = 5000,
 }
+config.keys = require("keybinds")
+
 wezterm.on("gui-startup", function()
 	local tab, pane, window = mux.spawn_window({})
 	window:gui_window():maximize()
