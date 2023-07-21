@@ -68,6 +68,9 @@ map("i", "<C-j>", vim_fn("codeium#CycleCompletions", 1), { desc = "Cycle complet
 map("i", "<C-k>", vim_fn("codeium#CycleCompletions", -1), { desc = "Cycle completions back", expr = true })
 map("i", "<C-x>", vim.fn["codeium#Clear"], { desc = "Clear Codeium", expr = true })
 
+-- nvim-navbuddy
+map("n", "<leader>cn", require("nvim-navbuddy").open, { desc = "Open navbuddy" })
+
 -- Bufferline
 local function go_to_tab(tabnr, absolute)
   return function()
