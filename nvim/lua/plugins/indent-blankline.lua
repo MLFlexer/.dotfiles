@@ -1,7 +1,7 @@
 return {
   {
     "echasnovski/mini.indentscope",
-    enabled = false, --removal of animations
+    enabled = false, -- Removes animations
   },
   {
     "lukas-reineke/indent-blankline.nvim",
