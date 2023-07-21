@@ -3,11 +3,22 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
-local function vim_fn(vim_cmd, args)
-  return function()
-    return vim.fn[vim_cmd](args)
-  end
-end
+
+map("n", "<Leader>_", ":vs<CR>", { desc = "Vertical split" })
+map("n", "<CR>", "ciw", { desc = "Change word" })
+
+-- Yanking text makes the cursor stay at the current position
+map("v", "y", "may`a", { desc = "Yank visual selection" })
+
+map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
+map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
+
+-- Paste with correct indent
+map("n", "p", "p=`]")
+map("n", "P", "P=`]")
+
+-- maximize window
+map("n", "<leader>wm", ":MaximizerToggle<CR>", { desc = "[W]indow [M]aximize toggle" })
 
 -- function to toggle "normal" diagnostics or lsp-lines diagnostics.
 local function toggle_diagnostics()
@@ -24,20 +35,8 @@ local function toggle_diagnostics()
   end
 end
 
+-- Toggle diagnostics on current line or below
 map("n", "<Leader>uD", toggle_diagnostics, { desc = "Toggle line [D]iagnostic type" })
-
-map("n", "<Leader>_", ":vs<CR>", { desc = "Vertical split" })
-map("n", "<CR>", "ciw", { desc = "Change word" })
-
--- Yanking text makes the cursor stay at the current position
-map("v", "y", "may`a", { desc = "Yank visual selection" })
-
-map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
-map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
-
--- Paste with correct indent
-map("n", "p", "p=`]")
-map("n", "P", "P=`]")
 
 -- ChatGPT keybinds
 local chatgpt = require("chatgpt")
@@ -58,6 +57,12 @@ map({ "v" }, "<leader>aR", ":'<,'>ChatGPTRun roxygen_edit<CR>", { desc = "Roxyge
 map({ "v" }, "<leader>ar", ":'<,'>ChatGPTRun code_readability_analysis<CR>", { desc = "Analyse code readability" })
 
 -- Codeium keybinds
+local function vim_fn(vim_cmd, args)
+  return function()
+    return vim.fn[vim_cmd](args)
+  end
+end
+
 map("i", "<C-l>", vim.fn["codeium#Accept"], { desc = "Accept Codeium", expr = true })
 map("i", "<C-j>", vim_fn("codeium#CycleCompletions", 1), { desc = "Cycle completions", expr = true })
 map("i", "<C-k>", vim_fn("codeium#CycleCompletions", -1), { desc = "Cycle completions back", expr = true })
