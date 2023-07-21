@@ -62,3 +62,18 @@ map("i", "<C-l>", vim.fn["codeium#Accept"], { desc = "Accept Codeium", expr = tr
 map("i", "<C-j>", vim_fn("codeium#CycleCompletions", 1), { desc = "Cycle completions", expr = true })
 map("i", "<C-k>", vim_fn("codeium#CycleCompletions", -1), { desc = "Cycle completions back", expr = true })
 map("i", "<C-x>", vim.fn["codeium#Clear"], { desc = "Clear Codeium", expr = true })
+
+-- Bufferline
+local function go_to_tab(tabnr, absolute)
+  return function()
+    return require("bufferline").go_to(tabnr, absolute)
+  end
+end
+
+for i = 1, 9 do
+  map("n", "<leader><Tab>" .. i, go_to_tab(i, true), { desc = "Tab " .. i })
+end
+map("n", "<leader><Tab>0", go_to_tab(10, true), { desc = "Tab 10" })
+map("n", "<leader><Tab>h", go_to_tab(1, true), { desc = "first tab" })
+map("n", "<leader><Tab>l", go_to_tab(-1, true), { desc = "last tab" })
+map("n", "<leader><Tab><Tab>", require("bufferline").pick, { desc = "Pick tab" })
