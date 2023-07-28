@@ -38,6 +38,9 @@ end
 -- Toggle diagnostics on current line or below
 map("n", "<Leader>uD", toggle_diagnostics, { desc = "Toggle line [D]iagnostic type" })
 
+-- Telescope undo
+map("n", "<leader>fu", require("telescope").extensions.undo.undo, { desc = "Undo tree" })
+
 -- ChatGPT keybinds
 local chatgpt = require("chatgpt")
 map({ "n", "v" }, "<leader>aa", chatgpt.openChat, { desc = "Open ChatGPT promt" })
