@@ -1,6 +1,8 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+
 wezterm.on("spawn_lazygit", function(window, pane)
 	local current_tab_id = pane:tab():tab_id()
 	local cmd = "lazygit ; wezterm cli activate-tab --tab-id " .. current_tab_id .. " ; exit\n"
@@ -8,8 +10,6 @@ wezterm.on("spawn_lazygit", function(window, pane)
 	tab_pane:send_text(cmd)
 	tab:set_title(wezterm.nerdfonts.dev_git .. " Lazygit")
 end)
-
-wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 wezterm.on("go_to_dotfiles", function(window, pane)
 	window:perform_action(
@@ -53,7 +53,7 @@ local function tab_switch_keys(keys, modifier)
 		})
 	end
 	table.insert(keys, {
-		key = tostring(0),
+		key = "0",
 		mods = modifier,
 		action = act.ActivateTab(9),
 	})

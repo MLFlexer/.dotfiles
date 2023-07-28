@@ -20,14 +20,14 @@ local NERD_NUMS = {
 	nf.md_numeric_10,
 }
 
-function get_thick_num(i)
+local function get_thick_num(i)
 	if i > 0 and i <= 10 then
 		return NERD_NUMS[i] .. " "
 	end
 	return ""
 end
 
-function get_nerd_title(title)
+local function get_nerd_title(title)
 	if title == "nvim" or title == "vim" then
 		return nf.custom_vim
 	elseif title == "zsh" then
@@ -40,7 +40,7 @@ end
 -- It prefers the title that was set via `tab:set_title()`
 -- or `wezterm cli set-tab-title`, but falls back to the
 -- title of the active pane in that tab.
-function tab_title(tab_info)
+local function tab_title(tab_info)
 	local title = tab_info.tab_title
 	-- if the tab title is explicitly set, take that
 	if title and #title > 0 then
@@ -51,11 +51,7 @@ function tab_title(tab_info)
 	return get_nerd_title(tab_info.active_pane.title)
 end
 
--- wezterm.log_info(color_scheme)
--- wezterm.log_info(color_scheme.tab_bar)
-
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	-- wezterm.log_info(config)
 	local color_scheme = config.resolved_palette
 	local edge_background = color_scheme.background
 	local edge_foreground = color_scheme.tab_bar.active_tab.fg_color --color_scheme.foreground
