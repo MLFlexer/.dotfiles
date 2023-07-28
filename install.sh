@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo Intalling git to the current nix shell
 nix-shell -p git
 
