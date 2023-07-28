@@ -26,6 +26,11 @@ local config = {
 }
 config.keys = require("keybinds")
 
+-- add smart-split keys
+for _, value in ipairs(require("plugins.smart-splits").keys) do
+	table.insert(config.keys, value)
+end
+
 require("bar")
 
 wezterm.on("gui-startup", function()
