@@ -23,9 +23,6 @@ export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 # Initialize zoxide
 eval "$(zoxide init zsh)"
 
-# FZF tab suggestions for zsh
-# source $NIX_PROFILE/share/fzf-tab/fzf-tab.plugin.zsh
-
 # Autosuggestions for zsh
 source $NIX_PROFILE/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 

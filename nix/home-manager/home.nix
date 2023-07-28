@@ -50,7 +50,6 @@
       zsh
       zsh-autosuggestions
       zsh-completions
-      zsh-fzf-tab
       zsh-powerlevel10k
       zsh-syntax-highlighting
     ];
