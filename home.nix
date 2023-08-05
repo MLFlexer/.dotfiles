@@ -7,11 +7,13 @@ let
   # path to dotfiles directory
   dotdir = config.lib.file.mkOutOfStoreSymlink "/home/mlflexer/repos/.dotfiles";
 in {
+  fonts.fontconfig.enable = true;
   home = {
     stateVersion = "23.05";
     homeDirectory = "/home/mlflexer";
     username = "mlflexer";
     packages = with pkgs; [
+      (nerdfonts.override {fonts = [ "Meslo" ]; })
       bat
       broot
       cabal-install # Haskell
