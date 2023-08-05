@@ -1,5 +1,6 @@
 # .dotfiles
-![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/d63500ce-e57f-43bc-9889-a5a6c34e5d0b)
+![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/fd9cf962-7231-42bd-827e-3b711603badd)
+
 
 ## Install
 ⚠️ This will install the dotfiles into `$HOME/repos/.dotfiles`. If you wish to install elsewhere you must change it manually in the bash script / nix flakes.
