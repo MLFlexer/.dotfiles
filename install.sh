@@ -7,7 +7,7 @@ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 
 echo Spawning nix-shell with git and finish install
-nix-shell -p git --cmd "curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/nix_git_install.sh | bash"
+nix-shell -p git --command "curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/nix_git_install.sh | bash"
 
 echo
 echo Install tmux plugins by pressing CTRL + SPACE followed by I \(Uppercase\)
