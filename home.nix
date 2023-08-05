@@ -47,8 +47,9 @@ in {
       sd
       tealdeer
       tmux
-      vscodium
       vhs
+      vscodium
+      # wezterm
       xclip
       xsv
       yarn
