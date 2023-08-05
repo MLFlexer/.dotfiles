@@ -65,7 +65,7 @@ end)
 
 local keys = {
 	{
-		key = "h",
+		key = "U",
 		mods = "CTRL|SHIFT",
 		action = act.EmitEvent("update_plugins"),
 	},
