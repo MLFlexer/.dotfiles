@@ -14,3 +14,5 @@ echo Install tmux plugins by pressing CTRL + SPACE followed by I \(Uppercase\)
 echo
 echo Change shell to zsh by typing:
 echo 'sudo usermod -s $(which zsh) $USER'
+echo
+echo Restart your terminal to complete the installation
