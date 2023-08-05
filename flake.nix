@@ -9,9 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database.url = "github:Mic92/nix-index-database"; # for comma integration
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs"; # for comma integration
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -19,8 +21,10 @@
       homeConfigurations.mlflexer = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = [ ./home.nix ];
-
+        modules = [
+          ./home.nix
+          nix-index-database.hmModules.nix-index # for comma integration
+        ];
       };
     };
 }
