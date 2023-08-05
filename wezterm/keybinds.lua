@@ -95,6 +95,11 @@ local keys = {
 		action = wezterm.action.TogglePaneZoomState,
 	},
 	{
+		key = "t",
+		mods = "ALT",
+		action = act.SpawnTab("CurrentPaneDomain"),
+	},
+	{
 		key = "d",
 		mods = "ALT|SHIFT|CTRL",
 		action = act.EmitEvent("go_to_dotfiles"),
