@@ -6,9 +6,6 @@ local config = {
 	-- uncomment if on windows with wsl
 	-- default_domain = 'WSL:Ubuntu'
 
-	font = wezterm.font("MesloLGLDZ Nerd Font Mono"),
-	font_size = 12.0,
-
 	window_background_opacity = 0.9,
 	window_padding = {
 		left = 0,
@@ -21,7 +18,12 @@ local config = {
 		brightness = 0.9,
 	},
 	scrollback_lines = 5000,
+	audible_bell = "Disabled",
+	enable_scroll_bar = true,
+
+	status_update_interval = 1000,
 }
+
 config.keys = require("keybinds")
 
 -- add smart-split keys
