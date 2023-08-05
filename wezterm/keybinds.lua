@@ -100,6 +100,11 @@ local keys = {
 		action = act.SpawnTab("CurrentPaneDomain"),
 	},
 	{
+		key = "w",
+		mods = "ALT",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	{
 		key = "d",
 		mods = "ALT|SHIFT|CTRL",
 		action = act.EmitEvent("go_to_dotfiles"),
