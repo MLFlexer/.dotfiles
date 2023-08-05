@@ -121,6 +121,14 @@ local keys = {
 		mods = "ALT|SHIFT|CTRL",
 		action = act.EmitEvent("go_to_dotfiles"),
 	},
+	{
+		key = "e",
+		mods = "SHIFT|CTRL",
+		action = wezterm.action.CharSelect({
+			copy_on_select = true,
+			copy_to = "ClipboardAndPrimarySelection",
+		}),
+	},
 }
 
 tab_switch_keys(keys, "ALT")
