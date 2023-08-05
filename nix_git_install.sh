@@ -11,7 +11,7 @@ git clone https://github.com/MLFlexer/.dotfiles.git $HOME/repos/.dotfiles
 echo Creating nix config
 mkdir -p $HOME/.config/nix
 touch $HOME/.config/nix/nix.conf
-curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/nix.conf -o $HOME/.config/nix/nix.conf
+curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/nix/nix.conf -o $HOME/.config/nix/nix.conf
 
 echo Activating and installing home manager flake
 nix run $HOME/repos/.dotfiles/#homeConfigurations.mlflexer.activationPackage
