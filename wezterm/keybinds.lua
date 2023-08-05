@@ -105,6 +105,18 @@ local keys = {
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 	{
+		key = "p",
+		mods = "ALT",
+		action = act.PaneSelect({}),
+	},
+	{
+		key = "p",
+		mods = "ALT|SHIFT",
+		action = act.PaneSelect({
+			mode = "SwapWithActive",
+		}),
+	},
+	{
 		key = "d",
 		mods = "ALT|SHIFT|CTRL",
 		action = act.EmitEvent("go_to_dotfiles"),
