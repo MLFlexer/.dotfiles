@@ -28,6 +28,3 @@ source $NIX_PROFILE/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Zsh syntax highlighting
 source $NIX_PROFILE/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# source wezterm.sh
-source /etc/profile.d/wezterm.sh
