@@ -17,13 +17,15 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       homeConfigurations.mlflexer = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
-          ./home.nix
           nix-index-database.hmModules.nix-index # for comma integration
+          ./home.nix
+          ./sym_conf.nix
         ];
       };
     };
