@@ -14,6 +14,7 @@ local config = {
 		bottom = 0,
 	},
 	hide_tab_bar_if_only_one_tab = true,
+  hide_mouse_cursor_when_typing = false,
 	inactive_pane_hsb = {
 		brightness = 0.9,
 	},
