@@ -6,8 +6,9 @@ let
   user = "mlflexer";
 in
 {
-  mlflexer_home_manager = home-manager.lib.homeManagerConfiguration {
-    #home-manager switch --flake .#mlflexer_home_manager
+  mlflexer = home-manager.lib.homeManagerConfiguration {
+    # nix build .#homeConfigurations.mlflexer.activationPackage
+    #home-manager switch --flake .#mlflexer
     inherit pkgs;
     extraSpecialArgs = { inherit system user; };
     modules = [
