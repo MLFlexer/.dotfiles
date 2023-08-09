@@ -1,11 +1,13 @@
 {
-  description = "Home Manager configuration of mlflexer";
+  description = "Nix configuration flake for NixOS and Home-Manager";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -13,20 +15,22 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs"; # for comma integration
   };
 
-  outputs = { nixpkgs, home-manager, nix-index-database, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      lib = nixpkgs.lib;
+
     in
     {
-      homeConfigurations.mlflexer = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      nixosConfigurations = (
+        import ./hosts {
+          inherit lib nixpkgs nixpkgs-unstable home-manager;
+        }
+      );
 
-        modules = [
-          nix-index-database.hmModules.nix-index # for comma integration
-          ./home.nix
-          ./sym_conf.nix
-        ];
-      };
+      homeConfigurations = (
+        import ./home-manager {
+          inherit lib nixpkgs nixpkgs-unstable home-manager nix-index-database;
+        }
+      );
     };
 }

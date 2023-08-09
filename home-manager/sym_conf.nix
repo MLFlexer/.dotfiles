@@ -1,9 +1,10 @@
 { config
+, user
 , ...
 }:
 let
   # path to dotfiles directory
-  dotdir = config.lib.file.mkOutOfStoreSymlink "/home/mlflexer/repos/.dotfiles";
+  dotdir = config.lib.file.mkOutOfStoreSymlink "/home/${user}/repos/.dotfiles/home-manager/config";
 in
 {
   # Symlink files
