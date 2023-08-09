@@ -4,48 +4,45 @@
 }:
 {
   home = {
-    stateVersion = "23.05";
-    homeDirectory = "/home/mlflexer";
-    username = "mlflexer";
     packages = with pkgs; [
       bat
       broot
       cabal-install # Haskell
-      choose
+      # choose
       comma
       delta
       difftastic
-      du-dust
-      erdtree
+      # du-dust
+      # erdtree
       exa
       fd
-      firefox
-      fselect
-      fx
+      firefox # TODO move to system packages or nixGL
+      # fselect
+      # fx
       fzf
       gh
       ghc # Haskell
       git
       gitmux
       go
-      grex
+      # grex
       haskell-language-server
       lazygit
       neovim
       nodejs_20
       ntfy-sh
-      procs
+      # procs
       ripgrep
       ripgrep-all
       rustup
-      sd
+      # sd
       tealdeer
       tmux
       vhs
-      vscodium
+      # vscodium
       # wezterm
       xclip
-      xsv
+      # xsv
       yarn
       zig
       zoxide
@@ -56,11 +53,7 @@
       zsh-syntax-highlighting
     ];
   };
-
   nixpkgs.config = {
     allowUnfree = true;
-    # allowUnfreePredicate = _: true;
   };
-
-  programs.home-manager.enable = true;
 }
