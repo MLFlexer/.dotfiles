@@ -29,22 +29,6 @@ in
     modules = [
       ./laptop/configuration.nix
       ./laptop/hardware-configuration.nix
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user home-manager pkgs;
-          host = {
-            hostName = "laptop";
-          };
-        };
-        home-manager.users.${user} = {
-
-          imports = [ ./laptop/home.nix ];
-        };
-      }
     ];
   };
 
