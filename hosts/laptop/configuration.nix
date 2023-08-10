@@ -70,6 +70,10 @@
     iagno # go game
     hitori # sudoku game
     atomix # puzzle game
+    gnome-contacts
+    simple-scan # document scanner
+    yelp # help client
+    gnome-maps
   ]);
 
 
