@@ -16,7 +16,7 @@
       # erdtree
       exa
       fd
-      firefox # TODO move to system packages or nixGL
+      # firefox
       # fselect
       # fx
       fzf
