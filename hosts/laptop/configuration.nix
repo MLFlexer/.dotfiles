@@ -130,11 +130,10 @@
     vlc
     wget
     zip
-    gnome.gpaste # clipboard
     gnomeExtensions.gsconnect
   ];
 
-  programs.gpaste.enable = true;
+  programs.gpaste.enable = true; # clipboard manager
   networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
   networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
 
