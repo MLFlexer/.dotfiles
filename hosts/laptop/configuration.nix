@@ -131,7 +131,11 @@
     vlc
     wget
     zip
+    gnomeExtensions.gsconnect
   ];
+
+  networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
+  networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
 
   programs.zsh.enable = true;
   programs.gnupg.agent = {
