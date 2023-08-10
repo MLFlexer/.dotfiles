@@ -111,7 +111,6 @@
   };
 
   environment.variables = {
-    # ...
     # fix for this curl issue with https requests: https://github.com/NixOS/nixpkgs/issues/148686
     CURL_CA_BUNDLE = "/etc/pki/tls/certs/ca-bundle.crt"; # this is the value of $SSL_CERT_FILE ; may be brittle
   };

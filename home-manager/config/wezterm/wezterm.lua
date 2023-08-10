@@ -23,6 +23,7 @@ local config = {
 	enable_scroll_bar = true,
 
 	status_update_interval = 1000,
+  xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
 
 config.keys = require("keybinds")
