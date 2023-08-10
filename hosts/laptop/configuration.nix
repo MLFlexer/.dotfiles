@@ -130,7 +130,9 @@
     vlc
     wget
     zip
+    gnome.gnome-weather
     gnomeExtensions.gsconnect
+    gnomeExtensions.openweather
   ];
 
   programs.gpaste.enable = true; # clipboard manager
