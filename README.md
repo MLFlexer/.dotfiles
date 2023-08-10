@@ -1,5 +1,5 @@
 # .dotfiles
-![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/fd9cf962-7231-42bd-827e-3b711603badd)
+![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/05173810-e858-476c-a2b8-161b01f2237c)
 
 
 ## Install
