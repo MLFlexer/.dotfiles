@@ -105,8 +105,10 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      unstable.wezterm
       discord
+      unstable.vscode
+      unstable.vscodium
+      unstable.wezterm
     ];
   };
 
