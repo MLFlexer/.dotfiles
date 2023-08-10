@@ -17,7 +17,7 @@ for file in ${dot_arr[@]}; do
 		echo "moving $file to $HOME/old_dotfiles/"
 		mv $HOME/$file $back_up_dir/$file
 	fi
-	ln -s $PWD/$file $HOME/$file
+	ln -s $PWD/home-manager/config/$file $HOME/$file
 done
 
 # symlink .config-directories:
@@ -32,5 +32,5 @@ for dir in ${conf_arr[@]}; do
 		echo "moving $dir to $HOME/old_dotfiles/.config/"
 		mv $HOME/.config/$dir $back_up_dir/.config/$dir
 	fi
-	ln -s $PWD/$dir $HOME/.config/$dir
+	ln -s $PWD/home-manager/config/$dir $HOME/.config/$dir
 done
