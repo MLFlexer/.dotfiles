@@ -131,8 +131,10 @@
     wget
     zip
     gnome.gnome-weather
+    gnome.gnome-system-monitor
     gnomeExtensions.gsconnect
     gnomeExtensions.openweather
+    gnomeExtensions.vitals # system monitoring
   ];
 
   programs.gpaste.enable = true; # clipboard manager
