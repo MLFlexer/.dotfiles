@@ -35,6 +35,7 @@
       ripgrep
       ripgrep-all
       rustup
+      python3
       # sd
       tealdeer
       tmux
