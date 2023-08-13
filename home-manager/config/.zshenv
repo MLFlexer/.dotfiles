@@ -1,3 +1,3 @@
 ZDOTDIR=$HOME/.config/zsh
-EDITOR=neovim
+EDITOR=nvim
 TERM=wezterm

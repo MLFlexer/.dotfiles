@@ -102,7 +102,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "mlflexer";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       discord
@@ -124,9 +124,9 @@
     curl
     firefox
     gcc
-    okular
+    okular # pdf reader
     pinentry-gnome
-    steam-run
+    steam-run # to run unpatched binaies
     unzip
     vim
     vlc
@@ -139,16 +139,19 @@
     gnomeExtensions.vitals # system monitoring
   ];
 
-  programs.gpaste.enable = true; # clipboard manager
   networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
   networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
 
+  programs.gpaste.enable = true; # clipboard manager
   programs.zsh.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
     pinentryFlavor = "gnome3";
   };
+
+  virtualisation.docker.enable = true;
+  users.extraGroups.docker.members = [ "mlflexer" ];
 
   # List services that you want to enable:
 
