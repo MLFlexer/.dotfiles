@@ -65,19 +65,9 @@ end
 
 local keys = {
 	{
-		key = "U",
-		mods = "CTRL|SHIFT",
-		action = act.EmitEvent("update_plugins"),
-	},
-	{
 		key = "g",
-		mods = "CTRL|SHIFT",
+		mods = "ALT",
 		action = act.EmitEvent("spawn_lazygit"),
-	},
-	{
-		key = "b",
-		mods = "CTRL|SHIFT",
-		action = act.EmitEvent("smart_workspace_switcher"),
 	},
 	{
 		key = "-",
@@ -117,17 +107,27 @@ local keys = {
 		}),
 	},
 	{
+		key = "s",
+		mods = "LEADER",
+		action = act.EmitEvent("smart_workspace_switcher"),
+	},
+	{
 		key = "d",
-		mods = "ALT|SHIFT|CTRL",
+		mods = "LEADER",
 		action = act.EmitEvent("go_to_dotfiles"),
 	},
 	{
 		key = "e",
-		mods = "SHIFT|CTRL",
+		mods = "LEADER",
 		action = wezterm.action.CharSelect({
 			copy_on_select = true,
 			copy_to = "ClipboardAndPrimarySelection",
 		}),
+	},
+	{
+		key = "U",
+		mods = "LEADER|SHIFT",
+		action = act.EmitEvent("update_plugins"),
 	},
 }
 
