@@ -32,7 +32,7 @@
 
       homeConfigurations = (
         import ./home-manager {
-          inherit lib nixpkgs nixpkgs-unstable home-manager nix-index-database;
+          inherit nixpkgs nixpkgs-unstable home-manager nix-index-database;
         }
       );
     };

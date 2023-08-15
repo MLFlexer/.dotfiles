@@ -54,7 +54,4 @@
       zsh-syntax-highlighting
     ];
   };
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
 }
