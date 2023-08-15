@@ -18,7 +18,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ... } @ inputs:
     let
       lib = nixpkgs.lib;
 
@@ -26,7 +26,7 @@
     {
       nixosConfigurations = (
         import ./hosts {
-          inherit lib nixpkgs nixpkgs-unstable home-manager;
+          inherit lib nixpkgs nixpkgs-unstable inputs;
         }
       );
 

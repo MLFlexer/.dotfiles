@@ -1,4 +1,4 @@
-{ config, system, pkgs, unstable, user, ... }:
+{ config, system, pkgs, unstable, user, inputs, ... }:
 {
   imports =
     [
@@ -144,6 +144,8 @@
 
   programs.gpaste.enable = true; # clipboard manager
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true; # run unpatched binaries
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -151,7 +153,7 @@
   };
 
   virtualisation.docker.enable = true;
-  users.extraGroups.docker.members = [ "mlflexer" ];
+  users.extraGroups.docker.members = [ "${user}" ];
 
   # List services that you want to enable:
 
