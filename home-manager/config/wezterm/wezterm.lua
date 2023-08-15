@@ -26,6 +26,7 @@ local config = {
   xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
 
+config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 1000 }
 config.keys = require("keybinds")
 
 -- add smart-split keys
@@ -43,7 +44,7 @@ local colors = require("colors")
 mergeTables(config, colors)
 
 wezterm.on("gui-startup", function()
-	local tab, pane, window = mux.spawn_window({})
+	local _, _, window = mux.spawn_window({})
 	window:gui_window():maximize()
 end)
 
