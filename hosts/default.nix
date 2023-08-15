@@ -1,4 +1,4 @@
-{ lib, nixpkgs, nixpkgs-unstable, home-manager, ... }:
+{ lib, nixpkgs, nixpkgs-unstable, inputs, ... }:
 
 let
   system = "x86_64-linux";
@@ -22,6 +22,7 @@ in
     inherit system;
     specialArgs = {
       inherit pkgs unstable user;
+      inputs = inputs;
       host = {
         hostName = "laptop";
       };
