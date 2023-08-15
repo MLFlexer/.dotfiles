@@ -14,7 +14,7 @@ local config = {
 		bottom = 0,
 	},
 	hide_tab_bar_if_only_one_tab = true,
-  hide_mouse_cursor_when_typing = false,
+	hide_mouse_cursor_when_typing = false,
 	inactive_pane_hsb = {
 		brightness = 0.9,
 	},
@@ -23,7 +23,7 @@ local config = {
 	enable_scroll_bar = true,
 
 	status_update_interval = 1000,
-  xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
+	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
 
 config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 1000 }
