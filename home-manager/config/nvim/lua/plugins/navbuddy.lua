@@ -10,4 +10,7 @@ return {
       opts = { lsp = { auto_attach = true } },
     },
   },
+  keys = {
+    { mode = { "n" }, "<leader>cn", ':lua require("nvim-navbuddy").open()<CR>', desc = "Open navbuddy", silent = true },
+  },
 }
