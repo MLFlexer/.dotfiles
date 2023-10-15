@@ -10,7 +10,7 @@ colors.tab_bar.active_tab.bg_color = color_scheme.tab_bar.active_tab.fg_color
 colors.tab_bar.inactive_tab_hover.bg_color = color_scheme.selection_bg
 colors.tab_bar.inactive_tab_edge = color_scheme.selection_bg
 
-return {
+local theme_colors = {
 	window_frame = {
 		inactive_titlebar_bg = color_scheme.background,
 		active_titlebar_bg = color_scheme.background,
@@ -20,10 +20,13 @@ return {
 	command_palette_bg_color = color_scheme.background,
 	command_palette_fg_color = color_scheme.foreground,
 	char_select_bg_color = color_scheme.background,
-	char_select_fg_color = color_scheme.foreground,
+	char_select_fg_color = color_scheme.tab_bar.active_tab.fg_color,
 	colors = colors,
 }
 
+return {
+	colors = theme_colors,
+}
 -- color_scheme = {
 -- foreground: #c0caf5,
 -- background: #24283b,

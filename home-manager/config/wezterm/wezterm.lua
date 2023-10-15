@@ -2,6 +2,12 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 wezterm.log_info("The config was reloaded for this window!")
 
+local function mergeTables(t1, t2)
+	for key, value in pairs(t2) do
+		t1[key] = value
+	end
+end
+
 local config = {
 	-- uncomment if on windows with wsl
 	-- default_domain = 'WSL:Ubuntu'
@@ -26,6 +32,8 @@ local config = {
 	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
 
+mergeTables(config, require("colors").colors)
+
 config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 1000 }
 config.keys = require("keybinds")
 
@@ -33,15 +41,6 @@ config.keys = require("keybinds")
 for _, value in ipairs(require("plugins.smart-splits").keys) do
 	table.insert(config.keys, value)
 end
-
-local function mergeTables(t1, t2)
-	for key, value in pairs(t2) do
-		t1[key] = value
-	end
-end
-
-local colors = require("colors")
-mergeTables(config, colors)
 
 wezterm.on("gui-startup", function()
 	local _, _, window = mux.spawn_window({})
