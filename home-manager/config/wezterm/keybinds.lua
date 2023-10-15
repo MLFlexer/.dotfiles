@@ -1,73 +1,17 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
-wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-
-wezterm.on("update_plugins", function(_, _)
-	wezterm.plugin.update_all()
-end)
-
-wezterm.on("user-var-changed", function(window, pane, name, value)
-	if name == "workspace_switch" then
-		local workspace_name = string.match(value, ".+/(.+)$")
-		window:perform_action(
-			act.SwitchToWorkspace({
-				name = workspace_name,
-				spawn = { cwd = value },
-			}),
-			pane
-		)
-		window:set_right_status(window:active_workspace())
-	elseif name == "workspace_switch_session_name" then
-		window:perform_action(
-			act.SwitchToWorkspace({
-				name = value,
-			}),
-			pane
-		)
-		window:set_right_status(window:active_workspace())
-	end
-end)
-
-wezterm.on("spawn_lazygit", function(window, pane)
-	local current_tab_id = pane:tab():tab_id()
-	local cmd = "lazygit ; wezterm cli activate-tab --tab-id " .. current_tab_id .. " ; exit\n"
-	local tab, tab_pane, _ = window:mux_window():spawn_tab({})
-	tab_pane:send_text(cmd)
-	tab:set_title(wezterm.nerdfonts.dev_git .. " Lazygit")
-end)
-
-wezterm.on("go_to_dotfiles", function(window, pane)
-	window:perform_action(
-		act.SwitchToWorkspace({
-			name = ".dotfiles",
-			spawn = { cwd = wezterm.home_dir .. "/repos/.dotfiles" },
-		}),
-		pane
-	)
-	window:set_right_status(window:active_workspace())
-end)
-
-local function tab_switch_keys(keys, modifier)
-	for i = 1, 9 do
-		table.insert(keys, {
-			key = tostring(i),
-			mods = modifier,
-			action = act.ActivateTab(i - 1),
-		})
-	end
-	table.insert(keys, {
-		key = "0",
-		mods = modifier,
-		action = act.ActivateTab(9),
-	})
-end
-
 local keys = {
 	{
 		key = "g",
 		mods = "ALT",
-		action = act.EmitEvent("spawn_lazygit"),
+		action = wezterm.action_callback(function(window, pane)
+			local current_tab_id = pane:tab():tab_id()
+			local cmd = "lazygit ; wezterm cli activate-tab --tab-id " .. current_tab_id .. " ; exit\n"
+			local tab, tab_pane, _ = window:mux_window():spawn_tab({})
+			tab_pane:send_text(cmd)
+			tab:set_title(wezterm.nerdfonts.dev_git .. " Lazygit")
+		end),
 	},
 	{
 		key = "-",
@@ -107,14 +51,18 @@ local keys = {
 		}),
 	},
 	{
-		key = "s",
-		mods = "LEADER",
-		action = act.EmitEvent("smart_workspace_switcher"),
-	},
-	{
 		key = "d",
 		mods = "LEADER",
-		action = act.EmitEvent("go_to_dotfiles"),
+		action = wezterm.action_callback(function(window, pane)
+			window:perform_action(
+				act.SwitchToWorkspace({
+					name = ".dotfiles",
+					spawn = { cwd = wezterm.home_dir .. "/repos/.dotfiles" },
+				}),
+				pane
+			)
+			window:set_right_status(window:active_workspace())
+		end),
 	},
 	{
 		key = "e",
@@ -125,11 +73,33 @@ local keys = {
 		}),
 	},
 	{
-		key = "U",
-		mods = "LEADER|SHIFT",
-		action = act.EmitEvent("update_plugins"),
+		key = "s",
+		mods = "ALT",
+		action = require("plugins.workspace_switcher").workspace_switcher(function(label)
+			return wezterm.format({
+				{ Attribute = { Italic = true } },
+				{ Foreground = { Color = require("colors").colors.colors.ansi[3] } },
+				{ Background = { Color = require("colors").colors.colors.background } },
+				{ Text = "󱂬: " .. label },
+			})
+		end),
 	},
 }
+
+local function tab_switch_keys(key_table, modifier)
+	for i = 1, 9 do
+		table.insert(key_table, {
+			key = tostring(i),
+			mods = modifier,
+			action = act.ActivateTab(i - 1),
+		})
+	end
+	table.insert(key_table, {
+		key = "0",
+		mods = modifier,
+		action = act.ActivateTab(9),
+	})
+end
 
 tab_switch_keys(keys, "ALT")
 
