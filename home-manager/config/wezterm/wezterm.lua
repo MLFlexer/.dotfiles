@@ -37,6 +37,16 @@ mergeTables(config, require("colors").colors)
 config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 1000 }
 config.keys = require("keybinds")
 
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
+workspace_switcher.apply_to_config(config, "s", "ALT", function(label)
+	return wezterm.format({
+		{ Attribute = { Italic = true } },
+		{ Foreground = { Color = require("colors").colors.colors.ansi[3] } },
+		{ Background = { Color = require("colors").colors.colors.background } },
+		{ Text = "󱂬: " .. label },
+	})
+end)
+
 -- add smart-split keys
 for _, value in ipairs(require("plugins.smart-splits").keys) do
 	table.insert(config.keys, value)

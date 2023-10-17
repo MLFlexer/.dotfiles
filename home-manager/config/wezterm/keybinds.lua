@@ -72,18 +72,6 @@ local keys = {
 			copy_to = "ClipboardAndPrimarySelection",
 		}),
 	},
-	{
-		key = "s",
-		mods = "ALT",
-		action = require("plugins.workspace_switcher").workspace_switcher(function(label)
-			return wezterm.format({
-				{ Attribute = { Italic = true } },
-				{ Foreground = { Color = require("colors").colors.colors.ansi[3] } },
-				{ Background = { Color = require("colors").colors.colors.background } },
-				{ Text = "󱂬: " .. label },
-			})
-		end),
-	},
 }
 
 local function tab_switch_keys(key_table, modifier)
