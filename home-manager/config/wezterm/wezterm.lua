@@ -11,6 +11,9 @@ end
 local config = {
 	-- uncomment if on windows with wsl
 	-- default_domain = 'WSL:Ubuntu'
+	--
+	font = require("font").font,
+	font_rules = require("font").font_rules,
 
 	window_background_opacity = 0.9,
 	window_padding = {
@@ -38,6 +41,7 @@ config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 100
 config.keys = require("keybinds")
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
+-- workspace_switcher.apply_to_config(config, "s", "ALT")
 workspace_switcher.apply_to_config(config, "s", "ALT", function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
@@ -49,6 +53,10 @@ end)
 
 -- add smart-split keys
 for _, value in ipairs(require("plugins.smart-splits").keys) do
+	table.insert(config.keys, value)
+end
+
+for _, value in ipairs(require("plugins.nvim_maximizer").keys) do
 	table.insert(config.keys, value)
 end
 
