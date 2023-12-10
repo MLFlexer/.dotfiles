@@ -5,7 +5,6 @@
 local map = vim.keymap.set
 
 map("n", "<Leader>_", ":vs<CR>", { desc = "Vertical split" })
-map("n", "<CR>", "ciw", { desc = "Change word" })
 
 -- Yanking text makes the cursor stay at the current position
 map("v", "y", "may`a", { desc = "Yank visual selection" })
@@ -13,9 +12,6 @@ map("v", "y", "may`a", { desc = "Yank visual selection" })
 map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
 map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
 
--- Paste with correct indent
-map("n", "p", "p=`]")
-map("n", "P", "P=`]")
 
 -- function to toggle "normal" diagnostics or lsp-lines diagnostics.
 local function toggle_diagnostics()
@@ -49,6 +45,9 @@ map("n", "<leader><Tab>0", go_to_tab(10, true), { desc = "Tab 10" })
 map("n", "<leader><Tab>h", go_to_tab(1, true), { desc = "first tab" })
 map("n", "<leader><Tab>l", go_to_tab(-1, true), { desc = "last tab" })
 map("n", "<leader><Tab><Tab>", require("bufferline").pick, { desc = "Pick tab" })
+
+map("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Move to next tab", silent = true })
+map("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Move to previous tab", silent = true })
 
 -- smart-split
 -- moving between splits
