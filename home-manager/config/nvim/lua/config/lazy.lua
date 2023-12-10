@@ -25,7 +25,7 @@ require("lazy").setup({
   -- dev = {
   --   -- directory where you store your local plugin projects
   --   path = "~/repos/nvim_plugs/",
-  --   patterns = {}, -- For example {"folke"}
+  --   patterns = {},
   --   fallback = false, -- Fallback to git when local plugin doesn't exist
   -- },
   install = { colorscheme = { "tokyonight" } },

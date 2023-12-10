@@ -2,7 +2,7 @@ local home = vim.fn.expand("$HOME")
 
 return {
   "jackMort/ChatGPT.nvim",
-  event = "VeryLazy",
+  lazy = true,
   config = function()
     require("chatgpt").setup({
       api_key_cmd = "gpg --decrypt " .. home .. "/.secrets/open_ai.txt.gpg",

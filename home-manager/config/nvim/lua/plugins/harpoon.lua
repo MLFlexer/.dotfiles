@@ -1,5 +1,6 @@
 return {
   "ThePrimeagen/harpoon",
+  lazy = true,
   keys = {
     { mode = { "n" }, "<leader>hs", ":Telescope harpoon marks<CR>", desc = "Search Harpoon marks", silent = true },
     {
