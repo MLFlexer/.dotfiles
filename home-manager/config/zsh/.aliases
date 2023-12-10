@@ -1,5 +1,5 @@
 alias v="nvim"
-alias ls="exa"
+alias ls="eza"
 alias cat="bat"
 alias diff="difft"
 alias lg="lazygit"
