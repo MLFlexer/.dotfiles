@@ -28,3 +28,6 @@ compinit -d "$HOME"/.cache/zsh/zcompdump-"$ZSH_VERSION"
 
 # Add t to path (tmux session switcher script)
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+
+# direnv
+eval "$(direnv hook zsh)"
