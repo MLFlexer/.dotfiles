@@ -24,7 +24,15 @@ source $NIX_PROFILE/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $NIX_PROFILE/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Initialize zsh completions directory
-compinit -d "$HOME"/.cache/zsh/zcompdump-"$ZSH_VERSION"
+autoload -U compinit -d "$HOME"/.cache/zsh/zcompdump-"$ZSH_VERSION"
+zstyle ':completion:*' menu select
+_comp_options+=(globdots) # include hidden files
+
+# Add shift-tab to reverse menu
+bindkey '^[[Z' reverse-menu-complete
+
+# atuin
+eval "$(atuin init zsh --disable-up-arrow)"
 
 # Add t to path (tmux session switcher script)
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
