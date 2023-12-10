@@ -1,4 +1,4 @@
-{ config, system, pkgs, unstable, user, inputs, ... }:
+{ pkgs, unstable, user, ... }:
 {
   imports =
     [
@@ -97,6 +97,8 @@
     jack.enable = true;
   };
 
+  fonts.packages = with pkgs; [ monaspace ];
+  fonts.fontconfig.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
@@ -105,10 +107,11 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
+      # google-chrome
       discord
       unstable.vscode
       unstable.vscodium
-      unstable.wezterm
+      wezterm
     ];
   };
 
@@ -120,6 +123,7 @@
   environment.systemPackages = with pkgs; [
     # gnupg
     # obs-studio 
+    # anki-bin
     cacert
     curl
     firefox
@@ -166,7 +170,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   nix = {
     package = pkgs.nixFlakes;

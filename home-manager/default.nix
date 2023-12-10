@@ -1,8 +1,10 @@
-{ nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ... }:
+{ nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ollama-pkgs, ... }:
 
 let
   system = "x86_64-linux";
   pkgs = nixpkgs.legacyPackages.${system};
+  unstable = nixpkgs-unstable.legacyPackages.${system};
+  ollama_pkgs = ollama-pkgs.legacyPackages.${system};
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
 in
@@ -11,7 +13,7 @@ in
     # nix build .#homeConfigurations.mlflexer.activationPackage
     #home-manager switch --flake .#mlflexer
     inherit pkgs;
-    extraSpecialArgs = { inherit config_dir; };
+    extraSpecialArgs = { inherit config_dir unstable ollama_pkgs; };
     modules = [
       nix-index-database.hmModules.nix-index # for comma integration
       ./packages.nix
@@ -23,6 +25,9 @@ in
           stateVersion = "23.05";
         };
         programs.home-manager.enable = true;
+        programs.direnv = { enable = true; enableZshIntegration = true; nix-direnv.enable = true; };
+        programs.zsh.enable = true;
+
         nixpkgs.config = {
           allowUnfree = true;
         };
