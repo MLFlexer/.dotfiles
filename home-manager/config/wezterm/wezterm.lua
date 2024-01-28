@@ -2,6 +2,22 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 wezterm.log_info("The config was reloaded for this window!")
 
+local function base_path_name(str)
+	return string.gsub(str, "(.*[/\\])(.*)", "%2")
+end
+
+local function update_right_status(window)
+	local title = base_path_name(window:active_workspace())
+	window:set_right_status(wezterm.format({
+		{ Foreground = { Color = require("colors").colors.colors.ansi[5] } },
+		{ Text = title .. "  " },
+	}))
+end
+
+wezterm.on("update-right-status", function(window, _)
+	update_right_status(window)
+end)
+
 local function mergeTables(t1, t2)
 	for key, value in pairs(t2) do
 		t1[key] = value
@@ -41,8 +57,8 @@ config.leader = { key = "Space", mods = "CTRL|SHIFT", timeout_milliseconds = 100
 config.keys = require("keybinds")
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
--- workspace_switcher.apply_to_config(config, "s", "ALT")
-workspace_switcher.apply_to_config(config, "s", "ALT", function(label)
+workspace_switcher.apply_to_config(config)
+workspace_switcher.set_workspace_formatter(function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
 		{ Foreground = { Color = require("colors").colors.colors.ansi[3] } },
@@ -51,10 +67,14 @@ workspace_switcher.apply_to_config(config, "s", "ALT", function(label)
 	})
 end)
 
--- add smart-split keys
-for _, value in ipairs(require("plugins.smart-splits").keys) do
-	table.insert(config.keys, value)
-end
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+smart_splits.apply_to_config(config, {
+	direction_keys = { "h", "j", "k", "l" },
+	modifiers = {
+		move = "CTRL",
+		resize = "ALT",
+	},
+})
 
 for _, value in ipairs(require("plugins.nvim_maximizer").keys) do
 	table.insert(config.keys, value)
