@@ -1,4 +1,4 @@
-{ nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ollama-pkgs, ... }:
+{ nixpkgs, nixpkgs-unstable, home-manager, nix-index-database, ollama-pkgs, neovim-nightly, ... }:
 
 let
   system = "x86_64-linux";
@@ -31,6 +31,9 @@ in
         nixpkgs.config = {
           allowUnfree = true;
         };
+        # nixpkgs.overlays = [
+        #   neovim-nightly.overlay
+        # ];
       }
     ];
   };

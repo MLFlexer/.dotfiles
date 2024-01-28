@@ -7,13 +7,13 @@
 
 buildGoModule rec {
   pname = "ollama";
-  version = "0.1.5";
+  version = "0.1.16";
 
   src = fetchFromGitHub {
     owner = "jmorganca";
     repo = "ollama";
     rev = "v${version}";
-    hash = "sha256-usb4at8B+e8VNXRBpDQe24XvmV5kIrBjSjvpD+11fAM=";
+    hash = "sha256-usb4at8B+e8VNBpDQe24XvmV5kIrBjSjvpD+11fAM=";
   };
 
   patches = [

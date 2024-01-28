@@ -11,6 +11,7 @@ let
     broot
     # cabal-install # Haskell
     stack # KU Advanced programming haskell
+    adoptopenjdk-openj9-bin-15 # KU ACS
     # choose
     comma
     delta
@@ -55,6 +56,10 @@ let
     zsh-completions
     zsh-powerlevel10k
     zsh-syntax-highlighting
+    act
+    ffmpeg
+    pandoc
+    # neovim-nightly
   ];
   unstable_pkgs = with unstable; [
     (unstable.callPackage ./deravations/yazi.nix { })
