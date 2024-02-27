@@ -3,6 +3,7 @@ return {
   "neovim/nvim-lspconfig",
   opts = { ---@type lspconfig.options
     servers = {
+      nixd = {},
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {
@@ -14,9 +15,6 @@ return {
             },
           },
         },
-      },
-      erlangls = {
-        mason = false,
       },
     },
     ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>

@@ -72,6 +72,7 @@ let
     rebar3 # for installing erlang-ls with mason
     nodejs
     eza
+    nixd
     # jdk
   ];
 in
