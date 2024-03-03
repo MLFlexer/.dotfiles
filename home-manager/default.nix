@@ -15,7 +15,7 @@ in
     inherit pkgs;
     extraSpecialArgs = { inherit config_dir unstable ollama_pkgs; };
     modules = [
-      inputs.nix-index-database.hmModules.nix-index # for comma integration
+      inputs.nix-index-database.hmModules.nix-index # comma integration
       ./packages.nix
       ./sym_conf.nix
       {
@@ -24,9 +24,43 @@ in
           homeDirectory = "/home/${user}";
           stateVersion = "23.11";
         };
-        programs.home-manager.enable = true;
-        programs.direnv = { enable = true; enableZshIntegration = true; nix-direnv.enable = true; };
-        programs.zsh.enable = true;
+        programs = {
+          home-manager.enable = true;
+
+          direnv = {
+            enable = true;
+            enableZshIntegration = true;
+            nix-direnv.enable = true;
+          };
+
+          bat = {
+            enable = true;
+            config = {
+              pager = "less -FR";
+              theme = "tokoyonight_moon";
+            };
+            themes = {
+              tokoyonight_moon = {
+                src = pkgs.fetchFromGitHub {
+                  owner = "folke";
+                  repo = "tokyonight.nvim";
+                  rev = "610179f7f12db3d08540b6cc61434db2eaecbcff";
+                  sha256 = "sha256-mzCdcf7FINhhVLUIPv/eLohm4qMG9ndRJ5H4sFU2vO0=";
+                };
+                file = "extras/sublime/tokyonight_moon.tmTheme";
+              };
+            };
+          };
+
+          git = {
+            enable = true;
+            difftastic = {
+              enable = true;
+            };
+            userEmail = "75012728+MLFlexer@users.noreply.github.com";
+            userName = "MLFlexer";
+          };
+        };
 
         nixpkgs.config = {
           allowUnfree = true;

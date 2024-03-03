@@ -7,7 +7,6 @@ let
 
   stable_pkgs = with pkgs; [
     atuin
-    bat
     broot
     # choose
     comma
@@ -16,7 +15,6 @@ let
     # du-dust
     # erdtree
     fd
-    # firefox
     # fselect
     # fx
     fzf
@@ -41,8 +39,6 @@ let
     tmux
     gnumake
     vhs
-    # vscodium
-    # wezterm
     xclip
     # xsv
     yarn
@@ -61,17 +57,11 @@ let
   ];
   unstable_pkgs = with unstable; [
     (unstable.callPackage ./deravations/yazi.nix { })
-    # (unstable.callPackage ./deravations/ollama/ollama.nix { })
     ollama_pkgs.ollama
     # (unstable.callPackage ./deravations/neovim_nightly.nix {unstable, })
-    # ollama
-    erlang_26
-    erlang-ls
-    rebar3 # for installing erlang-ls with mason
     nodejs
     eza
     nixd
-    # jdk
   ];
 in
 {
