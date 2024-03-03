@@ -15,19 +15,19 @@
 
   boot.blacklistedKernelModules = [ "elan_i2c" ]; # to enable touchpad
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/716f9fd9-b17d-4f6e-b79c-c4d13cb6824a";
+	fileSystems."/" =
+    { device = "/dev/disk/by-uuid/0c204fdf-9af9-42da-83f0-66df519876a0";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/CCF1-A542";
+    { device = "/dev/disk/by-uuid/669D-5F33";
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/cb09ce52-0f1e-4bc2-96e1-b2a407e57b97"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
