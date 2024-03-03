@@ -1,5 +1,5 @@
 # Nix
-if [ -e /home/mlflexer/.nix-profile/etc/profile.d/nix.sh ]; then . /home/mlflexer/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/mlflexer/.nix-profile/etc/profile.d/nix.sh ]; then . /home/mlflexer/.nix-profile/etc/profile.d/nix.sh; fi
 NIX_PROFILE=$HOME/.nix-profile
 
 # Source aliases
@@ -14,9 +14,6 @@ source $ZDOTDIR/.p10k.zsh
 POWERLEVEL9K_CONFIG_FILE="$ZDOTDIR/.p10k.zsh"
 source $NIX_PROFILE/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
-# Initialize zoxide
-eval "$(zoxide init zsh)"
-
 # Autosuggestions for zsh
 source $NIX_PROFILE/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -30,6 +27,9 @@ _comp_options+=(globdots) # include hidden files
 
 # Add shift-tab to reverse menu
 bindkey '^[[Z' reverse-menu-complete
+
+# Initialize zoxide
+eval "$(zoxide init zsh)"
 
 # atuin
 eval "$(atuin init zsh --disable-up-arrow)"
