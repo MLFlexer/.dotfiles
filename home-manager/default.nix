@@ -24,6 +24,11 @@ in
           homeDirectory = "/home/${user}";
           stateVersion = "23.11";
         };
+
+        nixpkgs.config = {
+          allowUnfree = true;
+        };
+
         programs = {
           home-manager.enable = true;
 
@@ -61,13 +66,6 @@ in
             userName = "MLFlexer";
           };
         };
-
-        nixpkgs.config = {
-          allowUnfree = true;
-        };
-        # nixpkgs.overlays = [
-        #   neovim-nightly.overlay
-        # ];
       }
     ];
   };
