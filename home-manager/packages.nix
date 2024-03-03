@@ -9,9 +9,6 @@ let
     atuin
     bat
     broot
-    # cabal-install # Haskell
-    stack # KU Advanced programming haskell
-    adoptopenjdk-openj9-bin-15 # KU ACS
     # choose
     comma
     delta
@@ -60,6 +57,7 @@ let
     ffmpeg
     pandoc
     # neovim-nightly
+    hyperfine
   ];
   unstable_pkgs = with unstable; [
     (unstable.callPackage ./deravations/yazi.nix { })
