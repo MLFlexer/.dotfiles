@@ -111,7 +111,7 @@
       discord
       unstable.vscode
       unstable.vscodium
-      wezterm
+      unstable.wezterm
     ];
   };
 
