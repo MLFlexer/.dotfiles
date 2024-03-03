@@ -3,17 +3,15 @@
 let
   system = "x86_64-linux";
   pkgs = inputs.nixpkgs.legacyPackages.${system};
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+  pkgs_unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
   ollama_pkgs = inputs.ollama-pkgs.legacyPackages.${system};
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
 in
 {
   mlflexer = inputs.home-manager.lib.homeManagerConfiguration {
-    # nix build .#homeConfigurations.mlflexer.activationPackage
-    #home-manager switch --flake .#mlflexer
     inherit pkgs;
-    extraSpecialArgs = { inherit config_dir unstable ollama_pkgs; };
+    extraSpecialArgs = { inherit config_dir pkgs_unstable ollama_pkgs; };
     modules = [
       inputs.nix-index-database.hmModules.nix-index # comma integration
       ./packages.nix

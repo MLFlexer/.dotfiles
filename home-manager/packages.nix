@@ -1,16 +1,14 @@
 { pkgs
-, unstable
+, pkgs_unstable
 , ollama_pkgs
 , ...
 }:
 let
-
-  stable_pkgs = with pkgs; [
+  stable = with pkgs; [
     atuin
-    broot
+    # broot
     # choose
     comma
-    delta
     difftastic
     # du-dust
     # erdtree
@@ -20,8 +18,6 @@ let
     fzf
     gh
     ghc # Haskell
-    git
-    gitmux
     go
     # grex
     haskell-language-server
@@ -36,9 +32,7 @@ let
     python3
     # sd
     tealdeer
-    tmux
     gnumake
-    vhs
     xclip
     # xsv
     yarn
@@ -55,8 +49,9 @@ let
     # neovim-nightly
     hyperfine
   ];
-  unstable_pkgs = with unstable; [
-    (unstable.callPackage ./deravations/yazi.nix { })
+
+  unstable = with pkgs_unstable; [
+    yazi
     ollama_pkgs.ollama
     # (unstable.callPackage ./deravations/neovim_nightly.nix {unstable, })
     nodejs
@@ -66,6 +61,6 @@ let
 in
 {
   home = {
-    packages = stable_pkgs ++ unstable_pkgs;
+    packages = stable ++ unstable;
   };
 }
