@@ -1,9 +1,6 @@
 { pkgs, unstable, user, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
   boot.loader = {
@@ -11,17 +8,9 @@
     efi.canTouchEfiVariables = true;
   };
 
-  networking.hostName = "laptop_nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  networking.hostName = "laptop_nixos";
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
 
   # Select internationalisation properties.
@@ -40,10 +29,9 @@
   };
 
   services.xserver = {
-    # Enable the X11 windowing system.
     enable = true;
 
-    # Enable the GNOME Desktop Environment.
+    # Enable GNOME Desktop Environment.
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
@@ -76,7 +64,6 @@
     gnome-maps
   ]);
 
-
   # Configure console keymap
   console.keyMap = "dk-latin1";
 
@@ -100,14 +87,12 @@
   fonts.packages = with pkgs; [ monaspace ];
   fonts.fontconfig.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      # google-chrome
       discord
       unstable.vscode
       unstable.vscodium
@@ -146,29 +131,20 @@
   networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
   networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
 
-  programs.gpaste.enable = true; # clipboard manager
-  programs.zsh.enable = true;
-  programs.nix-ld.enable = true; # run unpatched binaries
+  programs = {
+    zsh.enable = true;
+    gpaste.enable = true; # clipboard manager
+    nix-ld.enable = true; # run unpatched binaries
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryFlavor = "gnome3";
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "gnome3";
+    };
   };
 
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   system.stateVersion = "23.11";
 
