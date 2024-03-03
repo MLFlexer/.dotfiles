@@ -34,8 +34,5 @@ bindkey '^[[Z' reverse-menu-complete
 # atuin
 eval "$(atuin init zsh --disable-up-arrow)"
 
-# Add t to path (tmux session switcher script)
-export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
-
 # direnv
 eval "$(direnv hook zsh)"
