@@ -9,12 +9,6 @@ in
 {
   # Symlink files
   home.file = {
-    "alacritty" = {
-      enable = false;
-      source = "${config_sym_dir}/alacritty";
-      recursive = true;
-      target = ".config/alacritty";
-    };
     "bat" = {
       enable = true;
       source = "${config_sym_dir}/bat";
@@ -50,12 +44,6 @@ in
       source = "${config_sym_dir}/zsh";
       recursive = true;
       target = ".config/zsh";
-    };
-    "tmux" = {
-      enable = true;
-      source = "${config_sym_dir}/tmux";
-      recursive = true;
-      target = ".config/tmux";
     };
   };
 }

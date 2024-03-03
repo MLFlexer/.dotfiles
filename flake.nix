@@ -23,17 +23,17 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nix-index-database, ollama-pkgs, neovim-nightly, ... } @ inputs:
+  outputs = { ... } @ inputs:
     {
       nixosConfigurations = (
         import ./hosts {
-          inherit nixpkgs nixpkgs-unstable inputs;
+          inherit inputs;
         }
       );
 
       homeConfigurations = (
         import ./home-manager {
-          inherit nixpkgs nixpkgs-unstable home-manager nix-index-database ollama-pkgs neovim-nightly;
+          inherit inputs;
         }
       );
     };

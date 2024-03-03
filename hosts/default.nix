@@ -1,28 +1,27 @@
-{ nixpkgs, nixpkgs-unstable, inputs, ... }:
+{ inputs, ... }:
 
 let
   system = "x86_64-linux";
   user = "mlflexer";
 
-  pkgs = import nixpkgs {
+  pkgs = import inputs.nixpkgs {
     inherit system;
     config.allowUnfree = true;
   };
 
-  unstable = import nixpkgs-unstable {
+  unstable = import inputs.nixpkgs-unstable {
     inherit system;
     config.allowUnfree = true;
   };
 
-  lib = nixpkgs.lib;
+  lib = inputs.nixpkgs.lib;
 in
 {
   # Laptop profile
   laptop = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit pkgs unstable user;
-      inputs = inputs;
+      inherit pkgs unstable user inputs;
       host = {
         hostName = "laptop";
       };
