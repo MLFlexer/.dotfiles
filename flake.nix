@@ -7,10 +7,6 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
-    ollama-pkgs.url = "github:elohmeier/nixpkgs";
-
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";

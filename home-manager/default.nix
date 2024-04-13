@@ -4,14 +4,13 @@ let
   system = "x86_64-linux";
   pkgs = inputs.nixpkgs.legacyPackages.${system};
   pkgs_unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-  ollama_pkgs = inputs.ollama-pkgs.legacyPackages.${system};
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
 in
 {
   mlflexer = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
-    extraSpecialArgs = { inherit config_dir pkgs_unstable ollama_pkgs; };
+    extraSpecialArgs = { inherit config_dir pkgs_unstable; };
     modules = [
       inputs.nix-index-database.hmModules.nix-index # comma integration
       ./packages.nix

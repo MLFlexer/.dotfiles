@@ -1,6 +1,5 @@
 { pkgs
 , pkgs_unstable
-, ollama_pkgs
 , ...
 }:
 let
@@ -46,17 +45,16 @@ let
     act
     ffmpeg
     pandoc
-    # neovim-nightly
     hyperfine
   ];
 
   unstable = with pkgs_unstable; [
     yazi
-    ollama_pkgs.ollama
-    # (unstable.callPackage ./deravations/neovim_nightly.nix {unstable, })
+    ollama
     nodejs
     eza
     nixd
+    nixpkgs-fmt
   ];
 in
 {
