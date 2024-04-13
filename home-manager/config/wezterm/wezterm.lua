@@ -27,11 +27,11 @@ end
 local config = {
 	-- uncomment if on windows with wsl
 	-- default_domain = 'WSL:Ubuntu'
-	--
+
+	default_workspace = "~",
 	font = require("font").font,
 	font_rules = require("font").font_rules,
 
-	window_background_opacity = 0.9,
 	window_padding = {
 		left = 0,
 		right = 0,
