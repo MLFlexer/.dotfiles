@@ -12,7 +12,6 @@ map("v", "y", "may`a", { desc = "Yank visual selection" })
 map({ "n", "v", "o" }, "H", "^", { desc = "Go to start of line" })
 map({ "n", "v", "o" }, "L", "$", { desc = "Go to end of line" })
 
-
 -- function to toggle "normal" diagnostics or lsp-lines diagnostics.
 local function toggle_diagnostics()
   local diagnostics_on = require("lsp_lines").toggle()
@@ -55,3 +54,8 @@ map("n", "<C-h>", require("smart-splits").move_cursor_left)
 map("n", "<C-j>", require("smart-splits").move_cursor_down)
 map("n", "<C-k>", require("smart-splits").move_cursor_up)
 map("n", "<C-l>", require("smart-splits").move_cursor_right)
+
+map("n", "<C-M-h>", require("smart-splits").resize_left)
+map("n", "<C-M-j>", require("smart-splits").resize_down)
+map("n", "<C-M-k>", require("smart-splits").resize_up)
+map("n", "<C-M-l>", require("smart-splits").resize_right)
