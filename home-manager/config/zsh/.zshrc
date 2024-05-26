@@ -9,6 +9,9 @@ source $ALIASES_FILE
 # Autoload functions
 autoload -U $HOME/.config/zsh/functions/*
 
+# Wezterm Shell integration
+source "$ZDOTDIR/wezterm.sh"
+
 # Set p10k theme
 source $ZDOTDIR/.p10k.zsh
 POWERLEVEL9K_CONFIG_FILE="$ZDOTDIR/.p10k.zsh"
