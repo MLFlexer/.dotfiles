@@ -28,6 +28,9 @@ autoload -U compinit -d "$HOME"/.cache/zsh/zcompdump-"$ZSH_VERSION"
 zstyle ':completion:*' menu select
 _comp_options+=(globdots) # include hidden files
 
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors $LS_COLORS
+
 # Add shift-tab to reverse menu
 bindkey '^[[Z' reverse-menu-complete
 
