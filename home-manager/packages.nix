@@ -21,8 +21,7 @@ let
     # grex
     haskell-language-server
     lazygit
-    neovim
-    # nodejs_20
+    nodejs_20
     ntfy-sh
     # procs
     ripgrep
@@ -55,6 +54,9 @@ let
     eza
     nixd
     nixpkgs-fmt
+    helix
+    neovim
+    # asm-lsp
   ];
 in
 {

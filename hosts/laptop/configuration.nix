@@ -97,6 +97,7 @@
       unstable.vscode
       unstable.vscodium
       unstable.wezterm
+      lima
     ];
   };
 
@@ -106,6 +107,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
+    openssl
     # gnupg
     # obs-studio 
     # anki-bin
