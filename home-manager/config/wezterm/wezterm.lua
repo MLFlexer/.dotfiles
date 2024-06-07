@@ -112,7 +112,7 @@ end
 
 wezterm.on("gui-startup", function()
 	local _, _, window = mux.spawn_window({})
-	window:gui_window():maximize()
+	-- window:gui_window():maximize()
 end)
 
 return config

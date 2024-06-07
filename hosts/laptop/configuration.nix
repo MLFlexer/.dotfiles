@@ -84,7 +84,12 @@
     jack.enable = true;
   };
 
-  fonts.packages = with pkgs; [ monaspace ];
+  fonts.packages = with pkgs; [ 
+    monaspace
+    font-awesome
+    nerdfonts
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+  ];
   fonts.fontconfig.enable = true;
 
   users.users.${user} = {
@@ -126,13 +131,16 @@
     zip
     gnome.gnome-weather
     gnome.gnome-system-monitor
-    gnomeExtensions.gsconnect
     gnomeExtensions.openweather
     gnomeExtensions.vitals # system monitoring
-  ];
 
-  networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
-  networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
+    # hyprland
+    waybar
+    mako
+    hyprpaper
+    rofi-wayland
+    wl-clipboard
+  ];
 
   programs = {
     zsh.enable = true;
@@ -144,6 +152,8 @@
       enableSSHSupport = true;
       pinentryFlavor = "gnome3";
     };
+
+    hyprland.enable = true;
   };
 
   virtualisation.docker.enable = true;

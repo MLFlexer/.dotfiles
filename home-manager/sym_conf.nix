@@ -36,5 +36,20 @@ in
       recursive = true;
       target = ".config/zsh";
     };
+
+    "hypr" = {
+      enable = true;
+      source = "${config_sym_dir}/hypr";
+      recursive = true;
+      target = ".config/hypr";
+    };
+
+    "waybar" = {
+      enable = true;
+      source = "${config_sym_dir}/waybar";
+      recursive = true;
+      target = ".config/waybar";
+    };
+
   };
 }

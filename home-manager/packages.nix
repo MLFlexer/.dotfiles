@@ -31,7 +31,7 @@ let
     # sd
     tealdeer
     gnumake
-    xclip
+    # xclip
     # xsv
     yarn
     zig
