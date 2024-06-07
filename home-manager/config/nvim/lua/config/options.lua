@@ -6,6 +6,7 @@ local opt = vim.opt
 opt.scrolloff = 0
 opt.wrap = true -- enable text wrapping
 opt.mousescroll = "ver:1"
+opt.clipboard = "unnamedplus"
 
 vim.diagnostic.config({
   virtual_text = { spacing = 4, prefix = "●" },
