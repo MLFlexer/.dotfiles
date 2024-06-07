@@ -36,12 +36,13 @@
     desktopManager.gnome.enable = true;
 
     # Configure keymap in X11
-    layout = "dk";
-    xkbVariant = "";
-
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput.enable = true;
+    xkb = {
+      layout = "dk";
+      # xkbVariant = "";
+    };
   };
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.libinput.enable = true;
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-tour
@@ -49,7 +50,7 @@
     cheese # webcam tool
     gnome-music
     gnome-terminal
-    gedit # text editor
+    # gedit # text editor
     epiphany # web browser
     geary # email reader
     evince # document viewer
@@ -92,18 +93,14 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
+    packages = (with pkgs; [
       discord
-      unstable.vscode
-      unstable.vscodium
-      unstable.wezterm
       lima
-    ];
-  };
-
-  environment.variables = {
-    # fix for this curl issue with https requests: https://github.com/NixOS/nixpkgs/issues/148686
-    CURL_CA_BUNDLE = "/etc/pki/tls/certs/ca-bundle.crt"; # this is the value of $SSL_CERT_FILE ; may be brittle
+    ]) ++ (with unstable; [
+      vscode
+      vscodium
+      wezterm
+    ]);
   };
 
   environment.systemPackages = with pkgs; [
@@ -117,7 +114,7 @@
     firefox
     gcc
     okular # pdf reader
-    pinentry-gnome
+    # pinentry-gnome
     steam-run # to run unpatched binaies
     unzip
     vim
@@ -126,30 +123,25 @@
     zip
     gnome.gnome-weather
     gnome.gnome-system-monitor
-    gnomeExtensions.gsconnect
     gnomeExtensions.openweather
     gnomeExtensions.vitals # system monitoring
   ];
 
-  networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
-  networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # Open ports for GSConnect
-
   programs = {
     zsh.enable = true;
-    gpaste.enable = true; # clipboard manager
     nix-ld.enable = true; # run unpatched binaries
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryFlavor = "gnome3";
-    };
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    #   pinentryPackage = "gnome3";
+    # };
   };
 
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   nix = {
     package = pkgs.nixFlakes;
