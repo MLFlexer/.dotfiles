@@ -1,12 +1,14 @@
 { pkgs, unstable, user, ... }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./cachix.nix /etc/nixos/cachix.nix];
 
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+  # Emulate arm to cross compile raspberry pi 5
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "laptop_nixos";
   networking.networkmanager.enable = true;
@@ -104,9 +106,10 @@
   };
 
   environment.systemPackages = with pkgs; [
+    cachix
     (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
-    # gnupg
+    gnupg
     # obs-studio 
     # anki-bin
     cacert
@@ -131,11 +134,11 @@
     zsh.enable = true;
     nix-ld.enable = true; # run unpatched binaries
 
-    # gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    #   pinentryPackage = "gnome3";
-    # };
+              # gnupg.agent = {
+              #   enable = true;
+              #   enableSSHSupport = true;
+              #   pinentryPackage = "gnome3";
+              # };
   };
 
   virtualisation.docker.enable = true;

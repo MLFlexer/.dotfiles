@@ -36,5 +36,12 @@ in
       recursive = true;
       target = ".config/zsh";
     };
+
+    "nix" = {
+      enable = true;
+      source = "${config_sym_dir}/nix";
+      recursive = true;
+      target = ".config/nix";
+    };
   };
 }

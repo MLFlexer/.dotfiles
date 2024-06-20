@@ -158,29 +158,13 @@
         "type": "github"
       }
     },
-    "nixpkgs_23_11": {
-      "locked": {
-        "lastModified": 1718060059,
-        "narHash": "sha256-9XKFni8VMXo81RTq9XygCyaO3I/7UKpwIlM/yn0MdcM=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a3c8d64ba846725f040582b2d3b875466d2115bd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-23.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "raspberry-pi-nix": {
       "inputs": {
         "libcamera-apps-src": "libcamera-apps-src",
         "libcamera-src": "libcamera-src",
         "libpisp-src": "libpisp-src",
         "nixpkgs": [
-          "nixpkgs_23_11"
+          "nixpkgs"
         ],
         "rpi-bluez-firmware-src": "rpi-bluez-firmware-src",
         "rpi-firmware-nonfree-src": "rpi-firmware-nonfree-src",
@@ -210,7 +194,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixpkgs_23_11": "nixpkgs_23_11",
         "raspberry-pi-nix": "raspberry-pi-nix"
       }
     },

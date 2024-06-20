@@ -1,11 +1,27 @@
 {
   description = "Nix configuration flake for NixOS and Home-Manager";
 
+  # for raspberry pi
+  nixConfig = {
+    extra-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
+    extra-trusted-public-keys = [
+      "raspberry-pi-nix.cachix.org-1:WmV2rdSangxW0rZjY/tBvBDSaNFQ3DyEQsVw8EvHn9o="
+    ];
+  };
+
+
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
+    # for raspberry pi
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
+    # Should be changed with this: https://github.com/tstat/raspberry-pi-nix/issues/19
+    nixpkgs_23_11.url = "github:nixos/nixpkgs/nixos-23.11";
+    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs_23_11";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
