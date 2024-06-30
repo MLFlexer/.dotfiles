@@ -1,104 +1,87 @@
-{ pkgs, unstable, user, ... }:
+{ pkgs, ... }: 
+let
+  user = "mlflexer";
+in
 {
-  # imports = [ ./hardware-configuration.nix ];
-
-  # Bootloader.
-  # boot.loader = {
-  #   systemd-boot.enable = true;
-  #   efi.canTouchEfiVariables = true;
-  # };
-
-  # networking.hostName = "rpi5";
-  # networking.networkmanager.enable = true;
-  networking = {
-    useDHCP = true;
-    hostName = "rpi5";
-
-    interfaces = { wlan0.useDHCP = true; };
-      # TODO: remove
-    firewall.allowedTCPPorts = [ 8000 ];
-
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
-
-      # TODO: remove
-      networks = {
-
-      };
-    };
-  };
-
-
   time.timeZone = "Europe/Copenhagen";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-
   # Configure console keymap
   console.keyMap = "dk-latin1";
 
-  # hardware.bluetooth.enable = true;
-  hardware = {
-    # bluetooth.enable = true;
-
-    raspberry-pi.config.all.base-dt-params = {
-      # bluetooth
-      krnbt = {
+    users.users.root.initialPassword = "root";
+    networking = {
+      hostName = "rpi5";
+      useDHCP = true;
+      interfaces = { wlan0.useDHCP = true; };
+      wireless = {
         enable = true;
-        value = "on";
+        userControlled.enable = true;
+
+        networks = {
+        };
       };
     };
-  };
 
-  users.users.${user} = {
-    isNormalUser = true;
-    createHome = true;
-    description = "${user} user.";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;
-    # packages = (with pkgs; [
-    #     # stable
-    # ]) ++ (with unstable; [
-    #     # unstable
-    # ]);
-    # TODO: REMOVE THIS
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com" ];
-  };
+    virtualisation.docker.enable = true;
+    users.extraGroups.docker.members = [ "${user}" ];
 
-  users.groups = {
-    # raspberry needed
-    gpio = { };
-    i2c = { };
-    spi = { };
-  };
-
-  environment.systemPackages = with pkgs; [
-    vim
-  ];
-
-  programs = {
-    zsh.enable = true;
-  };
-
-  # virtualisation.docker.enable = true;
-  # users.extraGroups.docker.members = [ "${user}" ];
-
-  system.stateVersion = "24.05";
-
-  # TODO: wtf is this?
-  services.journald.extraConfig = ''
-    SystemMaxUse=2G
-  '';
-
-  nix = {
-    settings.auto-optimise-store = true;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+    users.users.${user} = {
+      initialPassword = "root";
+      isNormalUser = true;
+      createHome = true;
+      description = "${user} user.";
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      shell = pkgs.zsh;
+      packages = (with pkgs; [
+        blocky
+        minecraft-server
+        jdk
+        # stable
+      ]); #++ (with inputs.unstable; [
+      #     # unstable
+      # ]);
     };
-  };
-}
+
+    programs.zsh.enable = true;
+    services.openssh = {
+      enable = true;
+      settings.PasswordAuthentication = true;
+    };
+
+
+
+    networking.firewall.allowedTCPPorts = [ 22 443 8080 25565 ];
+
+    nix = {
+      settings.auto-optimise-store = true;
+      settings.experimental-features = [ "nix-command" "flakes" ];
+
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+    };
+    nixpkgs.config.allowUnfree = true;
+
+    environment.systemPackages = with pkgs; [ vim git bluez bluez-tools ];
+    system.stateVersion = "23.11";
+    hardware = {
+      bluetooth.enable = true;
+      raspberry-pi = {
+        config = {
+          all = {
+            base-dt-params = {
+              # enable autoprobing of bluetooth driver
+              # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
+              krnbt = {
+                enable = true;
+                value = "on";
+              };
+            };
+          };
+        };
+      };
+    };
+  }
