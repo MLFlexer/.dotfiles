@@ -85,34 +85,52 @@ local keys = {
 		}),
 	},
 	{
-		key = "m",
+		key = "b",
 		mods = "ALT",
 		action = wezterm.action.Multiple({
-			wezterm.action.ActivateKeyTable({
-				name = "UI",
-				one_shot = false,
-			}),
 			wezterm.action_callback(function(win, pane)
-				local conf = win:get_config_overrides()
-				if conf == nil then
-					conf = { hide_tab_bar_if_only_one_tab = true }
-				else
-					conf.hide_tab_bar_if_only_one_tab = not conf.hide_tab_bar_if_only_one_tab
-				end
+				-- wezterm.mux.write_session_state("/tmp/wezterm/session_state.json")
+				local workspace_switcher = wezterm.plugin.require_as_alias(
+					"https://github.com/MLFlexer/smart_workspace_switcher.wezterm/",
+					"some_alias"
+				)
 
-				win:set_config_overrides(conf)
+				wezterm.log_info(workspace_switcher.a)
+				-- local ws = require("some_alias.plugin.init")
+				-- wezterm.log_info(ws)
+				wezterm.log_info(require("some_alias"))
 			end),
 		}),
 	},
-	-- {
-	-- 	key = "m",
-	-- 	mods = "ALT",
-	-- 	action = act.Multiple({
-	-- 		wezterm.action_callback(function(win, pane)
-	-- 			pane:inject_output("\x1b]2;new_title\x1b\\")
-	-- 		end),
-	-- 	}),
-	-- },
+	{
+		key = "v",
+		mods = "ALT",
+		action = wezterm.action.Multiple({
+			wezterm.action_callback(function(win, pane)
+				wezterm.reload_configuration()
+			end),
+		}),
+	},
+	{
+		key = "m",
+		mods = "ALT",
+		action = wezterm.action.Multiple({
+			wezterm.action_callback(function(win, pane)
+				local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm/")
+				resurrect.fuzzy_load(win, pane, function(id, label)
+					id = string.match(id, "([^/]+)$")
+					id = string.match(id, "(.+)%..+$")
+					local state = resurrect.load_state(id, "workspace")
+					local workspace_state = require(resurrect.get_require_path() .. ".plugin.resurrect.workspace_state")
+					workspace_state.restore_workspace(state, {
+						relative = true,
+						restore_text = true,
+						on_pane_restore = (require(resurrect.get_require_path() .. ".plugin.resurrect.tab_state")).default_on_pane_restore,
+					})
+				end)
+			end),
+		}),
+	},
 	{ key = "L", mods = "CTRL|SHIFT|ALT", action = wezterm.action.ShowDebugOverlay },
 
 	{ key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },

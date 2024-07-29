@@ -19,6 +19,7 @@ in
       ./modules/configs/zsh.nix
       ./modules/configs/wezterm.nix
       ./modules/configs/nvim.nix
+      ./modules/configs/helix.nix
       {
         home = {
           username = "${user}";

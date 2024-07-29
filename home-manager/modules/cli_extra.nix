@@ -22,7 +22,6 @@
     xclip
     # xsv
 
-
     act
     ffmpeg
     pandoc
@@ -43,5 +42,7 @@
     nixd
     nixpkgs-fmt
     asm-lsp
+    lua-language-server
+    nil
   ]);
 }

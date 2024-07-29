@@ -1,6 +1,6 @@
 { pkgs, unstable, user, ... }:
 {
-  imports = [ ./hardware-configuration.nix ./cachix.nix /etc/nixos/cachix.nix];
+  imports = [ ./hardware-configuration.nix ]; #./cachix.nix];
 
   # Bootloader.
   boot.loader = {
