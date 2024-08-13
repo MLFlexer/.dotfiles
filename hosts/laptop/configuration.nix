@@ -134,11 +134,11 @@
     zsh.enable = true;
     nix-ld.enable = true; # run unpatched binaries
 
-              # gnupg.agent = {
-              #   enable = true;
-              #   enableSSHSupport = true;
-              #   pinentryPackage = "gnome3";
-              # };
+      gnupg.agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-gnome3;
+        enableSSHSupport = true;
+      };
   };
 
   virtualisation.docker.enable = true;
