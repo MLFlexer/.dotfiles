@@ -1,5 +1,6 @@
 alias v="nvim"
 alias ls="eza"
+alias cat="smart_cat"
 alias diff="difft"
 alias lg="lazygit"
 alias uhm="home-manager switch --flake /home/mlflexer/repos/.dotfiles/#mlflexer"

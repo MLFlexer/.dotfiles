@@ -2,15 +2,15 @@
 if [ -e /home/mlflexer/.nix-profile/etc/profile.d/nix.sh ]; then . /home/mlflexer/.nix-profile/etc/profile.d/nix.sh; fi
 NIX_PROFILE=$HOME/.nix-profile
 
-# Source aliases
-export ALIASES_FILE="$ZDOTDIR/.aliases"
-source $ALIASES_FILE
+# Wezterm Shell integration
+source "$ZDOTDIR/wezterm.sh"
 
 # Autoload functions
 autoload -U $HOME/.config/zsh/functions/*
 
-# Wezterm Shell integration
-source "$ZDOTDIR/wezterm.sh"
+# Source aliases
+export ALIASES_FILE="$ZDOTDIR/.aliases"
+source $ALIASES_FILE
 
 # Set p10k theme
 source $ZDOTDIR/.p10k.zsh
