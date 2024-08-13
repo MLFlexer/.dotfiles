@@ -1,8 +1,4 @@
-{ pkgs
-, pkgs_unstable
-, ...
-}:
-{
+{ pkgs, pkgs_unstable, ... }: {
   home.packages = (with pkgs; [
     # stable
     # broot

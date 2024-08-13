@@ -1,13 +1,6 @@
-
-{ config
-, config_dir
-, pkgs
-, ...
-}:
-let
-  config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
-in
-{
+{ config, config_dir, pkgs, ... }:
+let config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
+in {
   home.packages = with pkgs; [
     zsh
     zsh-autosuggestions

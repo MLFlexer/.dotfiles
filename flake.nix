@@ -9,7 +9,6 @@
     ];
   };
 
-
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -35,18 +34,9 @@
     };
   };
 
-  outputs = { ... } @ inputs:
-    {
-      nixosConfigurations = (
-        import ./hosts {
-          inherit inputs;
-        }
-      );
+  outputs = { ... }@inputs: {
+    nixosConfigurations = (import ./hosts { inherit inputs; });
 
-      homeConfigurations = (
-        import ./home-manager {
-          inherit inputs;
-        }
-      );
-    };
+    homeConfigurations = (import ./home-manager { inherit inputs; });
+  };
 }

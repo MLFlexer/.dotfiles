@@ -14,19 +14,13 @@ let
   };
 
   lib = inputs.nixpkgs.lib;
-in
-{
-  laptop = lib.nixosSystem {
-    inherit system;
-    specialArgs = {
-      inherit pkgs unstable user inputs;
-      host = {
-        hostName = "laptop";
-      };
-    };
-    modules = [
-      ./configuration.nix
-      ./hardware-configuration.nix
-    ];
+
+in lib.nixosSystem {
+  inherit system;
+  specialArgs = {
+    inherit pkgs unstable user inputs;
+    host = { hostName = "laptop"; };
   };
+  modules = [ ./configuration.nix ./hardware-configuration.nix ];
 }
+

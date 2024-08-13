@@ -1,6 +1,5 @@
-{ pkgs, unstable, user, ... }:
-{
-  imports = [ ./hardware-configuration.nix ]; #./cachix.nix];
+{ pkgs, unstable, user, ... }: {
+  imports = [ ./hardware-configuration.nix ]; # ./cachix.nix];
 
   # Bootloader.
   boot.loader = {
@@ -46,26 +45,25 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    cheese # webcam tool
-    gnome-music
-    gnome-terminal
-    # gedit # text editor
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-    gnome-contacts
-    simple-scan # document scanner
-    yelp # help client
-    gnome-maps
-  ]);
+  environment.gnome.excludePackages = (with pkgs; [ gnome-tour ])
+    ++ (with pkgs.gnome; [
+      cheese # webcam tool
+      gnome-music
+      gnome-terminal
+      # gedit # text editor
+      epiphany # web browser
+      geary # email reader
+      evince # document viewer
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+      gnome-contacts
+      simple-scan # document scanner
+      yelp # help client
+      gnome-maps
+    ]);
 
   # Configure console keymap
   console.keyMap = "dk-latin1";
@@ -95,14 +93,8 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [
-      discord
-      lima
-    ]) ++ (with unstable; [
-      vscode
-      vscodium
-      wezterm
-    ]);
+    packages = (with pkgs; [ discord lima ])
+      ++ (with unstable; [ vscode vscodium wezterm ]);
   };
 
   environment.systemPackages = with pkgs; [
@@ -134,11 +126,11 @@
     zsh.enable = true;
     nix-ld.enable = true; # run unpatched binaries
 
-      gnupg.agent = {
-        enable = true;
-        pinentryPackage = pkgs.pinentry-gnome3;
-        enableSSHSupport = true;
-      };
+    gnupg.agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-gnome3;
+      enableSSHSupport = true;
+    };
   };
 
   virtualisation.docker.enable = true;

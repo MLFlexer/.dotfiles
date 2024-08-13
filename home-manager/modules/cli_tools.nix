@@ -1,8 +1,4 @@
-{ pkgs
-, pkgs_unstable
-, ...
-}:
-{
+{ pkgs, pkgs_unstable, ... }: {
   home.packages = (with pkgs; [
     # stable
     age
@@ -16,8 +12,9 @@
     ripgrep
     ripgrep-all
     zoxide
-  ]) ++ (with pkgs_unstable; [
-    # unstable
-    yazi
-  ]);
+  ]) ++ (with pkgs_unstable;
+    [
+      # unstable
+      yazi
+    ]);
 }

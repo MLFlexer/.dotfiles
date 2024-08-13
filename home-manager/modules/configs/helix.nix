@@ -1,13 +1,8 @@
-{ config
-, config_dir
-, pkgs_unstable
-, ...
-}:
+{ config, config_dir, pkgs_unstable, ... }:
 let
   # path to config directory
   config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
-in
-{
+in {
   home.packages = with pkgs_unstable; [ helix ];
 
   # Symlink files
