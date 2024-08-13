@@ -48,10 +48,10 @@ sudo nixos-rebuild switch --flake $HOME/repos/.dotfiles#<host_name>
 ``` 
 ### Home-Manager
 ```bash
-home-manager switch --flake "$HOME/repos/.dotfiles/#mlflexer"
+home-manager switch --flake "$HOME/repos/.dotfiles/#laptop"
 ```
 If it does not work, then try the following:
 ```bash
-nix build $HOME/repos/.dotfiles/#homeConfigurations.mlflexer.activationPackage
+nix build $HOME/repos/.dotfiles/#homeConfigurations.laptop.activationPackage
 $HOME/repos/.dotfiles/result/activate
 ```
