@@ -64,20 +64,25 @@ wezterm.on("modal.exit", function(name, window, pane)
 	modal.reset_window_title(pane)
 end)
 
-local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm/")
-resurrect.init_directories()
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 resurrect.periodic_save()
+resurrect.set_encryption({
+	enable = true,
+	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
+	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
+})
+resurrect.set_max_nlines(20)
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
 workspace_switcher.apply_to_config(config)
-workspace_switcher.set_workspace_formatter(function(label)
+workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
 		{ Foreground = { Color = colors.colors.ansi[3] } },
 		{ Background = { Color = colors.colors.background } },
 		{ Text = "󱂬 : " .. label },
 	})
-end)
+end
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
 	window:gui_window():set_right_status(wezterm.format({
@@ -85,13 +90,13 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(windo
 		{ Foreground = { Color = colors.colors.ansi[5] } },
 		{ Text = basename(path) .. "  " },
 	}))
-	local workspace_state = require(resurrect.get_require_path() .. ".plugin.resurrect.workspace_state")
+	local workspace_state = resurrect.workspace_state
 
 	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
 		window = window,
 		relative = true,
 		restore_text = true,
-		on_pane_restore = (require(resurrect.get_require_path() .. ".plugin.resurrect.tab_state")).default_on_pane_restore,
+		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
 	})
 end)
 
@@ -104,7 +109,7 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window
 end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
-	local workspace_state = require(resurrect.get_require_path() .. ".plugin.resurrect.workspace_state")
+	local workspace_state = resurrect.workspace_state
 	resurrect.save_state(workspace_state.get_workspace_state())
 end)
 
@@ -135,8 +140,8 @@ end)
 -- 	table.insert(config.keys, value)
 -- end
 
-wezterm.on("gui-startup", function()
-	local _, _, window = mux.spawn_window({})
+wezterm.on("gui-startup", function(cmd)
+	local _, _, window = mux.spawn_window(cmd or {})
 	window:gui_window():maximize()
 end)
 

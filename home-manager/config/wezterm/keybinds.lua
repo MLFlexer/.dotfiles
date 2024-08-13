@@ -116,16 +116,16 @@ local keys = {
 		mods = "ALT",
 		action = wezterm.action.Multiple({
 			wezterm.action_callback(function(win, pane)
-				local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm/")
+				local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 				resurrect.fuzzy_load(win, pane, function(id, label)
 					id = string.match(id, "([^/]+)$")
 					id = string.match(id, "(.+)%..+$")
 					local state = resurrect.load_state(id, "workspace")
-					local workspace_state = require(resurrect.get_require_path() .. ".plugin.resurrect.workspace_state")
+					local workspace_state = resurrect.workspace_state
 					workspace_state.restore_workspace(state, {
 						relative = true,
 						restore_text = true,
-						on_pane_restore = (require(resurrect.get_require_path() .. ".plugin.resurrect.tab_state")).default_on_pane_restore,
+						on_pane_restore = resurrect.tab_state.default_on_pane_restore,
 					})
 				end)
 			end),
