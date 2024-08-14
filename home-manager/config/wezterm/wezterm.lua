@@ -135,10 +135,6 @@ wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
 	return zoomed .. index .. tab.active_pane.title
 end)
 
--- for _, value in ipairs(require("plugins.nvim_maximizer").keys) do
--- 	table.insert(config.keys, value)
--- end
-
 wezterm.on("gui-startup", function(cmd)
 	local _, _, window = mux.spawn_window(cmd or {})
 	window:gui_window():maximize()
