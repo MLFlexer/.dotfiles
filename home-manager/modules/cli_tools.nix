@@ -12,6 +12,7 @@
     ripgrep
     ripgrep-all
     zoxide
+    nixfmt
   ]) ++ (with pkgs_unstable;
     [
       # unstable
