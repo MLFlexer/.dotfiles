@@ -71,7 +71,6 @@ resurrect.set_encryption({
 	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
 	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
 })
-resurrect.set_max_nlines(20)
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
 workspace_switcher.apply_to_config(config)
