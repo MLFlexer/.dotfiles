@@ -14,7 +14,6 @@ touch $HOME/.config/nix/nix.conf
 curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/home-manager/config/nix/nix.conf -o $HOME/.config/nix/nix.conf
 
 echo Activating and installing home manager flake
-nix run $HOME/repos/.dotfiles/#homeConfigurations.mlflexer.activationPackage
-
-echo Installing tmux plugin manager
-git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm
+echo Please provide home-manager user
+read hm_user
+home-manager switch --flake "$HOME/repos/.dotfiles/#$hm_user"
