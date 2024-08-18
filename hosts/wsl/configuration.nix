@@ -19,9 +19,10 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [
-      # stable
-    ]); # ++ (with inputs.unstable; [
+    packages = (with pkgs;
+      [
+        # stable
+      ]); # ++ (with inputs.unstable; [
     #     # unstable
     # ]);
   };
