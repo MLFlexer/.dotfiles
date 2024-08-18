@@ -22,6 +22,9 @@
     nixpkgs_23_11.url = "github:nixos/nixpkgs/nixos-23.11";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs_23_11";
 
+	# for wsl
+	nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
