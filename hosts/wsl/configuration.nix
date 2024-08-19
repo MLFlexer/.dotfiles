@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 let user = "mlflexer";
 in {
   time.timeZone = "Europe/Copenhagen";
@@ -19,12 +19,7 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs;
-      [
-        # stable
-      ]); # ++ (with inputs.unstable; [
-    #     # unstable
-    # ]);
+    packages = (with pkgs; [ home-manager ]) ++ (with unstable; [ wezterm ]);
   };
 
   programs.zsh.enable = true;

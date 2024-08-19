@@ -93,7 +93,7 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ discord lima ])
+    packages = (with pkgs; [ home-manager discord lima ])
       ++ (with unstable; [ vscode vscodium wezterm ]);
   };
 
