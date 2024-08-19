@@ -61,3 +61,12 @@ nix flake update
 ```bash
 nix-collect-garbage --delete-older-than 7d
 ```
+
+## Building images and tarballs
+
+### WSL
+Checkout the [Building your own system tarball](https://nix-community.github.io/NixOS-WSL/building.html) for WSL.
+
+### Raspberry Pi 5
+Checkout the [Building an sd-card image](https://github.com/nix-community/raspberry-pi-nix?tab=readme-ov-file#building-an-sd-card-image) for Raspberry Pi 5.
+
