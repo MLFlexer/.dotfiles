@@ -32,6 +32,7 @@ in {
     shell = pkgs.zsh;
     packages = (with pkgs; [
       home-manager
+      btop
       blocky
       minecraft-server
       jdk

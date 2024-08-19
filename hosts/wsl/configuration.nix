@@ -19,7 +19,8 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager ]) ++ (with unstable; [ wezterm ]);
+    packages = (with pkgs; [ home-manager btop ])
+      ++ (with unstable; [ wezterm ]);
   };
 
   programs.zsh.enable = true;
