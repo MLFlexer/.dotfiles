@@ -34,13 +34,13 @@ in
       extraGroups = [ "networkmanager" "wheel" "docker" ];
       shell = pkgs.zsh;
       packages = (with pkgs; [
+        tmux
         blocky
-        minecraft-server
-        jdk
         # stable
       ]); #++ (with inputs.unstable; [
       #     # unstable
       # ]);
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com" ];
     };
 
     programs.zsh.enable = true;
@@ -48,10 +48,17 @@ in
       enable = true;
       settings.PasswordAuthentication = true;
     };
+    services.adguardhome = {
+      enable = true;
+      openFirewall = true;
+      allowDHCP = true;
+    };
 
-
-
-    networking.firewall.allowedTCPPorts = [ 22 443 8080 25565 ];
+    networking.firewall.allowedTCPPorts = [ 22 443 53 80 4221 5000 8000 8080 25565 6969 ];
+    networking.firewall.allowedUDPPortRanges = [
+      { from = 2456; to = 2457; } # Valheim
+      { from = 53; to = 53; } # adguard
+    ];
 
     nix = {
       settings.auto-optimise-store = true;
