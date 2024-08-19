@@ -32,23 +32,22 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [
+      home-manager
       tmux
       blocky
       btop
       # stable
-    ]); #++ (with inputs.unstable; [
-    #     # unstable
-    # ]);
+    ]); #++ (with unstable; []);
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com" ];
   };
 
   programs.zsh.enable = true;
+
   services.openssh = {
     enable = true;
-    userControlled.enable = true;
-
-    networks = { };
+    settings.PasswordAuthentication = true;
   };
+
   services.adguardhome = {
     enable = true;
     openFirewall = true;
