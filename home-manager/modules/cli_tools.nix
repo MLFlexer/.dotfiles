@@ -1,22 +1,21 @@
-{ pkgs
-, pkgs_unstable
-, ...
-}:
-{
+{ pkgs, pkgs_unstable, ... }: {
   home.packages = (with pkgs; [
     # stable
+    age
     atuin
     comma
+    eza
     fd
     fzf
     lazygit
+    python3
     ripgrep
     ripgrep-all
-    python3
     zoxide
-    eza
-  ]) ++ (with pkgs_unstable; [
-    # unstable
-    yazi
-  ]);
+    nixfmt
+  ]) ++ (with pkgs_unstable;
+    [
+      # unstable
+      yazi
+    ]);
 }

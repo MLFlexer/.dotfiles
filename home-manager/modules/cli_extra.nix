@@ -1,8 +1,4 @@
-{ pkgs
-, pkgs_unstable
-, ...
-}:
-{
+{ pkgs, pkgs_unstable, ... }: {
   home.packages = (with pkgs; [
     # stable
     # broot
@@ -21,7 +17,6 @@
     gnumake
     xclip
     # xsv
-
 
     act
     ffmpeg
@@ -43,5 +38,7 @@
     nixd
     nixpkgs-fmt
     asm-lsp
+    lua-language-server
+    nil
   ]);
 }

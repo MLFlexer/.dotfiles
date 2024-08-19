@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 function mal {
 	
 	# Check if the user has provided a help option or no arguments

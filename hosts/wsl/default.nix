@@ -19,8 +19,15 @@ in lib.nixosSystem {
   inherit system;
   specialArgs = {
     inherit pkgs unstable user inputs;
-    host = { hostName = "laptop"; };
+    host = { hostName = "wsl"; };
   };
-  modules = [ ./configuration.nix ./hardware-configuration.nix ];
+  modules = [
+    ./configuration.nix
+    inputs.nixos-wsl.nixosModules.default
+    {
+      system.stateVersion = "24.05";
+      wsl.enable = true;
+      wsl.defaultUser = user;
+    }
+  ];
 }
-

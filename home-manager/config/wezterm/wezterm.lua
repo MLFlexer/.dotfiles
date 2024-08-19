@@ -2,6 +2,8 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 wezterm.log_info("The config was reloaded for this window!")
 
+local is_windows = wezterm.target_triple == "x86_64-pc-windows-msvc"
+
 local function mergeTables(t1, t2)
 	for key, value in pairs(t2) do
 		t1[key] = value
@@ -13,9 +15,6 @@ local function basename(s)
 end
 
 local config = {
-	-- uncomment if on windows with wsl
-	-- default_domain = 'WSL:Ubuntu'
-
 	default_workspace = "~",
 	font = require("font").font,
 	font_rules = require("font").font_rules,
@@ -38,6 +37,17 @@ local config = {
 	status_update_interval = 1000,
 	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
+
+if is_windows then
+  config.wsl_domains = {
+    {
+      name = 'WSL:NixOS',
+      distribution = 'NixOS',
+      default_cwd = "/home/mlflexer",
+    },
+  }
+	config.default_domain = 'WSL:NixOS'
+end
 
 local colors = require("colors")
 mergeTables(config, colors)
@@ -64,23 +74,52 @@ wezterm.on("modal.exit", function(name, window, pane)
 	modal.reset_window_title(pane)
 end)
 
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+resurrect.periodic_save()
+resurrect.set_encryption({
+	enable = true,
+	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
+	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
+})
+
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
 workspace_switcher.apply_to_config(config)
-workspace_switcher.set_workspace_formatter(function(label)
+workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
 		{ Foreground = { Color = colors.colors.ansi[3] } },
 		{ Background = { Color = colors.colors.background } },
-		{ Text = "󱂬: " .. label },
+		{ Text = "󱂬 : " .. label },
 	})
-end)
+end
 
-wezterm.on("smart_workspace_switcher.workspace_chosen", function(window, path)
-	window:set_right_status(wezterm.format({
+wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
+	window:gui_window():set_right_status(wezterm.format({
 		{ Attribute = { Intensity = "Bold" } },
 		{ Foreground = { Color = colors.colors.ansi[5] } },
 		{ Text = basename(path) .. "  " },
 	}))
+	local workspace_state = resurrect.workspace_state
+
+	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
+		window = window,
+		relative = true,
+		restore_text = true,
+		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+	})
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
+	window:gui_window():set_right_status(wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Foreground = { Color = colors.colors.ansi[5] } },
+		{ Text = basename(path) .. "  " },
+	}))
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+	local workspace_state = resurrect.workspace_state
+	resurrect.save_state(workspace_state.get_workspace_state())
 end)
 
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
@@ -106,12 +145,8 @@ wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
 	return zoomed .. index .. tab.active_pane.title
 end)
 
-for _, value in ipairs(require("plugins.nvim_maximizer").keys) do
-	table.insert(config.keys, value)
-end
-
-wezterm.on("gui-startup", function()
-	local _, _, window = mux.spawn_window({})
+wezterm.on("gui-startup", function(cmd)
+	local _, _, window = mux.spawn_window(cmd or {})
 	window:gui_window():maximize()
 end)
 

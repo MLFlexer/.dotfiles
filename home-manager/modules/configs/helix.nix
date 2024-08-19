@@ -3,15 +3,15 @@ let
   # path to config directory
   config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
 in {
-  home.packages = with pkgs_unstable; [ neovim ];
+  home.packages = with pkgs_unstable; [ helix ];
 
   # Symlink files
   home.file = {
-    "nvim" = {
+    "helix" = {
       enable = true;
-      source = "${config_sym_dir}/nvim";
+      source = "${config_sym_dir}/helix";
       recursive = true;
-      target = ".config/nvim";
+      target = ".config/helix";
     };
   };
 }

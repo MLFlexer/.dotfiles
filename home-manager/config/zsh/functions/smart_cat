@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+
+smart_cat() {
+	# Function to check if a file is an image
+	is_image() {
+		# Supported image extensions
+		local supported_ext=("jpg" "jpeg" "png" "gif" "pdf" "bmp" "tiff" "icns")
+		local ext="${1##*.}" # get ext
+
+		# Iterate over supported extensions
+		for supported in "${supported_ext[@]}"; do
+			if [ "$ext" = "$supported" ]; then
+				return 0 # File is an image
+			fi
+		done
+		return 1 # File is not an image
+	}
+
+	# Check if a file is provided
+	if [ -z "$1" ]; then
+		echo "Usage: smart_cat FILE"
+		return 1
+	fi
+
+	local file="$1"
+
+	# Check if the file exists
+	if [ ! -e "$file" ]; then
+		echo "File '$file' does not exist."
+		return 1
+	fi
+
+	# Check if the file is an image and is using wezterm
+	if is_image "$file" && [ "$TERM_PROGRAM" = "WezTerm" ]; then
+		# Display the image using wezterm imgcat
+		wezterm imgcat "$file"
+	else
+		# Display the contents of the file using bat
+		bat "$file"
+	fi
+}

@@ -1,13 +1,8 @@
-{ config
-, config_dir
-, pkgs
-, ...
-}:
+{ config, config_dir, pkgs, ... }:
 let
   # path to config directory
   config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
-in
-{
+in {
   home.packages = with pkgs; [ wezterm ];
 
   # Symlink files
