@@ -2,6 +2,8 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 wezterm.log_info("The config was reloaded for this window!")
 
+local is_windows = wezterm.target_triple == "x86_64-pc-windows-msvc"
+
 local function mergeTables(t1, t2)
 	for key, value in pairs(t2) do
 		t1[key] = value
@@ -13,9 +15,6 @@ local function basename(s)
 end
 
 local config = {
-	-- uncomment if on windows with wsl
-	-- default_domain = 'WSL:Ubuntu'
-
 	default_workspace = "~",
 	font = require("font").font,
 	font_rules = require("font").font_rules,
@@ -38,6 +37,17 @@ local config = {
 	status_update_interval = 1000,
 	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 }
+
+if is_windows then
+  config.wsl_domains = {
+    {
+      name = 'WSL:NixOS',
+      distribution = 'NixOS',
+      default_cwd = "/home/mlflexer",
+    },
+  }
+	config.default_domain = 'WSL:NixOS'
+end
 
 local colors = require("colors")
 mergeTables(config, colors)
