@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-let user = "mlflexer";
-in {
+{ pkgs, unstable, user, raspberry-pi-nix, ... }:
+{
   time.timeZone = "Europe/Copenhagen";
   # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
@@ -16,7 +15,8 @@ in {
       enable = true;
       userControlled.enable = true;
 
-      networks = { };
+      networks = {
+      };
     };
   };
 
@@ -32,23 +32,32 @@ in {
     shell = pkgs.zsh;
     packages = (with pkgs; [
       home-manager
-      btop
+      tmux
       blocky
-      minecraft-server
-      jdk
+      btop
       # stable
-    ]); # ++ (with unstable; [
-    #     # unstable
-    # ]);
+    ]); #++ (with unstable; []);
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com" ];
   };
 
   programs.zsh.enable = true;
+
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = true;
   };
 
-  networking.firewall.allowedTCPPorts = [ 22 443 8080 25565 ];
+  services.adguardhome = {
+    enable = true;
+    openFirewall = true;
+    allowDHCP = true;
+  };
+
+  networking.firewall.allowedTCPPorts = [ 22 443 53 80 4221 5000 8000 8080 25565 6969 ];
+  networking.firewall.allowedUDPPortRanges = [
+    { from = 2456; to = 2457; } # Valheim
+    { from = 53; to = 53; } # adguard
+  ];
 
   nix = {
     settings.auto-optimise-store = true;
@@ -63,7 +72,8 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [ vim git bluez bluez-tools ];
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
+  raspberry-pi-nix.board = "bcm2712";
   hardware = {
     bluetooth.enable = true;
     raspberry-pi = {
