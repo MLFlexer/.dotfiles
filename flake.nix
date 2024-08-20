@@ -22,8 +22,6 @@
     # for raspberry pi
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
-    # Should be changed with this: https://github.com/tstat/raspberry-pi-nix/issues/19
-    # nixpkgs_23_11.url = "github:nixos/nixpkgs/nixos-23.11";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # for wsl
