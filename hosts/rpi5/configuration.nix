@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-let user = "mlflexer";
-in {
+{ pkgs, unstable, user, raspberry-pi-nix, ... }:
+{
   time.timeZone = "Europe/Copenhagen";
   # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
@@ -73,7 +72,8 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [ vim git bluez bluez-tools ];
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
+  raspberry-pi-nix.board = "bcm2712";
   hardware = {
     bluetooth.enable = true;
     raspberry-pi = {

@@ -3,10 +3,14 @@
 
   # for raspberry pi
   nixConfig = {
-    extra-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
-    extra-trusted-public-keys = [
-      "raspberry-pi-nix.cachix.org-1:WmV2rdSangxW0rZjY/tBvBDSaNFQ3DyEQsVw8EvHn9o="
+    substituters = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
     ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    trusted-users = ["root" "mlflexer"];
   };
 
   inputs = {
@@ -19,8 +23,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
     # Should be changed with this: https://github.com/tstat/raspberry-pi-nix/issues/19
-    nixpkgs_23_11.url = "github:nixos/nixpkgs/nixos-23.11";
-    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs_23_11";
+    # nixpkgs_23_11.url = "github:nixos/nixpkgs/nixos-23.11";
+    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # for wsl
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
