@@ -39,14 +39,14 @@ local config = {
 }
 
 if is_windows then
-  config.wsl_domains = {
-    {
-      name = 'WSL:NixOS',
-      distribution = 'NixOS',
-      default_cwd = "/home/mlflexer",
-    },
-  }
-	config.default_domain = 'WSL:NixOS'
+	config.wsl_domains = {
+		{
+			name = "WSL:NixOS",
+			distribution = "NixOS",
+			default_cwd = "/home/mlflexer",
+		},
+	}
+	config.default_domain = "WSL:NixOS"
 end
 
 local colors = require("colors")
@@ -82,7 +82,7 @@ resurrect.set_encryption({
 	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
 })
 
-local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm/")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
