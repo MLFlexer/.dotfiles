@@ -16,6 +16,13 @@ smart_cat() {
 		return 1 # File is not an image
 	}
 
+  # Check if input is from stdin
+	if [ -p /dev/stdin ]; then
+		# Handle stdin input
+    bat
+		return $?
+	fi
+
 	# Check if a file is provided
 	if [ -z "$1" ]; then
 		echo "Usage: smart_cat FILE"
