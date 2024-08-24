@@ -7,6 +7,7 @@
     eza
     fd
     fzf
+    lazydocker
     lazygit
     python3
     ripgrep
