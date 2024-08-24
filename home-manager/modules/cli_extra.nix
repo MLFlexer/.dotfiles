@@ -22,6 +22,7 @@
     ffmpeg
     pandoc
     hyperfine
+    texliveMedium
   ]) ++ (with pkgs_unstable; [
     # unstable
     ollama
