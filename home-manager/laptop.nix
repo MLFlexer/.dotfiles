@@ -1,8 +1,16 @@
 { inputs, ... }:
 let
   system = "x86_64-linux";
-  pkgs = inputs.nixpkgs.legacyPackages.${system};
-  pkgs_unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+  # pkgs = inputs.nixpkgs.legacyPackages.${system};
+  # pkgs_unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+  pkgs = import inputs.nixpkgs {
+    system = "${system}";
+    config = { allowUnfree = true; };
+  };
+  pkgs_unstable = import inputs.nixpkgs-unstable {
+    system = "${system}";
+    config = { allowUnfree = true; };
+  };
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
 
@@ -26,9 +34,13 @@ in inputs.home-manager.lib.homeManagerConfiguration {
         stateVersion = "24.05";
       };
 
+      programs.home-manager.enable = true;
       nixpkgs.config.allowUnfree = true;
 
-      programs.home-manager.enable = true;
+      programs.git = {
+        enable = true;
+        lfs.enable = true;
+      };
 
       programs = {
         direnv = {
