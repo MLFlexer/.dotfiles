@@ -25,24 +25,25 @@ smart_cat() {
 
 	# Check if a file is provided
 	if [ -z "$1" ]; then
-		echo "Usage: smart_cat FILE"
+		echo "Usage: smart_cat FILE [FILE...]"
 		return 1
 	fi
 
-	local file="$1"
+  for file in "$@"; do
+    # Check if the file exists
+    if [ ! -e "$file" ]; then
+      echo "File '$file' does not exist."
+      return 1
+    fi
 
-	# Check if the file exists
-	if [ ! -e "$file" ]; then
-		echo "File '$file' does not exist."
-		return 1
-	fi
-
-	# Check if the file is an image and is using wezterm
-	if is_image "$file" && [ "$TERM_PROGRAM" = "WezTerm" ]; then
-		# Display the image using wezterm imgcat
-		wezterm imgcat "$file"
-	else
-		# Display the contents of the file using bat
-		bat "$file"
-	fi
+    # Check if the file is an image and is using wezterm
+    if is_image "$file" && [ "$TERM_PROGRAM" = "WezTerm" ]; then
+      echo $file
+      # Display the image using wezterm imgcat
+      wezterm imgcat "$file"
+    else
+      # Display the contents of the file using bat
+      bat "$file"
+    fi
+  done
 }
