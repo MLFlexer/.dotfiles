@@ -34,6 +34,12 @@ zstyle ':completion:*' list-colors $LS_COLORS
 # Add shift-tab to reverse menu
 bindkey '^[[Z' reverse-menu-complete
 
+bindkey '^H' backward-kill-word
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # Initialize zoxide
 eval "$(zoxide init zsh)"
 

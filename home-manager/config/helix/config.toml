@@ -11,3 +11,7 @@ bufferline = "multiple"
 insert = "bar"
 normal = "block"
 select = "underline"
+
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "error"
