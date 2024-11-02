@@ -21,6 +21,10 @@ in lib.nixosSystem {
     inherit pkgs unstable user inputs;
     host = { hostName = "laptop"; };
   };
-  modules = [ ./configuration.nix ./hardware-configuration.nix ];
+  modules = [ 
+      ./configuration.nix 
+      ./hardware-configuration.nix
+      ./modules/kanata/default.nix
+    ];
 }
 
