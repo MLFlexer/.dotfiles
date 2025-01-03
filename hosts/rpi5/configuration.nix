@@ -47,12 +47,6 @@
     settings.PasswordAuthentication = true;
   };
 
-  services.adguardhome = {
-    enable = true;
-    openFirewall = true;
-    allowDHCP = true;
-  };
-
   networking.firewall.allowedTCPPorts = [ 22 443 53 80 4221 5000 8000 8080 25565 6969 ];
   networking.firewall.allowedUDPPortRanges = [
     { from = 2456; to = 2457; } # Valheim

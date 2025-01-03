@@ -19,6 +19,11 @@ in lib.nixosSystem {
     inherit unstable user raspberry-pi-nix;
   };
   modules =
-    [ raspberry-pi-nix.nixosModules.raspberry-pi ./configuration.nix ];
+    [ 
+    raspberry-pi-nix.nixosModules.raspberry-pi 
+    ./configuration.nix
+    ./modules/adguard.nix
+    ./modules/searxng.nix
+    ];
 }
 
