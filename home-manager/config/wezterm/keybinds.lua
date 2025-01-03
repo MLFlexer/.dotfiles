@@ -1,8 +1,19 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-local modal = wezterm.plugin.require("https://github.com/MLFlexer/modal.wezterm")
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 local keys = {
+	{
+		key = "s",
+		mods = "LEADER",
+		action = workspace_switcher.switch_workspace(),
+	},
+	{
+		key = "S",
+		mods = "LEADER",
+		action = workspace_switcher.switch_to_prev_workspace(),
+	},
 	{
 		key = "g",
 		mods = "ALT",
@@ -85,51 +96,92 @@ local keys = {
 		}),
 	},
 	{
+		key = "y",
+		mods = "CTRL",
+		action = wezterm.action.AttachDomain("local"),
+	},
+	{
+		key = "Y",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.DetachDomain("CurrentPaneDomain"),
+	},
+	{
 		key = "b",
 		mods = "ALT",
-		action = wezterm.action.Multiple({
-			wezterm.action_callback(function(win, pane)
-				-- wezterm.mux.write_session_state("/tmp/wezterm/session_state.json")
-				local workspace_switcher = wezterm.plugin.require_as_alias(
-					"https://github.com/MLFlexer/smart_workspace_switcher.wezterm/",
-					"some_alias"
-				)
-
-				wezterm.log_info(workspace_switcher.a)
-				-- local ws = require("some_alias.plugin.init")
-				-- wezterm.log_info(ws)
-				wezterm.log_info(require("some_alias"))
-			end),
-		}),
+		action = resurrect.tab_state.save_tab_action(), --wezterm.action_callback(function(win, pane)
+		-- local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+		-- resurrect.window_state.save_window_action(),
+		-- wezterm.log_info(pane:get_foreground_process_info())
+		-- wezterm.log_info(pane:get_lines_as_text())
+		-- wezterm.reload_configuration()
+		-- end),
 	},
 	{
 		key = "v",
 		mods = "ALT",
 		action = wezterm.action.Multiple({
 			wezterm.action_callback(function(win, pane)
-				wezterm.reload_configuration()
+				pane:tab():set_title("SET FROM ALT V")
+				wezterm.log_info(pane:get_foreground_process_info())
+				wezterm.log_info(pane:get_lines_as_text())
+				-- wezterm.reload_configuration()
 			end),
 		}),
 	},
+	-- {
+	-- 	key = "l",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action_callback(function(win, pane)
+	-- 		local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+	-- 		resurrect.fuzzy_load(win, pane, function(id, label)
+	-- 			local type = string.match(id, "^([^/]+)") -- match before '/'
+	-- 			id = string.match(id, "([^/]+)$") -- match after '/'
+	-- 			id = string.match(id, "(.+)%..+$") -- remove file extention
+	-- 			local state
+	-- 			if type == "workspace" then
+	-- 				state = resurrect.load_state(id, "workspace")
+	-- 				resurrect.workspace_state.restore_workspace(state, {
+	-- 					relative = true,
+	-- 					restore_text = true,
+	-- 					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+	-- 				})
+	-- 			elseif type == "window" then
+	-- 				state = resurrect.load_state(id, "window")
+	-- 				resurrect.window_state.restore_window(win:mux_window(), state, {
+	-- 					relative = true,
+	-- 					restore_text = true,
+	-- 					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+	-- 					-- tab = win:active_tab(), -- uncomment this line to replace active tab
+	-- 				})
+	-- 			end
+	-- 		end)
+	-- 	end),
+	-- },
 	{
-		key = "m",
+		key = "r",
 		mods = "ALT",
-		action = wezterm.action.Multiple({
-			wezterm.action_callback(function(win, pane)
-				local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-				resurrect.fuzzy_load(win, pane, function(id, label)
-					id = string.match(id, "([^/]+)$")
-					id = string.match(id, "(.+)%..+$")
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.fuzzy_load(win, pane, function(id, label)
+				local type = string.match(id, "^([^/]+)") -- match before '/'
+				id = string.match(id, "([^/]+)$") -- match after '/'
+				id = string.match(id, "(.+)%..+$") -- remove file extention
+				local opts = {
+					relative = true,
+					restore_text = true,
+					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+				}
+				if type == "workspace" then
 					local state = resurrect.load_state(id, "workspace")
-					local workspace_state = resurrect.workspace_state
-					workspace_state.restore_workspace(state, {
-						relative = true,
-						restore_text = true,
-						on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-					})
-				end)
-			end),
-		}),
+					resurrect.workspace_state.restore_workspace(state, opts)
+				elseif type == "window" then
+					local state = resurrect.load_state(id, "window")
+					resurrect.window_state.restore_window(pane:window(), state, opts)
+				elseif type == "tab" then
+					local state = resurrect.load_state(id, "tab")
+					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+				end
+			end)
+		end),
 	},
 	{ key = "L", mods = "CTRL|SHIFT|ALT", action = wezterm.action.ShowDebugOverlay },
 

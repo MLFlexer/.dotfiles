@@ -18,6 +18,7 @@ local config = {
 	default_workspace = "~",
 	font = require("font").font,
 	font_rules = require("font").font_rules,
+	warn_about_missing_glyphs = false,
 
 	window_padding = {
 		left = 0,
@@ -36,6 +37,10 @@ local config = {
 
 	status_update_interval = 1000,
 	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
+
+	max_fps = 120,
+	front_end = "WebGpu",
+	webgpu_power_preference = "HighPerformance",
 }
 
 if is_windows then
@@ -48,6 +53,30 @@ if is_windows then
 	}
 	config.default_domain = "WSL:NixOS"
 end
+
+config.ssh_domains = {
+	{
+		name = "rpi5",
+		remote_address = "192.168.0.42",
+		username = "mlflexer",
+	},
+}
+
+config.exec_domains = {
+	wezterm.exec_domain("rpi5_exec", function(cmd)
+		cmd.args = { "ssh", "mlflexer@192.168.0.42" }
+		return cmd
+	end),
+}
+
+-- for host, ssh_config in pairs(wezterm.enumerate_ssh_hosts()) do
+-- 	table.insert(config.ssh_domains, {
+-- 		name = host,
+-- 		remote_address = host,
+-- 		multiplexing = "None",
+-- 		assume_shell = "Posix",
+-- 	})
+-- end
 
 local colors = require("colors")
 mergeTables(config, colors)
@@ -75,15 +104,21 @@ wezterm.on("modal.exit", function(name, window, pane)
 end)
 
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-resurrect.periodic_save()
+resurrect.periodic_save({ interval_seconds = 15 * 60, save_workspaces = true, save_windows = true, save_tabs = true })
+
 resurrect.set_encryption({
 	enable = true,
 	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
 	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
 })
 
+wezterm.on("resurrect.error", function(err)
+	wezterm.log_error("ERROR!")
+	wezterm.gui.gui_windows()[1]:toast_notification("resurrect", err, nil, 3000)
+end)
+
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-workspace_switcher.apply_to_config(config)
+-- workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
@@ -110,6 +145,7 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(windo
 end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
+	wezterm.log_info(window)
 	window:gui_window():set_right_status(wezterm.format({
 		{ Attribute = { Intensity = "Bold" } },
 		{ Foreground = { Color = colors.colors.ansi[5] } },
@@ -118,8 +154,17 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window
 end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+	wezterm.log_info(window)
 	local workspace_state = resurrect.workspace_state
 	resurrect.save_state(workspace_state.get_workspace_state())
+	resurrect.write_current_state(label, "workspace")
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.start", function(window, _)
+	wezterm.log_info(window)
+end)
+wezterm.on("smart_workspace_switcher.workspace_switcher.canceled", function(window, _)
+	wezterm.log_info(window)
 end)
 
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
@@ -128,6 +173,64 @@ smart_splits.apply_to_config(config, {
 	modifiers = {
 		move = "CTRL",
 		resize = "ALT",
+	},
+})
+
+-- local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+-- config.use_fancy_tab_bar = false
+-- tabline.setup({
+-- 	sections = {
+-- 		tabline_a = {
+-- 			"mode",
+-- 			"battery",
+-- 			"cpu",
+-- 			"ram",
+-- 			"datetime",
+-- 			"hostname",
+-- 			"window",
+-- 			"workspace",
+-- 		},
+-- 		tabline_b = {},
+-- 		tabline_c = {},
+-- 		tab_active = {},
+-- 		tab_inactive = {},
+-- 		tabline_x = {},
+-- 		tabline_y = {},
+-- 		tabline_z = {},
+-- 	},
+-- 	extensions = {
+-- 		"resurrect",
+-- 		"smart_workspace_switcher",
+-- 	},
+-- })
+--
+
+local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
+domains.apply_to_config(config, {
+	keys = {
+		attach = {
+			key = "t",
+			mods = "ALT|SHIFT",
+			tbl = "",
+		},
+		vsplit = {
+			key = "_",
+			mods = "CTRL|ALT",
+			tbl = "",
+		},
+		hsplit = {
+			key = "-",
+			mods = "CTRL|ALT",
+			tbl = "",
+		},
+	},
+	auto = {
+		ssh_ignore = true,
+		exec_ignore = {
+			ssh = true,
+			docker = true,
+			kubernetes = true,
+		},
 	},
 })
 
@@ -145,9 +248,6 @@ wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
 	return zoomed .. index .. tab.active_pane.title
 end)
 
-wezterm.on("gui-startup", function(cmd)
-	local _, _, window = mux.spawn_window(cmd or {})
-	window:gui_window():maximize()
-end)
+wezterm.on("gui-startup", resurrect.resurrect_on_gui_startup)
 
 return config
