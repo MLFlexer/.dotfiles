@@ -108,55 +108,8 @@ local keys = {
 	{
 		key = "b",
 		mods = "ALT",
-		action = resurrect.tab_state.save_tab_action(), --wezterm.action_callback(function(win, pane)
-		-- local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-		-- resurrect.window_state.save_window_action(),
-		-- wezterm.log_info(pane:get_foreground_process_info())
-		-- wezterm.log_info(pane:get_lines_as_text())
-		-- wezterm.reload_configuration()
-		-- end),
+		action = resurrect.tab_state.save_tab_action(),
 	},
-	{
-		key = "v",
-		mods = "ALT",
-		action = wezterm.action.Multiple({
-			wezterm.action_callback(function(win, pane)
-				pane:tab():set_title("SET FROM ALT V")
-				wezterm.log_info(pane:get_foreground_process_info())
-				wezterm.log_info(pane:get_lines_as_text())
-				-- wezterm.reload_configuration()
-			end),
-		}),
-	},
-	-- {
-	-- 	key = "l",
-	-- 	mods = "ALT",
-	-- 	action = wezterm.action_callback(function(win, pane)
-	-- 		local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-	-- 		resurrect.fuzzy_load(win, pane, function(id, label)
-	-- 			local type = string.match(id, "^([^/]+)") -- match before '/'
-	-- 			id = string.match(id, "([^/]+)$") -- match after '/'
-	-- 			id = string.match(id, "(.+)%..+$") -- remove file extention
-	-- 			local state
-	-- 			if type == "workspace" then
-	-- 				state = resurrect.load_state(id, "workspace")
-	-- 				resurrect.workspace_state.restore_workspace(state, {
-	-- 					relative = true,
-	-- 					restore_text = true,
-	-- 					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-	-- 				})
-	-- 			elseif type == "window" then
-	-- 				state = resurrect.load_state(id, "window")
-	-- 				resurrect.window_state.restore_window(win:mux_window(), state, {
-	-- 					relative = true,
-	-- 					restore_text = true,
-	-- 					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-	-- 					-- tab = win:active_tab(), -- uncomment this line to replace active tab
-	-- 				})
-	-- 			end
-	-- 		end)
-	-- 	end),
-	-- },
 	{
 		key = "r",
 		mods = "ALT",

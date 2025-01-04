@@ -69,15 +69,6 @@ config.exec_domains = {
 	end),
 }
 
--- for host, ssh_config in pairs(wezterm.enumerate_ssh_hosts()) do
--- 	table.insert(config.ssh_domains, {
--- 		name = host,
--- 		remote_address = host,
--- 		multiplexing = "None",
--- 		assume_shell = "Posix",
--- 	})
--- end
-
 local colors = require("colors")
 mergeTables(config, colors)
 
@@ -118,7 +109,6 @@ wezterm.on("resurrect.error", function(err)
 end)
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
--- workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
@@ -175,35 +165,6 @@ smart_splits.apply_to_config(config, {
 		resize = "ALT",
 	},
 })
-
--- local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
--- config.use_fancy_tab_bar = false
--- tabline.setup({
--- 	sections = {
--- 		tabline_a = {
--- 			"mode",
--- 			"battery",
--- 			"cpu",
--- 			"ram",
--- 			"datetime",
--- 			"hostname",
--- 			"window",
--- 			"workspace",
--- 		},
--- 		tabline_b = {},
--- 		tabline_c = {},
--- 		tab_active = {},
--- 		tab_inactive = {},
--- 		tabline_x = {},
--- 		tabline_y = {},
--- 		tabline_z = {},
--- 	},
--- 	extensions = {
--- 		"resurrect",
--- 		"smart_workspace_switcher",
--- 	},
--- })
---
 
 local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
 domains.apply_to_config(config, {
