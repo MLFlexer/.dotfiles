@@ -14,3 +14,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<leader>o", "<Plug>MarkdownPreview", { desc = "Markdown preview", buffer = 0 })
   end,
 })
+
+vim.filetype.add({ extension = { fut = "futhark" } })
