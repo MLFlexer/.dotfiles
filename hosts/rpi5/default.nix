@@ -24,6 +24,8 @@ in lib.nixosSystem {
     ./configuration.nix
     ./modules/adguard.nix
     ./modules/searxng.nix
+    ./modules/home-assistant.nix
+    ./modules/traefik/traefik.nix
     ];
 }
 
