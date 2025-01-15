@@ -22,12 +22,15 @@ in lib.nixosSystem {
     host = { hostName = "wsl"; };
   };
   modules = [
-    ./configuration.nix
-    inputs.nixos-wsl.nixosModules.default
     {
+      wsl.useWindowsDriver = true;
       system.stateVersion = "24.05";
       wsl.enable = true;
       wsl.defaultUser = user;
+      hardware.opengl.setLdLibraryPath = true;
+      hardware.nvidia-container-toolkit.enable = true;
     }
+    ./configuration.nix
+    inputs.nixos-wsl.nixosModules.default
   ];
 }
