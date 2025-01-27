@@ -52,8 +52,16 @@ home-manager switch --flake $HOME/repos/.dotfiles/#<user>
 
 ### Flake lock
 
+Updating all inputs:
+
 ```bash
 nix flake update
+```
+
+Updating specific input:
+
+```sh
+nix flake lock --update-input nixpkgs-unstable
 ```
 
 ## Cleaning
