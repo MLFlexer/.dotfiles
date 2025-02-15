@@ -22,6 +22,8 @@
     raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
     # for wsl
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
