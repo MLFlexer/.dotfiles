@@ -95,9 +95,9 @@ wezterm.on("modal.exit", function(name, window, pane)
 end)
 
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-resurrect.periodic_save({ interval_seconds = 15 * 60, save_workspaces = true, save_windows = true, save_tabs = true })
+resurrect.state_manager.periodic_save({ interval_seconds = 15 * 60, save_workspaces = true, save_windows = true, save_tabs = true })
 
-resurrect.set_encryption({
+resurrect.state_manager.set_encryption({
 	enable = true,
 	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
 	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
@@ -109,6 +109,8 @@ wezterm.on("resurrect.error", function(err)
 end)
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+workspace_switcher.apply_to_config({})
+
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
@@ -126,10 +128,12 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(windo
 	}))
 	local workspace_state = resurrect.workspace_state
 
-	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
+	workspace_state.restore_workspace(resurrect.state_manager.load_state(label, "workspace"), {
 		window = window,
 		relative = true,
 		restore_text = true,
+
+		resize_window = false,
 		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
 	})
 end)
@@ -146,8 +150,8 @@ end)
 wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
 	wezterm.log_info(window)
 	local workspace_state = resurrect.workspace_state
-	resurrect.save_state(workspace_state.get_workspace_state())
-	resurrect.write_current_state(label, "workspace")
+	resurrect.state_manager.save_state(workspace_state.get_workspace_state())
+	resurrect.state_manager.write_current_state(label, "workspace")
 end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.start", function(window, _)
@@ -209,6 +213,6 @@ wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
 	return zoomed .. index .. tab.active_pane.title
 end)
 
-wezterm.on("gui-startup", resurrect.resurrect_on_gui_startup)
+wezterm.on("gui-startup", resurrect.state_manager.resurrect_on_gui_startup)
 
 return config
