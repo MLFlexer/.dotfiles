@@ -1,4 +1,4 @@
-{ pkgs, unstable, user, ... }: {
+{ pkgs, unstable, user, inputs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
@@ -7,9 +7,9 @@
     efi.canTouchEfiVariables = true;
   };
   # Emulate arm to cross compile raspberry pi 5
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  networking.hostName = "laptop_nixos";
+  networking.hostName = "desktop_nixos";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
@@ -46,7 +46,7 @@
   services.libinput.enable = true;
 
   environment.gnome.excludePackages = (with pkgs; [ gnome-tour ])
-    ++ (with pkgs.gnome; [
+    ++ (with pkgs; [
       cheese # webcam tool
       gnome-music
       gnome-terminal
@@ -74,7 +74,7 @@
   hardware.bluetooth.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -116,11 +116,27 @@
     vlc
     wget
     zip
-    gnome.gnome-weather
-    gnome.gnome-system-monitor
-    gnomeExtensions.openweather
-    gnomeExtensions.vitals # system monitoring
+    gnome-weather
+    gnome-system-monitor
+    # gnomeExtensions.openweather
+    # gnomeExtensions.vitals # system monitoring
+    inputs.zen-browser.packages."x86_64-linux".default
+
+    # for gaming
+    protonup # NOTE: remember to run protonup when installing imperatively, see nixos gaming video from vimjoyer.
   ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "/home/${user}/.steam/root/compatibilitytools.d";
+
+  };
+
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
+  programs.gamemode.enable = true;
 
   programs = {
     zsh.enable = true;
@@ -136,10 +152,10 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
   };
 }
