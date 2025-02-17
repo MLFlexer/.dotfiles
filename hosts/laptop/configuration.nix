@@ -137,7 +137,7 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 
   nix = {
     package = pkgs.nixFlakes;

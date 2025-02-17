@@ -44,7 +44,6 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [ vim git ];
-  system.stateVersion = "24.05";
 
   hardware.opengl = { enable = true; };
   hardware.nvidia = {
