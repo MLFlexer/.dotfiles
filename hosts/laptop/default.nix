@@ -21,10 +21,24 @@ in lib.nixosSystem {
     inherit pkgs unstable user inputs;
     host = { hostName = "laptop"; };
   };
-  modules = [ 
-      ./configuration.nix 
-      ./hardware-configuration.nix
-      ./modules/kanata/default.nix
-    ];
+  modules = [
+    ./configuration.nix
+    ./hardware-configuration.nix
+    ./modules/kanata/default.nix
+    {
+
+      hardware.opengl = {
+        enable = true;
+        driSupport = true;
+        driSupport32Bit = true;
+        extraPackages = with pkgs; [
+          rocmPackages_5.clr.icd
+          rocmPackages_5.clr
+          rocmPackages_5.rocminfo
+          rocmPackages_5.rocm-runtime
+        ];
+      };
+    }
+  ];
 }
 

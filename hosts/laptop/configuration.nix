@@ -1,4 +1,4 @@
-{ pkgs, unstable, user, ... }: {
+{ pkgs, unstable, user, inputs, ... }: {
   imports = [ ./hardware-configuration.nix ]; # ./cachix.nix];
 
   # Bootloader.
@@ -120,6 +120,7 @@
     gnome.gnome-system-monitor
     gnomeExtensions.openweather
     gnomeExtensions.vitals # system monitoring
+    inputs.zen-browser.packages."x86_64-linux".default
   ];
 
   programs = {

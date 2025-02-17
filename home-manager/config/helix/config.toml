@@ -1,10 +1,10 @@
 theme = "tokyonight_storm"
 
 [editor]
-line-number = "relative"
 cursorline = true
 color-modes = true
 auto-save = true
+auto-format = true
 bufferline = "multiple"
 
 [editor.cursor-shape]
