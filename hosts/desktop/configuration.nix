@@ -3,11 +3,50 @@
 
   # Bootloader.
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot = {
+      enable = true;
+
+      windows = {
+        "windows" = let
+          # To determine the name of the windows boot drive, boot into edk2 first, then run
+          # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
+          # which alias corresponds to which EFI partition.
+          boot-drive = "FS1";
+        in {
+          title = "Windows";
+          efiDeviceHandle = boot-drive;
+          sortKey = "a_windows";
+        };
+      };
+
+      edk2-uefi-shell.enable = true;
+      edk2-uefi-shell.sortKey = "z_edk2";
+    };
     efi.canTouchEfiVariables = true;
+    # systemd-boot.extraEntries = ''
+    #   title   Windows 10
+    #   efi     /EFI/Microsoft/Boot/bootmgfw.efi
+    # '';
+
+    # systemd-boot.enable = true;
+    # efi.canTouchEfiVariables = true;
+    #
+    # systemd-boot.enable = false;
+    #
+    # grub.enable = true;
+    # grub.efiSupport = true;
+    # grub.device = "nodev";
+    # grub.efiInstallAsRemovable = true;
+    # # Add a custom entry for Windows using chainloading.
+    # grub.extraEntries = ''
+    #   menuentry "Windows 10/11" {
+    #     search --fs-uuid --no-floppy --set=root DE04-2A33
+    #     chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
+    #   }
+    # '';
   };
   # Emulate arm to cross compile raspberry pi 5
-  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "desktop_nixos";
   networking.networkmanager.enable = true;
