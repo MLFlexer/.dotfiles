@@ -1,4 +1,4 @@
-{ pkgs, unstable, user, ... }: {
+{ pkgs, unstable, user, inputs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
@@ -45,25 +45,25 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [ gnome-tour ])
-    ++ (with pkgs.gnome; [
-      cheese # webcam tool
-      gnome-music
-      gnome-terminal
-      # gedit # text editor
-      epiphany # web browser
-      geary # email reader
-      evince # document viewer
-      totem # video player
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-      gnome-contacts
-      simple-scan # document scanner
-      yelp # help client
-      gnome-maps
-    ]);
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-tour
+    cheese # webcam tool
+    gnome-music
+    gnome-terminal
+    # gedit # text editor
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    totem # video player
+    tali # poker game
+    iagno # go game
+    hitori # sudoku game
+    atomix # puzzle game
+    gnome-contacts
+    simple-scan # document scanner
+    yelp # help client
+    gnome-maps
+  ]);
 
   # Configure console keymap
   console.keyMap = "dk-latin1";
@@ -74,7 +74,6 @@
   hardware.bluetooth.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -99,7 +98,7 @@
 
   environment.systemPackages = with pkgs; [
     cachix
-    (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
+    # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
     gnupg
     # obs-studio 
@@ -116,9 +115,8 @@
     vlc
     wget
     zip
-    gnome.gnome-weather
-    gnome.gnome-system-monitor
-    gnomeExtensions.openweather
+    gnome-weather
+    gnome-system-monitor
     gnomeExtensions.vitals # system monitoring
     inputs.zen-browser.packages."x86_64-linux".default
   ];
@@ -140,7 +138,7 @@
   system.stateVersion = "24.11";
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
   };
 }
