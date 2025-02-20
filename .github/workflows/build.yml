@@ -17,9 +17,4 @@ jobs:
         # If you chose API tokens for write access OR if you have a private cache
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Build the rpi5 flake
-      run: nix build .#nixosConfigurations.rpi5.config.system.build.toplevel --show-trace
-
-    - name: Push build results to Cachix
-      run: |
-        # This pushes all the paths reachable from the build result to your Cachix cache.
-        cachix push mlflexer $(nix-store --query --requisites ./result)
+      run: nix build .#nixosConfigurations.rpi5.config.system.build.toplevel
