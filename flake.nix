@@ -15,14 +15,13 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs_05.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
     # for raspberry pi
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
-    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs_05";
+    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
