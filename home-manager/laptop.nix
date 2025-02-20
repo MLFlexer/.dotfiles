@@ -27,6 +27,7 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     ./modules/configs/wezterm.nix
     ./modules/configs/nvim.nix
     ./modules/configs/helix.nix
+    ./modules/configs/gh.nix
     {
       home = {
         username = "${user}";
