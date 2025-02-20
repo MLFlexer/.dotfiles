@@ -17,9 +17,7 @@ jobs:
         # If you chose API tokens for write access OR if you have a private cache
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Build the rpi5 flake
-      run: |
-        # This builds your flake for rpi5 (make sure your flake.nix specifies the correct system)
-        nixos-rebuild build --flake .#rpi5 --show-trace
+      run: nix build .#nixosConfigurations.rpi5.config.system.build.toplevel --show-trace
 
     - name: Push build results to Cachix
       run: |
