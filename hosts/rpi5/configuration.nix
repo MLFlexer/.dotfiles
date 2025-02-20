@@ -61,10 +61,10 @@
     } # adguard
   ];
 
-  # fileSystems."/" = {
-  #   device = "/dev/mmcblk0p2";
-  #   fsType = "ext4";
-  # };
+  fileSystems."/" = {
+    device = "/dev/mmcblk0p2";
+    fsType = "ext4";
+  };
 
   fileSystems = {
     "/mnt/usbdrive2" = {
@@ -102,10 +102,7 @@
       config = {
         all = {
           base-dt-params = {
-            nvme = {
-              enable = true;
-              value = false;
-            };
+            nvme.enable = true;
             pciex1_gen = {
               enable = true;
               value = "3";
