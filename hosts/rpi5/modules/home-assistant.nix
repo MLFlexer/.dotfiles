@@ -9,9 +9,9 @@
     "local_todo"
     "google"
   ];
-  defaultIntegrations = [
-    "lovelace"
-  ];
+  # defaultIntegrations = [
+  #   "lovelace"
+  # ];
   customComponents = with pkgs.home-assistant-custom-components; [
     adaptive_lighting
   ];

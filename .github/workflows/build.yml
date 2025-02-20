@@ -1,0 +1,27 @@
+name: "rpi5_build"
+on:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v25
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - uses: cachix/cachix-action@v14
+      with:
+        name: mlflexer
+        # If you chose signing key for write access
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+        # If you chose API tokens for write access OR if you have a private cache
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - name: Build the rpi5 flake
+      run: |
+        # This builds your flake for rpi5 (make sure your flake.nix specifies the correct system)
+        nixos-rebuild build --flake .#rpi5 --show-trace
+
+    - name: Push build results to Cachix
+      run: |
+        # This pushes all the paths reachable from the build result to your Cachix cache.
+        cachix push mlflexer $(nix-store --query --requisites ./result)
