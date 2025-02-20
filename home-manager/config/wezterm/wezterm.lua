@@ -95,10 +95,15 @@ wezterm.on("modal.exit", function(name, window, pane)
 end)
 
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-resurrect.state_manager.periodic_save({ interval_seconds = 15 * 60, save_workspaces = true, save_windows = true, save_tabs = true })
+resurrect.state_manager.periodic_save({
+	interval_seconds = 15 * 60,
+	save_workspaces = true,
+	save_windows = true,
+	save_tabs = true,
+})
 
 resurrect.state_manager.set_encryption({
-	enable = true,
+	enable = false,
 	private_key = wezterm.home_dir .. "/.age/resurrect.txt",
 	public_key = "age1ddyj7qftw3z5ty84gyns25m0yc92e2amm3xur3udwh2262pa5afqe3elg7",
 })

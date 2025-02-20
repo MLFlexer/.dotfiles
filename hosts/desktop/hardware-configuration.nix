@@ -33,21 +33,22 @@
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # https://github.com/CallMeCaleb94/KyniFlakes/blob/main/modules/nvidia.nix
   hardware.nvidia = {
-    open = true;
+    open = false;
     modesetting.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     powerManagement = {
-      enable = true;
-      # finegrained = true;
+      enable = false;
+      finegrained = false;
     };
 
+    prime = { nvidiaBusId = "PCI:09:00.0"; };
   };
 }
