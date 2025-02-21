@@ -93,7 +93,13 @@
 
   environment.systemPackages = with pkgs; [ vim git bluez bluez-tools unzip ];
   system.stateVersion = "24.11";
-  raspberry-pi-nix.board = "bcm2712";
+  raspberry-pi-nix = {
+    kernel-version = "v6_6_51";
+    board = "bcm2712";
+    libcamera-overlay = {
+      enable = false; # set to false (enabled by default)
+    };
+  };
   # raspberry-pi-nix.pin-inputs = { enable = true; };
   # raspberry-pi-nix.kernel-version = "v6_6_67";
   hardware = {
