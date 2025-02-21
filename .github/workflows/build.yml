@@ -12,9 +12,6 @@ jobs:
     - uses: cachix/cachix-action@v14
       with:
         name: mlflexer
-        # If you chose signing key for write access
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-        # If you chose API tokens for write access OR if you have a private cache
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Build the rpi5 flake
       run: nix build .#nixosConfigurations.rpi5.config.system.build.toplevel
