@@ -39,13 +39,13 @@
 
   # https://github.com/CallMeCaleb94/KyniFlakes/blob/main/modules/nvidia.nix
   hardware.nvidia = {
-    open = false;
+    open = true;
     modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     powerManagement = {
-      enable = false;
+      enable = true;
       finegrained = false;
     };
 

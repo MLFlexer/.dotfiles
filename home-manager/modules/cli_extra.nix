@@ -1,6 +1,5 @@
 { pkgs, pkgs_unstable, ... }: {
   home.packages = (with pkgs; [
-    # stable
     # broot
     # choose
     # difftastic
@@ -24,14 +23,12 @@
     hyperfine
     texliveMedium
   ]) ++ (with pkgs_unstable; [
-    # unstable
-    ollama
-    helix
+    # ollama
 
     nodejs
     yarn
     rustup
-    ghc # Haskell
+    # ghc # Haskell
     go
     haskell-language-server
     nodejs_20

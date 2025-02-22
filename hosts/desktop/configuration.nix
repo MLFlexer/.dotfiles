@@ -23,28 +23,42 @@
       edk2-uefi-shell.sortKey = "z_edk2";
     };
     efi.canTouchEfiVariables = true;
-    # systemd-boot.extraEntries = ''
-    #   title   Windows 10
-    #   efi     /EFI/Microsoft/Boot/bootmgfw.efi
-    # '';
-
-    # systemd-boot.enable = true;
-    # efi.canTouchEfiVariables = true;
-    #
-    # systemd-boot.enable = false;
-    #
-    # grub.enable = true;
-    # grub.efiSupport = true;
-    # grub.device = "nodev";
-    # grub.efiInstallAsRemovable = true;
-    # # Add a custom entry for Windows using chainloading.
-    # grub.extraEntries = ''
-    #   menuentry "Windows 10/11" {
-    #     search --fs-uuid --no-floppy --set=root DE04-2A33
-    #     chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
-    #   }
-    # '';
   };
+
+  # https://github.com/NixOS/nixpkgs/issues/336723
+  # https://discourse.nixos.org/t/suspend-resume-cycling-on-system-resume/32322/12
+  systemd = {
+    services."gnome-suspend" = {
+      description = "suspend gnome shell";
+      before = [
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+        "nvidia-suspend.service"
+        "nvidia-hibernate.service"
+      ];
+      wantedBy = [ "systemd-suspend.service" "systemd-hibernate.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart =
+          "${pkgs.procps}/bin/pkill -f -STOP ${pkgs.gnome-shell}/bin/gnome-shell";
+      };
+    };
+    services."gnome-resume" = {
+      description = "resume gnome shell";
+      after = [
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+        "nvidia-resume.service"
+      ];
+      wantedBy = [ "systemd-suspend.service" "systemd-hibernate.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart =
+          "${pkgs.procps}/bin/pkill -f -CONT ${pkgs.gnome-shell}/bin/gnome-shell";
+      };
+    };
+  };
+
   # Emulate arm to cross compile raspberry pi 5
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -138,7 +152,7 @@
 
   environment.systemPackages = with pkgs; [
     cachix
-    (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
+    # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
     gnupg
     # obs-studio 
@@ -157,9 +171,8 @@
     zip
     gnome-weather
     gnome-system-monitor
-    # gnomeExtensions.openweather
-    # gnomeExtensions.vitals # system monitoring
-    inputs.zen-browser.packages."x86_64-linux".default
+    gnomeExtensions.vitals # system monitoring
+    inputs.zen-browser.packages.${system}.default
 
     # for gaming
     protonup # NOTE: remember to run protonup when installing imperatively, see nixos gaming video from vimjoyer.
@@ -168,7 +181,6 @@
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "/home/${user}/.steam/root/compatibilitytools.d";
-
   };
 
   programs.steam = {

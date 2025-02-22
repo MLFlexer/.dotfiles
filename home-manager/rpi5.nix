@@ -21,7 +21,7 @@ in inputs.home-manager.lib.homeManagerConfiguration {
       home = {
         username = "${user}";
         homeDirectory = "/home/${user}";
-        stateVersion = "24.05";
+        stateVersion = "24.11";
       };
 
       nixpkgs.config.allowUnfree = true;

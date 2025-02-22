@@ -118,7 +118,7 @@
     gnome-weather
     gnome-system-monitor
     gnomeExtensions.vitals # system monitoring
-    inputs.zen-browser.packages."x86_64-linux".default
+    inputs.zen-browser.packages.${system}.default
   ];
 
   programs = {
