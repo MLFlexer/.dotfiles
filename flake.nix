@@ -24,8 +24,10 @@
 
     # for raspberry pi
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
-    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
+    raspberry-pi-nix = {
+      url = "github:tstat/raspberry-pi-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
@@ -46,7 +48,6 @@
 
   outputs = { ... }@inputs: {
     nixosConfigurations = (import ./hosts { inherit inputs; });
-
     homeConfigurations = (import ./home-manager { inherit inputs; });
   };
 }
