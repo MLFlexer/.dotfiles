@@ -3,3 +3,4 @@ home-manager/config/zsh/.zsh_history
 home-manager/config/nvim/lazyvim.json
 home-manager/config/zsh/.zcompdump
 *.env
+result
