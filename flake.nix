@@ -3,11 +3,15 @@
 
   # for raspberry pi
   nixConfig = {
-    substituters =
-      [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
+    substituters = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://mlflexer.cachix.org"
+    ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "mlflexer.cachix.org-1:9tD5WIKif3nAUHHq6wTYFlg1bMq1z5uF0+h5UqICsQQ="
     ];
     trusted-users = [ "root" "mlflexer" ];
   };
