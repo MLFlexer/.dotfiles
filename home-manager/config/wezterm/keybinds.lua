@@ -16,7 +16,7 @@ local keys = {
 	},
 	{
 		key = "g",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action_callback(function(window, pane)
 			local current_tab_id = pane:tab():tab_id()
 			local cmd = "lazygit ; wezterm cli activate-tab --tab-id " .. current_tab_id .. " ; exit\n"
@@ -27,15 +27,15 @@ local keys = {
 	},
 	{
 		key = "-",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action.SplitPane({
 			direction = "Down",
 			size = { Percent = 30 },
 		}),
 	},
 	{
-		key = "_",
-		mods = "ALT|SHIFT",
+		key = "|",
+		mods = "LEADER",
 		action = wezterm.action.SplitPane({
 			direction = "Right",
 			size = { Percent = 25 },
@@ -43,32 +43,32 @@ local keys = {
 	},
 	{
 		key = "z",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action.TogglePaneZoomState,
 	},
 	{
 		key = "o",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action.ActivateLastTab,
 	},
 	{
 		key = "t",
-		mods = "ALT",
+		mods = "LEADER",
 		action = act.SpawnTab("CurrentPaneDomain"),
 	},
 	{
 		key = "w",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 	{
 		key = "p",
-		mods = "ALT",
+		mods = "LEADER",
 		action = act.PaneSelect({}),
 	},
 	{
-		key = "p",
-		mods = "ALT|SHIFT",
+		key = "P",
+		mods = "LEADER",
 		action = act.PaneSelect({
 			mode = "SwapWithActive",
 		}),
@@ -95,19 +95,19 @@ local keys = {
 			copy_to = "ClipboardAndPrimarySelection",
 		}),
 	},
-	{
-		key = "y",
-		mods = "CTRL",
-		action = wezterm.action.AttachDomain("local"),
-	},
-	{
-		key = "Y",
-		mods = "CTRL|SHIFT",
-		action = wezterm.action.DetachDomain("CurrentPaneDomain"),
-	},
+	-- {
+	-- 	key = "y",
+	-- 	mods = "CTRL",
+	-- 	action = wezterm.action.AttachDomain("local"),
+	-- },
+	-- {
+	-- 	key = "Y",
+	-- 	mods = "CTRL|SHIFT",
+	-- 	action = wezterm.action.DetachDomain("CurrentPaneDomain"),
+	-- },
 	{
 		key = "v",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action_callback(function(win, pane)
 			local a, b, c = wezterm.run_child_process({ "ls" })
 			wezterm.log_info(type(b))
@@ -115,7 +115,7 @@ local keys = {
 	},
 	{
 		key = "r",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action_callback(function(win, pane)
 			resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
 				local type = string.match(id, "^([^/]+)") -- match before '/'
@@ -141,7 +141,7 @@ local keys = {
 	},
 	{
 		key = "b",
-		mods = "ALT",
+		mods = "LEADER",
 		action = wezterm.action_callback(function(win, pane)
 			resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
 				local type = string.match(id, "^([^/]+)") -- match before '/'
@@ -168,7 +168,7 @@ local keys = {
 			end)
 		end),
 	},
-	{ key = "L", mods = "CTRL|SHIFT|ALT", action = wezterm.action.ShowDebugOverlay },
+	{ key = "L", mods = "LEADER", action = wezterm.action.ShowDebugOverlay },
 
 	{ key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
 	{ key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
@@ -181,10 +181,15 @@ local keys = {
 	},
 	{
 		key = "N",
-		mods = "LEADER | SHIFT",
+		mods = "LEADER",
 		action = wezterm.action_callback(function(win, pane)
 			local tab, window = pane:move_to_new_window()
 		end),
+	},
+	{
+		key = "Enter",
+		mods = "LEADER",
+		action = act.ToggleFullScreen,
 	},
 }
 

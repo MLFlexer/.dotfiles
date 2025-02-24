@@ -6,6 +6,7 @@ color-modes = true
 auto-save = true
 auto-format = true
 bufferline = "multiple"
+end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -14,4 +15,4 @@ select = "underline"
 
 [editor.inline-diagnostics]
 cursor-line = "hint"
-other-lines = "error"
+other-lines = "disable"
