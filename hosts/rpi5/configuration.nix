@@ -61,10 +61,10 @@
     } # adguard
   ];
 
-  fileSystems."/" = {
-    device = "/dev/mmcblk0p2";
-    fsType = "ext4";
-  };
+  # fileSystems."/" = {
+  #   device = "/dev/mmcblk0p2";
+  #   fsType = "ext4";
+  # };
 
   fileSystems = {
     "/mnt/usbdrive2" = {
@@ -73,6 +73,16 @@
       options = [ "defaults" "nofail" ];
     };
   };
+
+  # fileSystems."/" = {
+  #   device = "/dev/disk/by-uuid/43f0dcf8-432b-4712-8457-82f53e3e7ff3";
+  #   fsType = "ext4";
+  # };
+  #
+  # fileSystems."/boot" = {
+  #   device = "/dev/disk/by-uuid/AF02-7B13";
+  #   fsType = "vfat";
+  # };
 
   users.groups.usbdrive2 = { name = "usbdrive2"; };
   systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
@@ -91,7 +101,15 @@
   };
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [ vim git bluez bluez-tools unzip ];
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+    bluez
+    bluez-tools
+    unzip
+    raspberrypi-eeprom
+    rpi-imager
+  ];
   system.stateVersion = "24.11";
   raspberry-pi-nix = {
     kernel-version = "v6_6_51";
@@ -99,6 +117,7 @@
     libcamera-overlay = {
       enable = false; # set to false (enabled by default)
     };
+    uboot.enable = false;
   };
   # raspberry-pi-nix.pin-inputs = { enable = true; };
   # raspberry-pi-nix.kernel-version = "v6_6_67";
@@ -124,5 +143,4 @@
       };
     };
   };
-
 }
