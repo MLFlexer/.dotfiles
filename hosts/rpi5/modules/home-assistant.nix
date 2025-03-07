@@ -2,10 +2,7 @@
 
   services.home-assistant = {
     enable = true;
-    extraComponents = [ "esphome" "met" "wiz" "local_todo" "google" ];
-    # defaultIntegrations = [
-    #   "lovelace"
-    # ];
+    extraComponents = [ "esphome" "met" "wiz" "local_todo" ];
     customComponents = with pkgs.home-assistant-custom-components;
       [ adaptive_lighting ];
     customLovelaceModules =

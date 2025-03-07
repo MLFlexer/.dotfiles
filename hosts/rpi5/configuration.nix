@@ -1,8 +1,6 @@
 { pkgs, unstable, user, raspberry-pi-nix, ... }: {
   time.timeZone = "Europe/Copenhagen";
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-  # Configure console keymap
   console.keyMap = "dk-latin1";
 
   users.users.root.initialPassword = "root";
@@ -36,7 +34,7 @@
       blocky
       btop
       # stable
-    ]); # ++ (with unstable; []);
+    ]) ++ (with unstable; [ ]);
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com"
     ];
@@ -49,23 +47,30 @@
     settings.PasswordAuthentication = true;
   };
 
-  networking.firewall.allowedTCPPorts =
-    [ 22 443 53 80 8888 3000 4221 5000 8000 8080 25565 6969 ];
+  networking.firewall.allowedTCPPorts = [
+    22
+    # 25565
+    # 3000
+    # 4221
+    443
+    5000
+    53
+    # 6969
+    80
+    8000
+    8080
+    # 8888
+  ];
   networking.firewall.allowedUDPPortRanges = [
-    {
-      from = 2456;
-      to = 2457;
-    } # Valheim
+    # {
+    #   from = 2456;
+    #   to = 2457;
+    # } # Valheim
     {
       from = 53;
       to = 53;
     } # adguard
   ];
-
-  # fileSystems."/" = {
-  #   device = "/dev/mmcblk0p2";
-  #   fsType = "ext4";
-  # };
 
   fileSystems = {
     "/mnt/usbdrive2" = {
@@ -75,19 +80,8 @@
     };
   };
 
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-uuid/43f0dcf8-432b-4712-8457-82f53e3e7ff3";
-  #   fsType = "ext4";
-  # };
-  #
-  # fileSystems."/boot" = {
-  #   device = "/dev/disk/by-uuid/AF02-7B13";
-  #   fsType = "vfat";
-  # };
-
   users.groups.usbdrive2 = { name = "usbdrive2"; };
   systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
-  # users.users.mlflexer.extraGroups = [ "usbdrive2" ];
 
   nix = {
     settings.auto-optimise-store = true;
@@ -116,13 +110,10 @@
   raspberry-pi-nix = {
     kernel-version = "v6_6_51";
     board = "bcm2712";
-    libcamera-overlay = {
-      enable = false; # set to false (enabled by default)
-    };
+    libcamera-overlay = { enable = false; };
     uboot.enable = false;
   };
   # raspberry-pi-nix.pin-inputs = { enable = true; };
-  # raspberry-pi-nix.kernel-version = "v6_6_67";
   hardware = {
     bluetooth.enable = true;
     raspberry-pi = {
