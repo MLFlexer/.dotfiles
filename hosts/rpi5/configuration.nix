@@ -26,7 +26,8 @@
     isNormalUser = true;
     createHome = true;
     description = "${user} user.";
-    extraGroups = [ "networkmanager" "wheel" "docker" "usbdrive2" "nextcloud" ];
+    extraGroups =
+      [ "networkmanager" "wheel" "docker" "usbdrive2" "nextcloud" "hass" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [
       cachix
@@ -109,6 +110,7 @@
     unzip
     raspberrypi-eeprom
     rpi-imager
+    yazi
   ];
   system.stateVersion = "24.11";
   raspberry-pi-nix = {

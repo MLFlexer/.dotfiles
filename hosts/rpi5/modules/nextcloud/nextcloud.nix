@@ -15,8 +15,8 @@ in {
     hostName = domain;
     config.adminpassFile = "/etc/nextcloud-admin-pass";
     config.adminuser = "admin";
-    datadir = "/mnt/usbdrive2/nextcloud";
-    home = "/mnt/usbdrive2/nextcloud";
+    # datadir = "/home/mlflexer/nextcloud";
+    # home = "/home/mlflexer/nextcloud";
     # https = true;
     # "/var/lib/nextcloud"
     settings = {
