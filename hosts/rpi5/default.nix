@@ -18,6 +18,7 @@ in lib.nixosSystem {
   specialArgs = { inherit unstable user raspberry-pi-nix; };
   modules = [
     raspberry-pi-nix.nixosModules.raspberry-pi
+    raspberry-pi-nix.nixosModules.sd-image
     ./configuration.nix
     ./modules/adguard.nix
     ./modules/searxng.nix
