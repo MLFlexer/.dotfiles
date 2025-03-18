@@ -37,6 +37,13 @@
             tls.certResolver = "cloudflare";
           };
 
+          jellyfin = {
+            rule = "Host(`stream.mlflexer.online`)";
+            service = "jellyfin";
+            entryPoints = [ "websecure" ];
+            tls.certResolver = "cloudflare";
+          };
+
           homeassistant = {
             rule = "Host(`ha.mlflexer.online`)";
             service = "homeassistant";
@@ -53,6 +60,7 @@
         };
         services = {
           nextcloud.loadBalancer.servers = [{ url = "http://localhost:8080"; }];
+          jellyfin.loadBalancer.servers = [{ url = "http://localhost:8096"; }];
           homeassistant.loadBalancer.servers =
             [{ url = "http://localhost:8123"; }];
           adguard.loadBalancer.servers = [{ url = "http://localhost:5000"; }];

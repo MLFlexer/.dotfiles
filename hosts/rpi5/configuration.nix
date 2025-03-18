@@ -24,8 +24,16 @@
     isNormalUser = true;
     createHome = true;
     description = "${user} user.";
-    extraGroups =
-      [ "networkmanager" "wheel" "docker" "usbdrive2" "nextcloud" "hass" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "usbdrive2"
+      "nextcloud"
+      "hass"
+      "jellyfin"
+      "mediagroup"
+    ];
     shell = pkgs.zsh;
     packages = (with pkgs; [
       cachix
@@ -52,13 +60,17 @@
     # 25565
     # 3000
     # 4221
+    # 
+    8173
     443
     5000
     53
-    # 6969
+    6969
     80
     8000
     8080
+    8096
+    8920
     # 8888
   ];
   networking.firewall.allowedUDPPortRanges = [
@@ -66,6 +78,14 @@
     #   from = 2456;
     #   to = 2457;
     # } # Valheim
+    {
+      from = 1900;
+      to = 1900;
+    }
+    {
+      from = 7359;
+      to = 7359;
+    }
     {
       from = 53;
       to = 53;
