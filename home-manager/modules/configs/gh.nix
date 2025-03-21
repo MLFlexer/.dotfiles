@@ -1,5 +1,5 @@
-{ config, config_dir, pkgs, ... }:
-let config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
+{ config, pkgs, ... }:
+let config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
 in {
   programs.gh = {
     enable = true;
@@ -21,7 +21,6 @@ in {
     };
   };
 
-  # Symlink files
   home.file."gh-dash" = {
     enable = true;
     source = "${config_sym_dir}/gh-dash";

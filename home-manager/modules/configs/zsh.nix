@@ -1,28 +1,31 @@
-{ config, config_dir, pkgs, ... }:
-let config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
+{ config, lib, pkgs, ... }:
+let config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
 in {
-  home.packages = with pkgs; [
-    zsh
-    zsh-autosuggestions
-    zsh-completions
-    zsh-powerlevel10k
-    zsh-syntax-highlighting
-  ];
+  options = { zsh.enable = lib.mkEnableOption "Enables Zsh config"; };
 
-  # Symlink files
-  home.file = {
-    ".zshenv" = {
-      enable = true;
-      source = "${config_sym_dir}/.zshenv";
-      recursive = false;
-      target = ".zshenv";
-    };
+  config = lib.mkIf config.zsh.enable {
+    home.packages = with pkgs; [
+      zsh
+      zsh-autosuggestions
+      zsh-completions
+      zsh-powerlevel10k
+      zsh-syntax-highlighting
+    ];
 
-    "zsh" = {
-      enable = true;
-      source = "${config_sym_dir}/zsh";
-      recursive = true;
-      target = ".config/zsh";
+    home.file = {
+      ".zshenv" = {
+        enable = true;
+        source = "${config_sym_dir}/.zshenv";
+        recursive = false;
+        target = ".zshenv";
+      };
+
+      "zsh" = {
+        enable = true;
+        source = "${config_sym_dir}/zsh";
+        recursive = true;
+        target = ".config/zsh";
+      };
     };
   };
 }

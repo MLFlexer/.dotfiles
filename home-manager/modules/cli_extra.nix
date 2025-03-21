@@ -1,42 +1,50 @@
-{ pkgs, pkgs_unstable, ... }: {
-  home.packages = (with pkgs; [
-    # broot
-    # choose
-    # difftastic
-    # du-dust
-    # erdtree
-    # fselect
-    # fx
-    gh
-    # grex
-    ntfy-sh
-    # procs
-    # sd
-    tealdeer
-    gnumake
-    xclip
-    # xsv
+{ pkgs, config, lib, pkgs_unstable, ... }: {
+  options = {
+    cli_extra.enable = lib.mkEnableOption "Enables extra cli tools";
+  };
 
-    act
-    ffmpeg
-    pandoc
-    hyperfine
-    texliveMedium
-  ]) ++ (with pkgs_unstable; [
-    # ollama
+  config = lib.mkIf config.cli_extra.enable {
 
-    nodejs
-    yarn
-    rustup
-    # ghc # Haskell
-    go
-    haskell-language-server
-    nodejs_20
-    zig
-    nixd
-    nixpkgs-fmt
-    asm-lsp
-    lua-language-server
-    nil
-  ]);
+    home.packages = (with pkgs; [
+      # broot
+      # choose
+      # difftastic
+      # du-dust
+      dust
+      # erdtree
+      # fselect
+      # fx
+      gh
+      # grex
+      ntfy-sh
+      # procs
+      # sd
+      tealdeer
+      gnumake
+      xclip
+      # xsv
+
+      act
+      ffmpeg
+      pandoc
+      hyperfine
+      texliveMedium
+    ]) ++ (with pkgs_unstable; [
+      # ollama
+
+      nodejs
+      yarn
+      rustup
+      # ghc # Haskell
+      go
+      haskell-language-server
+      nodejs_20
+      zig
+      nixd
+      nixpkgs-fmt
+      asm-lsp
+      lua-language-server
+      nil
+    ]);
+  };
 }
