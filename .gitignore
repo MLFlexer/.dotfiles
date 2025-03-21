@@ -4,3 +4,4 @@ home-manager/config/nvim/lazyvim.json
 home-manager/config/zsh/.zcompdump
 *.env
 result
+*mullvad.conf
