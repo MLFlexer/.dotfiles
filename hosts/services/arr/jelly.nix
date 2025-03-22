@@ -2,7 +2,9 @@
 
   options = {
     arr.jelly.enable = lib.mkEnableOption "Enables jellyfin and jellyseerr";
-    arr.jellyfin.domain = lib.mkOptionDefault "stream.mlflexer.online";
+    arr.jellyfin.domain = lib.mkOption { default = "stream.mlflexer.online"; };
+    arr.jellyseerr.domain =
+      lib.mkOption { default = "request.mlflexer.online"; };
     arr.jellyfin.dataDir =
       lib.mkOption { default = "${config.arr.data_dir}/jellyfin"; };
   };

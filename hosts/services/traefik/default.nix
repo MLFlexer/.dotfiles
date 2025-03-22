@@ -47,9 +47,16 @@
               tls.certResolver = "cloudflare";
             };
 
-            jellyfin = lib.mkIf config.jelly.enable {
+            jellyfin = lib.mkIf config.arr.jelly.enable {
               rule = "Host(`${config.arr.jellyfin.domain}`)";
               service = "jellyfin";
+              entryPoints = [ "websecure" ];
+              tls.certResolver = "cloudflare";
+            };
+
+            jellyseerr = lib.mkIf config.arr.jelly.enable {
+              rule = "Host(`${config.arr.jellyseerr.domain}`)";
+              service = "jellyseerr";
               entryPoints = [ "websecure" ];
               tls.certResolver = "cloudflare";
             };
@@ -62,27 +69,46 @@
             };
 
             adguardhome = lib.mkIf config.adguardhome.enable {
-              rule = "Host(`${config.adguardhome.demain}`)";
+              rule = "Host(`${config.adguardhome.domain}`)";
               service = "adguardhome";
+              entryPoints = [ "websecure" ];
+              tls.certResolver = "cloudflare";
+            };
+
+            prowlarr = lib.mkIf config.arr.container.enable {
+              rule = "Host(`192.168.0.42/prowlarr`)";
+              service = "prowlarr";
               entryPoints = [ "websecure" ];
               tls.certResolver = "cloudflare";
             };
           };
           services = {
+            prowlarr.loadBalancer.servers =
+              lib.mkIf config.arr.container.enable [{
+                url = "${config.arr.container.local_ip}:9696";
+              }];
+
+            jellyfin.loadBalancer.servers = lib.mkIf config.arr.jelly.enable [{
+              url = "http://localhost:8096";
+            }];
+
+            jellyseerr.loadBalancer.servers =
+              lib.mkIf config.arr.jelly.enable [{
+                url = "http://localhost:5055";
+              }];
+
             nextcloud.loadBalancer.servers = lib.mkIf config.nextcloud.enable [{
               url =
                 "http://localhost:${builtins.toString config.nextcloud.port}";
             }];
-            jellyfin.loadBalancer.servers = lib.mkIf config.jellyfin.enable [{
-              url =
-                "http://localhost:${builtins.toString config.jellyfin.port}";
-            }];
+
             home-assistant.loadBalancer.servers =
               lib.mkIf config.home-assistant.enable [{
                 url = "http://localhost:${
                     builtins.toString config.home-assistant.port
                   }";
               }];
+
             adguardhome.loadBalancer.servers =
               lib.mkIf config.adguardhome.enable [{
                 url = "http://localhost:${

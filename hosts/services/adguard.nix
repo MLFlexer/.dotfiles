@@ -3,6 +3,7 @@
   options = {
     adguardhome.enable = lib.mkEnableOption "Enables adguardhome";
     adguardhome.port = lib.mkOption { default = 5000; };
+    adguardhome.domain = lib.mkOption { default = "adguard.mlflexer.online"; };
   };
 
   config = lib.mkIf config.adguardhome.enable {
