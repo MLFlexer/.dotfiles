@@ -54,6 +54,8 @@
           iptables -I INPUT -i lo -j ACCEPT           
           # Allow from config.arr.container.local_ip
           iptables -I INPUT -s ${config.arr.container.local_ip} -j ACCEPT
+          # Allow from config.arr.container.host_ip
+          iptables -I INPUT -s ${config.arr.container.host_ip} -j ACCEPT
           # Allow established
           iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
 
