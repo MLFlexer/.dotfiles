@@ -16,6 +16,8 @@
       local_ip = lib.mkOption { default = "192.168.100.1"; };
       host_ip = lib.mkOption { default = "192.168.100.2"; };
       host_mount = lib.mkOption { default = "/mnt/arr"; };
+      external_interface =
+        lib.mkOption { default = "end0"; }; # WARN: remember to set this
     };
   };
 
@@ -24,7 +26,7 @@
     networking.nat.enable = true;
     networking.nat.internalInterfaces =
       [ "ve-${config.arr.container.container_name}" ];
-    networking.nat.externalInterface = "enp4s0";
+    networking.nat.externalInterface = config.arr.container.external_interface;
 
     containers.${config.arr.container.container_name} = {
 
@@ -42,44 +44,70 @@
       };
 
       config = { ... }: {
-        networking.firewall.enable = true;
-        networking.firewall.extraCommands = ''
-          # Set default policies to DROP
-          iptables -P INPUT DROP
-          iptables -P OUTPUT DROP
-          iptables -P FORWARD DROP
+        networking.nftables = {
+          enable = true;
+          tables = {
+            filter = {
+              family = "inet";
+              content = ''
+                chain input {
+                  type filter hook input priority 0; policy drop;
+                  
+                  # Base allowances
+                  ct state { established, related } accept
+                  iifname "lo" accept
+                  
+                  # Allow host and LAN
+                  ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
 
-          # INPUT Chain Rules
-          # Allow loopback traffic 
-          iptables -I INPUT -i lo -j ACCEPT           
-          # Allow from config.arr.container.local_ip
-          iptables -I INPUT -s ${config.arr.container.local_ip} -j ACCEPT
-          # Allow from config.arr.container.host_ip
-          iptables -I INPUT -s ${config.arr.container.host_ip} -j ACCEPT
-          # Allow established
-          iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
+                  # Allow VPN interface traffic
+                  iifname "wg-mullvad" accept
+                  
+                  # Final drop (explicit for clarity)
+                  log prefix "INPUT-DROP: " level warn
+                  drop
+                }
 
-          # OUTPUT Chain Rules (order matters!)
-          # Allow establishing connection to VPN 
-          iptables -I OUTPUT -d 45.129.56.67 -p udp --dport 51820 -j ACCEPT
-          # Allow loopback first
-          iptables -I OUTPUT -o lo -j ACCEPT           
-          # Allow traffic to config.arr.container.local_ip
-          iptables -I OUTPUT -d ${config.arr.container.local_ip} -j ACCEPT 
-          # Allow traffic to config.arr.container.host_ip
-          iptables -I OUTPUT -d ${config.arr.container.host_ip} -j ACCEPT 
-          # Allow established
-          iptables -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-          # Allow traffic through VPN interface
-          iptables -A OUTPUT -o wg-mullvad -j ACCEPT
-        '';
+                chain output {
+                  type filter hook output priority 0; policy drop;
+                  
+                  # Base allowances
+                  ct state { established, related } accept
+                  oifname "lo" accept
+                  
+                  # VPN traffic allowance
+                  oifname "wg-mullvad" accept
+                  
+                  # Host/LAN fallback
+                  ip daddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
+
+                  udp dport 53 accept # DNS port
+                  tcp dport 53 accept # DNS port
+                  udp dport 51820 accept # mullvad port
+                  
+                  # Final drop
+                  log prefix "OUTPUT-DROP: " level warn                  
+                  drop
+                }
+
+                chain forward {
+                  type filter hook forward priority 0; policy drop;
+                  ct state { established, related } accept
+                  iifname "wg-mullvad" accept
+                  oifname "wg-mullvad" accept
+                }
+              '';
+            };
+          };
+        };
+        networking.firewall.enable = false;
 
         # Mullvad
-        environment.etc."mullvad.conf".text =
+        environment.etc."wg-mullvad.conf".text =
           builtins.readFile config.arr.container.mullvad_config;
 
         networking.wg-quick.interfaces.wg-mullvad = {
-          configFile = "/etc/mullvad.conf";
+          configFile = "/etc/wg-mullvad.conf";
           autostart = true;
         };
 
@@ -101,29 +129,29 @@
         '';
 
         # qbittorrent
-        systemd.services.qbittorrent = {
-          after = [ "network.target" ];
-          description = "Qbittorrent Web";
-          wantedBy = [ "multi-user.target" ];
-          path = [ pkgs.qbittorrent-nox ];
-          serviceConfig = {
-            ExecStart = ''
-              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
-                toString config.arr.container.torrent_port
-              } --profile=${config.arr.container.torrent_dir}
-            '';
-            User = "qbittorrent";
-            Group = config.arr.group;
-            MemoryMax = "4G";
-            Restart = "always";
-          };
-        };
+        # systemd.services.qbittorrent = {
+        #   after = [ "network.target" ];
+        #   description = "Qbittorrent Web";
+        #   wantedBy = [ "multi-user.target" ];
+        #   path = [ pkgs.qbittorrent-nox ];
+        #   serviceConfig = {
+        #     ExecStart = ''
+        #       ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
+        #         toString config.arr.container.torrent_port
+        #       } --profile=${config.arr.container.torrent_dir}
+        #     '';
+        #     User = "qbittorrent";
+        #     Group = config.arr.group;
+        #     MemoryMax = "4G";
+        #     Restart = "always";
+        #   };
+        # };
 
-        users.users.qbittorrent = {
-          isSystemUser = true;
-          description = "User for running qbittorrent";
-          group = config.arr.group;
-        };
+        # users.users.qbittorrent = {
+        #   isSystemUser = true;
+        #   description = "User for running qbittorrent";
+        #   group = config.arr.group;
+        # };
 
         networking.firewall.allowedTCPPorts =
           [ config.arr.container.torrent_port ];
@@ -132,7 +160,7 @@
         users.groups.${config.arr.group} = { name = config.arr.group; };
 
         services.prowlarr = {
-          enable = true;
+          enable = false;
           openFirewall = true;
         };
 
