@@ -5,9 +5,8 @@
       enable = lib.mkEnableOption "Enables arr container";
       container_name = lib.mkOption { default = "arr"; };
       mullvad_config = lib.mkOption {
-        type = lib.types.path;
-        default = builtins.toPath ./hosts/services/arr/mullvad.conf;
-        description = "Path to the Mullvad configuration file.";
+        default =
+          "/home/mlflexer/repos/.dotfiles/hosts/services/arr/mullvad.conf";
       };
       radarr_dir = lib.mkOption { default = "${config.arr.data_dir}/radarr"; };
       sonarr_dir = lib.mkOption { default = "${config.arr.data_dir}/sonarr"; };
@@ -62,6 +61,8 @@
                   ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
                   ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
 
+                  oifname "wg-mullvad" accept
+
                   log prefix "INPUT-DROP: " level warn
                   drop
                 }
@@ -106,6 +107,10 @@
         };
 
         system.activationScripts.setDataPermissions = ''
+          mkdir -p ${config.arr.data_dir}/movies
+          mkdir -p ${config.arr.data_dir}/shows
+          mkdir -p ${config.arr.data_dir}/downloads
+
           chown -R root:${config.arr.group} ${config.arr.data_dir}
           chmod -R 770 ${config.arr.data_dir}
 
@@ -123,29 +128,29 @@
         '';
 
         # qbittorrent
-        # systemd.services.qbittorrent = {
-        #   after = [ "network.target" ];
-        #   description = "Qbittorrent Web";
-        #   wantedBy = [ "multi-user.target" ];
-        #   path = [ pkgs.qbittorrent-nox ];
-        #   serviceConfig = {
-        #     ExecStart = ''
-        #       ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
-        #         toString config.arr.container.torrent_port
-        #       } --profile=${config.arr.container.torrent_dir}
-        #     '';
-        #     User = "qbittorrent";
-        #     Group = config.arr.group;
-        #     MemoryMax = "4G";
-        #     Restart = "always";
-        #   };
-        # };
+        systemd.services.qbittorrent = {
+          after = [ "network.target" ];
+          description = "Qbittorrent Web";
+          wantedBy = [ "multi-user.target" ];
+          path = [ pkgs.qbittorrent-nox ];
+          serviceConfig = {
+            ExecStart = ''
+              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
+                toString config.arr.container.torrent_port
+              } --profile=${config.arr.container.torrent_dir}
+            '';
+            User = "qbittorrent";
+            Group = config.arr.group;
+            MemoryMax = "1G";
+            Restart = "always";
+          };
+        };
 
-        # users.users.qbittorrent = {
-        #   isSystemUser = true;
-        #   description = "User for running qbittorrent";
-        #   group = config.arr.group;
-        # };
+        users.users.qbittorrent = {
+          isSystemUser = true;
+          description = "User for running qbittorrent";
+          group = config.arr.group;
+        };
 
         networking.firewall.allowedTCPPorts =
           [ config.arr.container.torrent_port ];
@@ -154,7 +159,7 @@
         users.groups.${config.arr.group} = { name = config.arr.group; };
 
         services.prowlarr = {
-          enable = false;
+          enable = true;
           openFirewall = true;
         };
 
