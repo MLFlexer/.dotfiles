@@ -5,8 +5,9 @@
       enable = lib.mkEnableOption "Enables arr container";
       container_name = lib.mkOption { default = "arr"; };
       mullvad_config = lib.mkOption {
-        default =
-          "/home/mlflexer/repos/.dotfiles/hosts/services/arr/mullvad.conf";
+        type = lib.types.path;
+        default = builtins.toPath ./hosts/services/arr/mullvad.conf;
+        description = "Path to the Mullvad configuration file.";
       };
       radarr_dir = lib.mkOption { default = "${config.arr.data_dir}/radarr"; };
       sonarr_dir = lib.mkOption { default = "${config.arr.data_dir}/sonarr"; };
