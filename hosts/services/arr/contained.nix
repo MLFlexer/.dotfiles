@@ -58,8 +58,8 @@
                   iifname "lo" accept
                   
                   # Allow host and LAN
-                  iifname "eth0" ip saddr 192.168.0.0/24 accept
-                  iifname "eth0" ip saddr ${config.arr.container.host_ip} accept
+                  ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
+                  ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
 
                   log prefix "INPUT-DROP: " level warn
                   drop
@@ -78,7 +78,8 @@
                   # Host/LAN fallback
                   ip daddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
 
-                  udp dport 51820 accept # mullvad port
+                  # mullvad port for initial connection
+                  oifname "eth0" udp dport 51820 accept
                   
                   log prefix "OUTPUT-DROP: " level warn                  
                   drop
