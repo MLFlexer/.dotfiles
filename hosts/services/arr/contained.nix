@@ -58,12 +58,9 @@
                   iifname "lo" accept
                   
                   # Allow host and LAN
-                  ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
+                  iifname "eth0" ip saddr 192.168.0.0/24 accept
+                  iifname "eth0" ip saddr ${config.arr.container.host_ip} accept
 
-                  # Allow VPN interface traffic
-                  iifname "wg-mullvad" accept
-                  
-                  # Final drop (explicit for clarity)
                   log prefix "INPUT-DROP: " level warn
                   drop
                 }
@@ -81,20 +78,15 @@
                   # Host/LAN fallback
                   ip daddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
 
-                  udp dport 53 accept # DNS port
-                  tcp dport 53 accept # DNS port
                   udp dport 51820 accept # mullvad port
                   
-                  # Final drop
                   log prefix "OUTPUT-DROP: " level warn                  
                   drop
                 }
 
                 chain forward {
                   type filter hook forward priority 0; policy drop;
-                  ct state { established, related } accept
-                  iifname "wg-mullvad" accept
-                  oifname "wg-mullvad" accept
+                  drop
                 }
               '';
             };
