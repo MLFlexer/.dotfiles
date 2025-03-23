@@ -17,12 +17,12 @@
 
         entryPoints = {
           web = {
-            address = ":8888";
+            address = ":80";
             # Redirect HTTP to HTTPS
-            http.redirections.entryPoint = {
-              to = "websecure";
-              scheme = "https";
-            };
+            #   http.redirections.entryPoint = {
+            #     to = "websecure";
+            #     scheme = "https";
+            #   };
           };
           websecure = { address = ":443"; };
         };
@@ -76,16 +76,52 @@
             };
 
             prowlarr = lib.mkIf config.arr.container.enable {
-              rule = "Host(`192.168.0.42/prowlarr`)";
+              rule = "Host(`prowlarr.local`)";
               service = "prowlarr";
-              entryPoints = [ "websecure" ];
-              tls.certResolver = "cloudflare";
+              entryPoints = [ "web" ];
+            };
+
+            sonarr = lib.mkIf config.arr.container.enable {
+              rule =
+                "Host(`sonarr.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
+              service = "sonarr";
+              entryPoints = [ "web" ];
+            };
+
+            radarr = lib.mkIf config.arr.container.enable {
+              rule =
+                "Host(`radarr.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
+              service = "radarr";
+              entryPoints = [ "web" ];
+            };
+
+            torrent = lib.mkIf config.arr.container.enable {
+              rule =
+                "Host(`torrent.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
+              service = "torrent";
+              entryPoints = [ "web" ];
             };
           };
+
           services = {
             prowlarr.loadBalancer.servers =
               lib.mkIf config.arr.container.enable [{
-                url = "${config.arr.container.local_ip}:9696";
+                url = "http://${config.arr.container.local_ip}:9696";
+              }];
+
+            sonarr.loadBalancer.servers =
+              lib.mkIf config.arr.container.enable [{
+                url = "http://${config.arr.container.local_ip}:8989";
+              }];
+
+            radarr.loadBalancer.servers =
+              lib.mkIf config.arr.container.enable [{
+                url = "http://${config.arr.container.local_ip}:7878";
+              }];
+
+            torrent.loadBalancer.servers =
+              lib.mkIf config.arr.container.enable [{
+                url = "http://${config.arr.container.local_ip}:8173";
               }];
 
             jellyfin.loadBalancer.servers = lib.mkIf config.arr.jelly.enable [{
