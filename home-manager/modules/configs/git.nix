@@ -14,6 +14,7 @@
       };
       userEmail = "75012728+MLFlexer@users.noreply.github.com";
       userName = "MLFlexer";
+      ignores = [ ".direnv" ];
       # follows: https://blog.gitbutler.com/how-git-core-devs-configure-git/
       extraConfig = {
         diff = {
@@ -54,14 +55,6 @@
     };
 
     # TODO: checkout the Slightly nicer rebase section of the article:  https://blog.gitbutler.com/how-git-core-devs-configure-git/
-    home.file = {
-      "ignore" = {
-        enable = true;
-        text = ".direnv";
-        recursive = false;
-        target = ".config/git/ignore";
-      };
-    };
 
     programs.lazygit = {
       enable = true;
