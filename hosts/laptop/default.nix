@@ -35,6 +35,14 @@ in lib.nixosSystem {
         rocmPackages_5.rocm-runtime
       ];
     }
+
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager.extraSpecialArgs = { inherit inputs system; };
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.mlflexer = ./home.nix;
+    }
   ];
 }
 

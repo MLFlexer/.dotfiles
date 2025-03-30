@@ -1,27 +1,23 @@
-{ pkgs, config, lib, pkgs_unstable, ... }: {
+{ pkgs, config, lib, ... }: {
   options = {
     cli_tools.enable = lib.mkEnableOption "Enables common cli tools";
   };
 
   config = lib.mkIf config.cli_tools.enable {
-    home.packages = (with pkgs; [
-      # stable
+    home.packages = with pkgs; [
       age
-      atuin
+      # atuin
       comma
       eza
       fd
       fzf
-      lazydocker
+      # lazydocker
       python3
       ripgrep
       ripgrep-all
       zoxide
       nixfmt
-    ]) ++ (with pkgs_unstable;
-      [
-        # unstable
-        yazi
-      ]);
+      yazi
+    ];
   };
 }

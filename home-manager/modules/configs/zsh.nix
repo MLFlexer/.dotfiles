@@ -4,13 +4,25 @@ in {
   options = { zsh.enable = lib.mkEnableOption "Enables Zsh config"; };
 
   config = lib.mkIf config.zsh.enable {
-    home.packages = with pkgs; [
-      zsh
-      zsh-autosuggestions
-      zsh-completions
-      zsh-powerlevel10k
-      zsh-syntax-highlighting
-    ];
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      initExtra = "source $HOME/.config/zsh/.p10k.zsh";
+      dotDir = ".config/zsh";
+      shellAliases = {
+        ls = "eza";
+        lg = "lazygit";
+        cat = "smart_cat";
+      };
+
+      plugins = [{
+        name = "zsh-powerlevel10k";
+        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
+        file = "powerlevel10k.zsh-theme";
+      }];
+    };
 
     home.file = {
       ".zshenv" = {
