@@ -27,6 +27,7 @@ in lib.nixosSystem {
     ./modules/kanata/default.nix
     {
 
+      nixpkgs.config.allowUnsupportedSystem = true;
       hardware.graphics.extraPackages = with pkgs; [
         rocmPackages_5.clr.icd
         rocmPackages_5.clr

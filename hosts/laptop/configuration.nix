@@ -92,8 +92,13 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager discord lima ])
-      ++ (with unstable; [ vscode vscodium wezterm ]);
+    packages = (with pkgs; [ home-manager discord lima ]) ++ (with unstable; [
+      vscode
+      vscodium
+      wezterm
+      element-desktop
+      element-web-unwrapped
+    ]);
   };
 
   environment.systemPackages = with pkgs; [
@@ -138,6 +143,7 @@
   system.stateVersion = "24.11";
 
   nix = {
+
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
   };
