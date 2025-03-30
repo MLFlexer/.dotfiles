@@ -40,7 +40,7 @@
           # pruneTags = false;
           all = true;
         };
-        # pull.rebase true
+        pull.rebase = true;
 
         help.autocorrect = "prompt";
         commit.verbose = true;
@@ -51,10 +51,14 @@
           autoupdate = true;
         };
 
+        rebase = {
+          autoSquash = "true";
+          autoStash = "true";
+          updateRefs = "true";
+        };
+
       };
     };
-
-    # TODO: checkout the Slightly nicer rebase section of the article:  https://blog.gitbutler.com/how-git-core-devs-configure-git/
 
     programs.lazygit = {
       enable = true;
