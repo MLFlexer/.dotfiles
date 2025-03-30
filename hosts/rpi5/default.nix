@@ -27,9 +27,9 @@ in lib.nixosSystem {
       nextcloud.enable = true;
       traefik.enable = true;
 
-      arr.jelly.enable = true;
-      arr.enable = true;
-      arr.container.enable = true;
+      arr.jelly.enable = false;
+      arr.enable = false;
+      arr.container.enable = false;
     }
 
   ];
