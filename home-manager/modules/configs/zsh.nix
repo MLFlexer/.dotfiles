@@ -4,6 +4,13 @@ in {
   options = { zsh.enable = lib.mkEnableOption "Enables Zsh config"; };
 
   config = lib.mkIf config.zsh.enable {
+    programs.atuin = {
+      enable = true;
+      flags = [ "--disable-up-arrow" ];
+    };
+
+    programs.zoxide.enable = true;
+
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -15,6 +22,16 @@ in {
         autoload -z edit-command-line
         zle -N edit-command-line
         bindkey -M vicmd v edit-command-line
+
+        # Yazi
+        function yy() {
+        	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        	yazi "$@" --cwd-file="$tmp"
+        	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        		cd -- "$cwd"
+        	fi
+        	rm -f -- "$tmp"
+        }
       '';
       completionInit = ''
         zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -26,7 +43,7 @@ in {
       shellAliases = {
         ls = "eza";
         lg = "lazygit";
-        cat = "smart_cat";
+        cat = "bat";
       };
 
       sessionVariables = {
@@ -42,19 +59,12 @@ in {
       }];
     };
 
-    programs.atuin = {
-      enable = true;
-      flags = [ "--disable-up-arrow" ];
-    };
-
-    programs.zoxide.enable = true;
-
     home.file = {
-      "zsh" = {
+      "p10k" = {
         enable = true;
-        source = "${config_sym_dir}/zsh";
-        recursive = true;
-        target = ".config/zsh";
+        source = "${config_sym_dir}/zsh/.p10k.zsh";
+        recursive = false;
+        target = ".config/zsh/.p10k.zsh";
       };
     };
   };

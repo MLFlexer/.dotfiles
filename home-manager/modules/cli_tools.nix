@@ -15,8 +15,8 @@
       python3
       ripgrep
       ripgrep-all
-      zoxide
-      nixfmt
+      # zoxide
+      # nixfmt
       yazi
     ];
   };

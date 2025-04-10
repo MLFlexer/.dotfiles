@@ -11,7 +11,8 @@
   # gnome.enable = true;
   isDesktop = false;
   cli_tools.enable = true;
-  # cli_extra.enable = true;
+  gh.enable = true;
+  cli_extra.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -30,7 +31,7 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  home.packages = [ pkgs.cowsay ];
+
   programs = {
     direnv = {
       enable = true;
