@@ -85,7 +85,7 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager discord ])
+    packages = (with pkgs; [ discord ])
       ++ (with unstable; [ vscode wezterm element-desktop ]);
   };
 
@@ -127,6 +127,7 @@
 
   system.stateVersion = "24.11";
 
+  nixpkgs.config.allowUnsupportedSystem = true;
   nix = {
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";

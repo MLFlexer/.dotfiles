@@ -10,7 +10,7 @@ in {
       package = inputs.helix-editor.packages.${system}.default;
       extraPackages = with pkgs; [
         nil
-        nixpkgs-fmt
+        nixfmt
         lua-language-server
         bash-language-server
         marksman
