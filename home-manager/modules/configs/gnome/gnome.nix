@@ -19,7 +19,7 @@ in {
 
         "org/gnome/shell" = {
           favorite-apps = [
-            "zen.desktop"
+            "zen-beta.desktop"
             "org.wezfurlong.wezterm.desktop"
             "discord.desktop"
             "element-desktop.desktop"
