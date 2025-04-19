@@ -38,7 +38,7 @@ local keys = {
 		mods = "LEADER",
 		action = wezterm.action.SplitPane({
 			direction = "Right",
-			size = { Percent = 25 },
+			size = { Percent = 40 },
 		}),
 	},
 	{

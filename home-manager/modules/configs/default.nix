@@ -2,6 +2,7 @@
 
   options = {
     isDesktop = lib.mkOption { default = false; };
+    hasTouchpad = lib.mkOption { default = false; };
     steam.enable = lib.mkEnableOption "Configure as though steam is enabled";
   };
   imports = [

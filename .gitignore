@@ -1,7 +1,8 @@
 home-manager/config/tmux/plugins
-home-manager/config/zsh/.zsh_history
 home-manager/config/nvim/lazyvim.json
 home-manager/config/zsh/.zcompdump
+home-manager/config/zsh/plugins
+home-manager/config/zsh/.zsh_history
 *.env
 result
 *mullvad.conf
