@@ -50,8 +50,9 @@ if is_windows then
 			distribution = "NixOS",
 			default_cwd = "/home/mlflexer",
 		},
-	}
-	config.default_domain = "WSL:NixOS"
+	}	config.default_domain = "WSL:NixOS"
+	else
+	config.enable_wayland = true
 end
 
 config.ssh_domains = {

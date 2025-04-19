@@ -89,6 +89,10 @@
       ++ (with unstable; [ vscode wezterm element-desktop ]);
   };
 
+  environment.sessionVariables = {
+    XCURSOR_THEME = "Adwaita";
+  };
+
   environment.systemPackages = with pkgs; [
     cachix
     openssl
