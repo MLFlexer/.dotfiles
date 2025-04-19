@@ -2,12 +2,6 @@
 
 ![image](https://github.com/MLFlexer/.dotfiles/assets/75012728/05173810-e858-476c-a2b8-161b01f2237c)
 
-## Install
-
-> [!WARNING] 
-> This will clone the repository into `$HOME/repos/.dotfiles`. If you wish to
-> clone it elsewhere you must change it manually in the bash script / nix flakes.
-
 ### NixOS
 
 Replace `<host>` with desired host
