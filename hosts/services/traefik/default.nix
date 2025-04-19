@@ -99,7 +99,7 @@
               rule =
                 "Host(`torrent.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
               service = "torrent";
-              entryPoints = [ "web" ];
+              entryPoints = [ "web" "websecure" ];
             };
           };
 
