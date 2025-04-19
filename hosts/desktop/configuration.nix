@@ -159,13 +159,8 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ discord krisp-patcher ]) ++ (with unstable; [
-      vscode
-      vscodium
-      wezterm
-      element-desktop
-      zeroadPackages.zeroad
-    ]);
+    packages = (with pkgs; [ discord krisp-patcher ])
+      ++ (with unstable; [ wezterm element-desktop zeroadPackages.zeroad ]);
   };
 
   networking.firewall.allowedUDPPorts = [ 20595 ];
