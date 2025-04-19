@@ -165,6 +165,8 @@ in {
 
   networking.firewall.allowedUDPPorts = [ 20595 ];
 
+  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
+
   environment.systemPackages = with pkgs; [
     cachix
     # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
