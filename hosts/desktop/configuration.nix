@@ -12,7 +12,6 @@ let
     sha256 = "sha256-IdXv0MfRG1/1pAAwHLS2+1NESFEz2uXrbSdvU9OvdJ8=";
   }));
 in {
-  imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
   boot.loader = {
@@ -73,7 +72,7 @@ in {
   };
 
   # Emulate arm to cross compile raspberry pi 5
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "desktop_nixos";
   networking.networkmanager.enable = true;
@@ -160,14 +159,13 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager discord krisp-patcher ])
-      ++ (with unstable; [
-        vscode
-        vscodium
-        wezterm
-        element-desktop
-        zeroadPackages.zeroad
-      ]);
+    packages = (with pkgs; [ discord krisp-patcher ]) ++ (with unstable; [
+      vscode
+      vscodium
+      wezterm
+      element-desktop
+      zeroadPackages.zeroad
+    ]);
   };
 
   networking.firewall.allowedUDPPorts = [ 20595 ];
