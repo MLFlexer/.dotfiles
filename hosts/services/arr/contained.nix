@@ -57,7 +57,7 @@
                   ct state { established, related } accept
                   iifname "lo" accept
                   
-                  # # Allow host and LAN
+                  # Allow host and LAN
                   ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
                   # ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989, 64090} accept
                   ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
