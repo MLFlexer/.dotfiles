@@ -129,9 +129,19 @@
 
   system.stateVersion = "24.11";
 
-  nixpkgs.config.allowUnsupportedSystem = true;
   nix = {
     package = pkgs.nixVersions.stable;
-    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "mlflexer" ];
+    };
+
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
   };
+  nixpkgs.config.allowUnfree = true;
 }
