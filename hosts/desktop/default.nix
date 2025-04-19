@@ -21,6 +21,18 @@ in lib.nixosSystem {
     inherit pkgs unstable user inputs;
     host = { hostName = "desktop"; };
   };
-  modules = [ ./configuration.nix ];
+  modules = [
+    ./configuration.nix
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager = {
+        extraSpecialArgs = { inherit inputs system unstable; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user} = ./home.nix;
+      };
+    }
+  ];
 }
 

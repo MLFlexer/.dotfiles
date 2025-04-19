@@ -27,10 +27,12 @@ in lib.nixosSystem {
     ./modules/kanata/default.nix
     inputs.home-manager.nixosModules.home-manager
     {
-      home-manager.extraSpecialArgs = { inherit inputs system unstable; };
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.mlflexer = ./home.nix;
+      home-manager = {
+        extraSpecialArgs = { inherit inputs system unstable; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user} = ./home.nix;
+      };
     }
   ];
 }

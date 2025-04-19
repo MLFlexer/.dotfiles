@@ -86,12 +86,10 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ discord ])
-      ++ (with unstable; [ vscode wezterm element-desktop ]);
+      ++ (with unstable; [ wezterm element-desktop ]);
   };
 
-  environment.sessionVariables = {
-    XCURSOR_THEME = "Adwaita";
-  };
+  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
   environment.systemPackages = with pkgs; [
     cachix

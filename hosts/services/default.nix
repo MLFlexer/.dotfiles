@@ -9,7 +9,6 @@
     ./nextcloud.nix
     ./arr
     ./traefik
-    # ./kanata
   ];
 
 }

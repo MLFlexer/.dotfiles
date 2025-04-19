@@ -59,9 +59,19 @@
                   
                   # Allow host and LAN
                   ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
+                  # ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989, 64090} accept
                   ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
+                  # ip saddr ${config.arr.container.host_ip} udp dport 64090 accept
 
-                  oifname "wg-mullvad" accept
+                  # ip saddr ${config.arr.container.host_ip} accept
+
+                  # Allow host and LAN
+                  ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
+
+                  # Allow VPN interface traffic
+                  # iifname "wg-mullvad" accept
+
+                  iifname "wg-mullvad" accept
 
                   log prefix "INPUT-DROP: " level warn
                   drop
@@ -82,6 +92,9 @@
 
                   # mullvad port for initial connection
                   oifname "eth0" udp dport 51820 accept
+
+                  oifname "wg-mullvad" udp dport 53 accept
+                  oifname "wg-mullvad" tcp dport 53 accept
                   
                   log prefix "OUTPUT-DROP: " level warn                  
                   drop
@@ -89,6 +102,9 @@
 
                 chain forward {
                   type filter hook forward priority 0; policy drop;
+                  ct state { established, related } accept
+                  iifname "wg-mullvad" accept
+                  oifname "wg-mullvad" accept
                   drop
                 }
               '';
