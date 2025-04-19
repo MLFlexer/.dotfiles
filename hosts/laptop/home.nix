@@ -7,8 +7,9 @@
   wezterm.enable = true;
   zsh.enable = true;
   bat.enable = true;
-  # gnome.enable = true;
+  gnome.enable = true;
   isDesktop = false;
+  hasTouchpad = true;
   cli_tools.enable = true;
   gh.enable = true;
   cli_extra.enable = true;
