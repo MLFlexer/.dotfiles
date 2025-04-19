@@ -1,15 +1,16 @@
-{ config, config_dir, pkgs, ... }:
-let
-  # path to config directory
-  config_sym_dir = config.lib.file.mkOutOfStoreSymlink "${config_dir}";
+{ config, lib, pkgs, ... }:
+let config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
 in {
-  home.packages = with pkgs; [ wezterm ];
+  options = { wezterm.enable = lib.mkEnableOption "Enables Wezterm config"; };
 
-  # Symlink files
-  home.file."wezterm" = {
-    enable = true;
-    source = "${config_sym_dir}/wezterm";
-    recursive = true;
-    target = ".config/wezterm";
+  config = lib.mkIf config.wezterm.enable {
+    home.packages = with pkgs; [ wezterm ];
+
+    home.file."wezterm" = {
+      enable = true;
+      source = "${config_sym_dir}/wezterm";
+      recursive = true;
+      target = ".config/wezterm";
+    };
   };
 }

@@ -11,24 +11,29 @@ let
   };
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
-
 in inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
-  extraSpecialArgs = { inherit config_dir pkgs_unstable inputs system; };
+  extraSpecialArgs = { inherit pkgs_unstable inputs system; };
   modules = [
     inputs.nix-index-database.hmModules.nix-index # comma integration
-    ./modules/cli_tools.nix
-    ./modules/cli_extra.nix
-    ./modules/configs/bat.nix
-    ./modules/configs/git.nix
-    ./modules/configs/zsh.nix
-    ./modules/configs/wezterm.nix
-    ./modules/configs/nvim.nix
-    ./modules/configs/helix.nix
-    ./modules/configs/gh.nix
+    ./modules
     {
+      nvim.enable = true;
+      helix.enable = true;
+      git.enable = true;
+      wezterm.enable = true;
+      zsh.enable = true;
+      bat.enable = true;
+      gnome.enable = true;
+      isDesktop = true;
+      cli_tools.enable = true;
+      cli_extra.enable = true;
+
+      user = user;
+      config_dir = config_dir;
+
       home = {
-        username = "${user}";
+        username = user;
         homeDirectory = "/home/${user}";
         stateVersion = "24.11";
       };

@@ -108,6 +108,7 @@ in {
       # xkbVariant = "";
     };
   };
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
@@ -160,7 +161,7 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ home-manager discord krisp-patcher ])
-      ++ (with unstable; [ vscode vscodium wezterm ]);
+      ++ (with unstable; [ vscode vscodium wezterm element-desktop ]);
   };
 
   environment.systemPackages = with pkgs; [

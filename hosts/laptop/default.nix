@@ -25,15 +25,12 @@ in lib.nixosSystem {
     ./configuration.nix
     ./hardware-configuration.nix
     ./modules/kanata/default.nix
+    inputs.home-manager.nixosModules.home-manager
     {
-
-      nixpkgs.config.allowUnsupportedSystem = true;
-      hardware.graphics.extraPackages = with pkgs; [
-        rocmPackages_5.clr.icd
-        rocmPackages_5.clr
-        rocmPackages_5.rocminfo
-        rocmPackages_5.rocm-runtime
-      ];
+      home-manager.extraSpecialArgs = { inherit inputs system unstable; };
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.mlflexer = ./home.nix;
     }
   ];
 }

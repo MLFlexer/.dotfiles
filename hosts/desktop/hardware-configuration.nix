@@ -6,8 +6,18 @@
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules =
-    [ "kvm-amd" "nvidia" "nvidia_uvm" "nvidia_modeset" "nvidia_drm" ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "nvidia"
+    "nvidia-utils"
+    "lib32-nvidia-utils"
+    "egl-wayland"
+    "nvidia_uvm"
+    "nvidia_modeset"
+    "libva-nvidia-driver"
+    "nvidia_drm"
+  ];
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4fa97e83-f840-4632-944d-fc38e32427ae";
@@ -17,6 +27,11 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/A5C1-10EF";
     fsType = "vfat";
+  };
+
+  fileSystems."/sandisk" = {
+    device = "/dev/disk/by-uuid/f431743a-286e-4cfe-b835-170f412cf0ad";
+    fsType = "ext4";
   };
 
   swapDevices =
@@ -39,7 +54,7 @@
 
   # https://github.com/CallMeCaleb94/KyniFlakes/blob/main/modules/nvidia.nix
   hardware.nvidia = {
-    open = true;
+    open = false;
     modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;

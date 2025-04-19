@@ -20,13 +20,18 @@ in lib.nixosSystem {
     raspberry-pi-nix.nixosModules.raspberry-pi
     raspberry-pi-nix.nixosModules.sd-image
     ./configuration.nix
-    ./modules/adguard.nix
-    ./modules/searxng.nix
-    ./modules/jellyfin.nix
-    ./modules/home-assistant.nix
-    ./modules/traefik/traefik.nix
-    ./modules/nextcloud/nextcloud.nix
-    ./modules/arr/default.nix
+    ../services
+    {
+      home-assistant.enable = true;
+      adguardhome.enable = true;
+      nextcloud.enable = true;
+      traefik.enable = true;
+
+      arr.jelly.enable = false;
+      arr.enable = false;
+      arr.container.enable = false;
+    }
+
   ];
 }
 

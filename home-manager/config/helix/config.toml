@@ -41,3 +41,6 @@ h = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.s
 Y = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE open    zoom > /dev/null"
 V = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE vsplit  zoom > /dev/null"
 H = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE hsplit  zoom > /dev/null"
+
+[keys.insert]
+C-v = ":primary-clipboard-paste-before"
