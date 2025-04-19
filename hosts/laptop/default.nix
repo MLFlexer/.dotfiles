@@ -24,7 +24,6 @@ in lib.nixosSystem {
   modules = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ./modules/kanata/default.nix
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager = {

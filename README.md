@@ -6,41 +6,27 @@
 
 Replace `<host>` with desired host
 
-```bash
+```sh
 nixos-rebuild switch --use-remote-sudo --flake github:MLFlexer/.dotfiles#<host>
 ```
 
 Or do it locally by cloning the repo and running:
 
-```bash
+```sh
 nixos-rebuild switch --use-remote-sudo --flake $HOME/repos/.dotfiles#<host>
-```
-
-### Home-Manager
-
-#### NixOS distribution
-
-```bash
-nix-shell -p git --command "curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/nix_git_install.sh | bash"
-```
-
-#### Non-NixOS distribution
-
-```bash
-curl -sSL https://raw.githubusercontent.com/MLFlexer/.dotfiles/main/install.sh | bash
 ```
 
 ## Updating
 
 ### NixOS-rebuild switch
 
-```bash
+```sh
 nixos-rebuild switch --use-remote-sudo --flake $HOME/repos/.dotfiles#<host>
 ```
 
 ### Home-Manager switch
 
-```bash
+```sh
 home-manager switch --flake $HOME/repos/.dotfiles/#<user>
 ```
 
@@ -48,7 +34,7 @@ home-manager switch --flake $HOME/repos/.dotfiles/#<user>
 
 Updating all inputs:
 
-```bash
+```sh
 nix flake update
 ```
 
@@ -60,7 +46,7 @@ nix flake lock --update-input nixpkgs-unstable
 
 ## Cleaning
 
-```bash
+```sh
 nix-collect-garbage --delete-older-than 7d
 ```
 
