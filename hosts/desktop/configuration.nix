@@ -161,8 +161,16 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ home-manager discord krisp-patcher ])
-      ++ (with unstable; [ vscode vscodium wezterm element-desktop ]);
+      ++ (with unstable; [
+        vscode
+        vscodium
+        wezterm
+        element-desktop
+        zeroadPackages.zeroad
+      ]);
   };
+
+  networking.firewall.allowedUDPPorts = [ 20595 ];
 
   environment.systemPackages = with pkgs; [
     cachix
