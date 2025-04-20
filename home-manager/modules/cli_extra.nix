@@ -14,14 +14,13 @@
       # erdtree
       # fselect
       # fx
-      gh
       # grex
       ntfy-sh
       # procs
       # sd
       tealdeer
       gnumake
-      xclip
+      # xclip
       # xsv
 
       act
@@ -29,22 +28,23 @@
       pandoc
       hyperfine
       texliveMedium
-    ]) ++ (with pkgs_unstable; [
-      # ollama
+    ]) ++ (with pkgs_unstable;
+      [
+        # ollama
 
-      nodejs
-      yarn
-      rustup
-      # ghc # Haskell
-      go
-      haskell-language-server
-      nodejs_20
-      zig
-      nixd
-      nixpkgs-fmt
-      asm-lsp
-      lua-language-server
-      nil
-    ]);
+        # nodejs
+        # yarn
+        # rustup
+        # ghc # Haskell
+        # go
+        # haskell-language-server
+        # nodejs_20
+        # zig
+        # nixd
+        # nixpkgs-fmt
+        # asm-lsp
+        # lua-language-server
+        # nil
+      ]);
   };
 }

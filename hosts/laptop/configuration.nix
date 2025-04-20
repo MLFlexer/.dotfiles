@@ -7,7 +7,7 @@
     efi.canTouchEfiVariables = true;
   };
   # Emulate arm to cross compile raspberry pi 5
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "laptop_nixos";
   networking.networkmanager.enable = true;
@@ -31,16 +31,9 @@
 
   services.xserver = {
     enable = true;
-
-    # Enable GNOME Desktop Environment.
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-
-    # Configure keymap in X11
-    xkb = {
-      layout = "dk";
-      # xkbVariant = "";
-    };
+    xkb.layout = "dk";
   };
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -92,17 +85,16 @@
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager discord lima ])
-      ++ (with unstable; [ vscode vscodium wezterm ]);
+    packages = (with pkgs; [ discord ])
+      ++ (with unstable; [ wezterm element-desktop ]);
   };
+
+  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
   environment.systemPackages = with pkgs; [
     cachix
-    # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
     gnupg
-    # obs-studio 
-    # anki-bin
     cacert
     curl
     firefox
@@ -139,6 +131,17 @@
 
   nix = {
     package = pkgs.nixVersions.stable;
-    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "mlflexer" ];
+    };
+
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
   };
+  nixpkgs.config.allowUnfree = true;
 }

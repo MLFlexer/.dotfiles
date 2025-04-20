@@ -24,15 +24,14 @@ in lib.nixosSystem {
   modules = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ./modules/kanata/default.nix
+    inputs.home-manager.nixosModules.home-manager
     {
-
-      hardware.graphics.extraPackages = with pkgs; [
-        rocmPackages_5.clr.icd
-        rocmPackages_5.clr
-        rocmPackages_5.rocminfo
-        rocmPackages_5.rocm-runtime
-      ];
+      home-manager = {
+        extraSpecialArgs = { inherit inputs system unstable; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user} = ./home.nix;
+      };
     }
   ];
 }

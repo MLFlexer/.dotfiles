@@ -19,7 +19,7 @@ in {
 
         "org/gnome/shell" = {
           favorite-apps = [
-            "zen.desktop"
+            "zen-beta.desktop"
             "org.wezfurlong.wezterm.desktop"
             "discord.desktop"
             "element-desktop.desktop"
@@ -56,6 +56,21 @@ in {
         "org/gnome/desktop/peripherals/mouse" = lib.mkIf config.isDesktop {
           accel-profile = "flat";
           speed = 0.5;
+        };
+
+        "org/gnome/desktop/peripherals/touchpad" = lib.mkIf config.hasTouchpad {
+          two-finger-scroll = true;
+          two-finger-scrolling-enabled = true;
+          edge-scrolling-enabled = false;
+          disable-while-typing = true;
+          tap-button-map = "default";
+          tap-and-drag-lock = false;
+          accel-profile = "default";
+          click-method = "fingers";
+          natural-scroll = true;
+          left-handed = "mouse";
+          tap-to-click = true;
+          tap-and-drag = true;
         };
 
         "org/gnome/shell/keybindings" = {

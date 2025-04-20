@@ -12,7 +12,6 @@ let
     sha256 = "sha256-IdXv0MfRG1/1pAAwHLS2+1NESFEz2uXrbSdvU9OvdJ8=";
   }));
 in {
-  imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
   boot.loader = {
@@ -73,7 +72,7 @@ in {
   };
 
   # Emulate arm to cross compile raspberry pi 5
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "desktop_nixos";
   networking.networkmanager.enable = true;
@@ -160,9 +159,13 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ home-manager discord krisp-patcher ])
-      ++ (with unstable; [ vscode vscodium wezterm element-desktop ]);
+    packages = (with pkgs; [ discord krisp-patcher ])
+      ++ (with unstable; [ wezterm element-desktop zeroad ]);
   };
+
+  networking.firewall.allowedUDPPorts = [ 20595 ];
+
+  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
   environment.systemPackages = with pkgs; [
     cachix
@@ -221,6 +224,17 @@ in {
 
   nix = {
     package = pkgs.nixVersions.stable;
-    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "mlflexer" ];
+    };
+
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
   };
+  nixpkgs.config.allowUnfree = true;
 }

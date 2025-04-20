@@ -14,7 +14,7 @@ let
 
 in inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
-  extraSpecialArgs = { inherit config_dir pkgs_unstable; };
+  extraSpecialArgs = { inherit config_dir pkgs_unstable inputs system; };
   modules = [
     inputs.nix-index-database.hmModules.nix-index # comma integration
     ./modules
