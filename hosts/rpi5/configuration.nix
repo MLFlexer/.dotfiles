@@ -38,12 +38,13 @@
     packages = (with pkgs; [
       cachix
       tmux
-      blocky
       btop
       # stable
     ]) ++ (with unstable; [ ]);
+
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIARHveCo8QOYQzd4rUYdPR37iXMe6wW+XgUacnmJfkwN malthemlarsen@gmail.com"
     ];
   };
 
