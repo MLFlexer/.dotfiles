@@ -40,7 +40,7 @@
       tmux
       btop
       # stable
-    ]) ++ (with unstable; [ ]);
+    ]) ++ (with unstable; [ wezterm ]);
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com"

@@ -4,7 +4,7 @@
   imports = [ ../../home-manager/modules ];
   helix.enable = true;
   git.enable = true;
-  wezterm.enable = true;
+  wezterm.enable = false;
   zsh.enable = true;
   bat.enable = true;
   gnome.enable = false;
