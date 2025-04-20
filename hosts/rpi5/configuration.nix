@@ -86,10 +86,6 @@
       from = 7359;
       to = 7359;
     }
-    {
-      from = 53;
-      to = 53;
-    } # adguard
   ];
 
   fileSystems = {
