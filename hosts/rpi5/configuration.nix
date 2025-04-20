@@ -37,7 +37,6 @@
     shell = pkgs.zsh;
     packages = (with pkgs; [
       cachix
-      home-manager
       tmux
       blocky
       btop

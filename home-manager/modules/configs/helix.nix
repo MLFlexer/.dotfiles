@@ -8,17 +8,12 @@ in {
       enable = true;
       defaultEditor = true;
       package = inputs.helix-editor.packages.${system}.default;
-      extraPackages = with pkgs; [
-        nil
-        nixfmt
-        lua-language-server
-        bash-language-server
-        marksman
-
-        # non-minimal
-        rust-analyzer
-        llvmPackages_19.clang-unwrapped
-      ];
+      extraPackages = with pkgs;
+        [ nil nixfmt lua-language-server bash-language-server marksman ]
+        ++ lib.lists.optionals config.extra_pkgs.enable [
+          rust-analyzer
+          llvmPackages_19.clang-unwrapped
+        ];
     };
 
     home.packages = [ pkgs.wl-clipboard ];

@@ -7,12 +7,12 @@
   wezterm.enable = true;
   zsh.enable = true;
   bat.enable = true;
-  gnome.enable = true;
-  isDesktop = true;
+  gnome.enable = false;
+  isDesktop = false;
   hasTouchpad = false;
   cli_tools.enable = true;
   gh.enable = true;
-  cli_extra.enable = true;
+  cli_extra.enable = false;
   extra_pkgs.enable = false;
 
   home.username = "mlflexer";
