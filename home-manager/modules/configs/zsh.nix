@@ -10,6 +10,7 @@ in {
     };
 
     programs.zoxide.enable = true;
+    programs.carapace.enable = true;
 
     programs.zsh = {
       enable = true;
