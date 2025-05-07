@@ -4,15 +4,15 @@
   imports = [ ../../home-manager/modules ];
   helix.enable = true;
   git.enable = true;
-  wezterm.enable = true;
+  wezterm.enable = false;
   zsh.enable = true;
   bat.enable = true;
-  gnome.enable = true;
-  isDesktop = true;
+  gnome.enable = false;
+  isDesktop = false;
   hasTouchpad = false;
   cli_tools.enable = true;
   gh.enable = true;
-  cli_extra.enable = true;
+  cli_extra.enable = false;
   extra_pkgs.enable = false;
 
   home.username = "mlflexer";

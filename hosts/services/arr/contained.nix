@@ -58,10 +58,11 @@
                   iifname "lo" accept
                   
                   # Allow host and LAN
-                  ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
-                  # ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989, 64090} accept
-                  ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
-                  # ip saddr ${config.arr.container.host_ip} udp dport 64090 accept
+                  # ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
+                  # ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
+
+                  ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
+                                    
 
                   # ip saddr ${config.arr.container.host_ip} accept
 
@@ -144,29 +145,29 @@
         '';
 
         # qbittorrent
-        systemd.services.qbittorrent = {
-          after = [ "network.target" ];
-          description = "Qbittorrent Web";
-          wantedBy = [ "multi-user.target" ];
-          path = [ pkgs.qbittorrent-nox ];
-          serviceConfig = {
-            ExecStart = ''
-              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
-                toString config.arr.container.torrent_port
-              } --profile=${config.arr.container.torrent_dir}
-            '';
-            User = "qbittorrent";
-            Group = config.arr.group;
-            MemoryMax = "1G";
-            Restart = "always";
-          };
-        };
+        # systemd.services.qbittorrent = {
+        #   after = [ "network.target" ];
+        #   description = "Qbittorrent Web";
+        #   wantedBy = [ "multi-user.target" ];
+        #   path = [ pkgs.qbittorrent-nox ];
+        #   serviceConfig = {
+        #     ExecStart = ''
+        #       ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
+        #         toString config.arr.container.torrent_port
+        #       } --profile=${config.arr.container.torrent_dir}
+        #     '';
+        #     User = "qbittorrent";
+        #     Group = config.arr.group;
+        #     MemoryMax = "1G";
+        #     Restart = "always";
+        #   };
+        # };
 
-        users.users.qbittorrent = {
-          isSystemUser = true;
-          description = "User for running qbittorrent";
-          group = config.arr.group;
-        };
+        # users.users.qbittorrent = {
+        #   isSystemUser = true;
+        #   description = "User for running qbittorrent";
+        #   group = config.arr.group;
+        # };
 
         networking.firewall.allowedTCPPorts =
           [ config.arr.container.torrent_port ];
@@ -175,7 +176,7 @@
         users.groups.${config.arr.group} = { name = config.arr.group; };
 
         services.prowlarr = {
-          enable = true;
+          enable = false;
           openFirewall = true;
         };
 

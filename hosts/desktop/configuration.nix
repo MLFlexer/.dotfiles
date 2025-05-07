@@ -160,7 +160,7 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ discord krisp-patcher ])
-      ++ (with unstable; [ wezterm element-desktop zeroadPackages.zeroad ]);
+      ++ (with unstable; [ wezterm element-desktop zeroad ]);
   };
 
   networking.firewall.allowedUDPPorts = [ 20595 ];

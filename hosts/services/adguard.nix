@@ -7,6 +7,11 @@
   };
 
   config = lib.mkIf config.adguardhome.enable {
+    networking.firewall.allowedUDPPortRanges = [{
+      from = 53;
+      to = 53;
+    }];
+
     services.adguardhome = {
       enable = true;
       openFirewall = true;
