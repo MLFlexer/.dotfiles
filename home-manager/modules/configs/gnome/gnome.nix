@@ -1,5 +1,5 @@
 { lib, config, ... }:
-let wallpaper = builtins.toString ./img/background.png;
+let wallpaper = builtins.toString (./img/background.png);
 in {
   options = { gnome.enable = lib.mkEnableOption "Enables Gnome config"; };
 
