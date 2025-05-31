@@ -3,6 +3,7 @@
 
   # for raspberry pi
   nixConfig = {
+    extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
@@ -12,6 +13,9 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "mlflexer.cachix.org-1:9tD5WIKif3nAUHHq6wTYFlg1bMq1z5uF0+h5UqICsQQ="
+    ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
     trusted-users = [ "root" "mlflexer" ];
   };
@@ -28,10 +32,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    raspberry-pi-nix = {
-      url = "github:tstat/raspberry-pi-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # raspberry-pi-nix = {
+    #   url = "github:tstat/raspberry-pi-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    nixos-raspberrypi = { url = "github:nvmd/nixos-raspberrypi/main"; };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 

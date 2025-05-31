@@ -88,6 +88,11 @@
     }
   ];
 
+  fileSystems."/" = {
+    device = "/dev/nvme0n1p2";
+    fsType = "ext4";
+  };
+
   fileSystems = {
     "/mnt/usbdrive2" = {
       device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
@@ -125,33 +130,33 @@
     yazi
   ];
   system.stateVersion = "24.11";
-  raspberry-pi-nix = {
-    kernel-version = "v6_6_51";
-    board = "bcm2712";
-    libcamera-overlay = { enable = false; };
-    uboot.enable = false;
-  };
-  # raspberry-pi-nix.pin-inputs = { enable = true; };
-  hardware = {
-    bluetooth.enable = true;
-    raspberry-pi = {
-      config = {
-        all = {
-          base-dt-params = {
-            nvme.enable = true;
-            pciex1_gen = {
-              enable = true;
-              value = "3";
-            };
-            # enable autoprobing of bluetooth driver
-            # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
-            krnbt = {
-              enable = true;
-              value = "on";
-            };
-          };
-        };
-      };
-    };
-  };
+  # raspberry-pi-nix = {
+  #   kernel-version = "v6_6_51";
+  #   board = "bcm2712";
+  #   libcamera-overlay = { enable = false; };
+  #   uboot.enable = false;
+  # };
+  # # raspberry-pi-nix.pin-inputs = { enable = true; };
+  # hardware = {
+  #   bluetooth.enable = true;
+  #   raspberry-pi = {
+  #     config = {
+  #       all = {
+  #         base-dt-params = {
+  #           nvme.enable = true;
+  #           pciex1_gen = {
+  #             enable = true;
+  #             value = "3";
+  #           };
+  #           # enable autoprobing of bluetooth driver
+  #           # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
+  #           krnbt = {
+  #             enable = true;
+  #             value = "on";
+  #           };
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 }
