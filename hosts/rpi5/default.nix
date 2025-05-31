@@ -11,11 +11,11 @@ let
 
   lib = inputs.nixos-raspberrypi.lib;
 
-  raspberry-pi-nix = inputs.raspberry-pi-nix;
+  nixos-raspberrypi = inputs.nixos-raspberrypi;
 
 in lib.nixosSystem {
   inherit system;
-  specialArgs = { inherit unstable user raspberry-pi-nix inputs; };
+  specialArgs = { inherit unstable user nixos-raspberrypi inputs; };
   modules = [
     # raspberry-pi-nix.nixosModules.raspberry-pi
     # raspberry-pi-nix.nixosModules.sd-image
