@@ -13,9 +13,6 @@ jobs:
       with:
         name: mlflexer
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        extraPullNames: |
-          nixpkgs
-          nix-community
     - name: Add extra binary caches
       run: cachix use nixos-raspberrypi
     - name: Build the rpi5 flake
