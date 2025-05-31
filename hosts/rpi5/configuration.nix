@@ -88,6 +88,11 @@
     }
   ];
 
+  fileSystems."/" = {
+    device = "/dev/nvme0n1p2";
+    fsType = "ext4";
+  };
+
   fileSystems = {
     "/mnt/usbdrive2" = {
       device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";

@@ -23,6 +23,7 @@
       hostName = config.nextcloud.domain;
       config.adminuser = "admin";
       config.adminpassFile = "/etc/nextcloud-admin-pass";
+      config.dbtype = "sqlite";
       # TODO: move this 
       # datadir = "/home/mlflexer/nextcloud";
       # home = "/home/mlflexer/nextcloud";

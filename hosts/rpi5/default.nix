@@ -48,7 +48,6 @@ in lib.nixosSystem {
       boot.initrd.kernelModules = [ "nvme" ];
     }
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-    inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
     ./configuration.nix
     ../services
     {
