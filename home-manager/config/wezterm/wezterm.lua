@@ -15,6 +15,7 @@ local function basename(s)
 end
 
 local config = {
+	enable_kitty_keyboard = true,
 	default_workspace = "~",
 	font = require("font").font,
 	font_rules = require("font").font_rules,

@@ -4,7 +4,10 @@ local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 local keys = {
-	{
+
+    -- Because of kitty protocol bug: https://github.com/nushell/nushell/issues/14783
+    { key = "Delete", action = act.SendKey { key = "Delete" } },
+    {
 		key = "s",
 		mods = "LEADER",
 		action = workspace_switcher.switch_workspace(),

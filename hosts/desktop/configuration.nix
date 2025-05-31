@@ -163,7 +163,7 @@ in {
       ++ (with unstable; [ wezterm element-desktop zeroad ]);
   };
 
-  networking.firewall.allowedUDPPorts = [ 20595 ];
+  # networking.firewall.allowedUDPPorts = [ 20595 ];
 
   environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
