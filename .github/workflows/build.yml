@@ -16,6 +16,7 @@ jobs:
         extraPullNames: |
           nixpkgs
           nix-community
-          nixos-raspberrypi
+    - name: Add extra binary caches
+      run: cachix use nixos-raspberrypi
     - name: Build the rpi5 flake
       run: nix build .#nixosConfigurations.rpi5.config.system.build.toplevel
