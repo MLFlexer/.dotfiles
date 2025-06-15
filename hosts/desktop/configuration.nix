@@ -159,7 +159,7 @@ in {
     description = "${user} user.";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ discord krisp-patcher ])
+    packages = (with pkgs; [ discord krisp-patcher prismlauncher ])
       ++ (with unstable; [ wezterm element-desktop zeroad ]);
   };
 
