@@ -4,7 +4,16 @@ local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 local keys = {
-	{
+  {
+    key = 'C',
+    mods = 'CTRL',
+    action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection',
+  },
+  {
+    key = 'V',
+    mods = 'CTRL',
+    action = wezterm.action.PasteFrom 'Clipboard',
+  },  	{
 		key = "s",
 		mods = "LEADER",
 		action = workspace_switcher.switch_workspace(),
@@ -191,6 +200,7 @@ local keys = {
 		mods = "LEADER",
 		action = act.ToggleFullScreen,
 	},
+	  { key = 'L', mods = 'CTRL', action = wezterm.action.ShowDebugOverlay },
 }
 
 local function tab_switch_keys(key_table, modifier)
