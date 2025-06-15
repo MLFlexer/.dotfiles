@@ -13,7 +13,7 @@ local keys = {
     key = 'V',
     mods = 'CTRL',
     action = wezterm.action.PasteFrom 'Clipboard',
-  },  	{
+  },  	
 
     -- Because of kitty protocol bug: https://github.com/nushell/nushell/issues/14783
     { key = "Delete", action = act.SendKey { key = "Delete" } },
