@@ -104,7 +104,7 @@
     curl
     firefox
     gcc
-    okular # pdf reader
+    kdePackages.okular # pdf reader
     # pinentry-gnome
     steam-run # to run unpatched binaies
     unzip
@@ -132,7 +132,7 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   nix = {
     package = pkgs.nixVersions.stable;

@@ -31,9 +31,9 @@
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.graphics.extraPackages = with pkgs; [
-    rocmPackages_5.clr.icd
-    rocmPackages_5.clr
-    rocmPackages_5.rocminfo
-    rocmPackages_5.rocm-runtime
+    rocmPackages.clr.icd
+    rocmPackages.clr
+    rocmPackages.rocminfo
+    rocmPackages.rocm-runtime
   ];
 }
