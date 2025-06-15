@@ -14,6 +14,10 @@ local keys = {
     mods = 'CTRL',
     action = wezterm.action.PasteFrom 'Clipboard',
   },  	{
+
+    -- Because of kitty protocol bug: https://github.com/nushell/nushell/issues/14783
+    { key = "Delete", action = act.SendKey { key = "Delete" } },
+    {
 		key = "s",
 		mods = "LEADER",
 		action = workspace_switcher.switch_workspace(),
