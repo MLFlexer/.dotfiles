@@ -1,5 +1,10 @@
 { pkgs, unstable, user, inputs, ... }: {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ inputs.niri.nixosModules.niri ./hardware-configuration.nix ];
+
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+  };
 
   # Bootloader.
   boot.loader = {

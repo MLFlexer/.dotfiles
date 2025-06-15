@@ -1,7 +1,8 @@
 { config, pkgs, system, inputs, ... }:
 
 {
-  imports = [ ../../home-manager/modules ];
+  imports = [../../home-manager/modules ];
+
   helix.enable = true;
   git.enable = true;
   wezterm.enable = true;
@@ -14,6 +15,13 @@
   gh.enable = true;
   cli_extra.enable = true;
   extra_pkgs.enable = false;
+  niri.enable = true;
+
+    fonts.fontconfig.enable = true;
+
+home.packages = with pkgs; [
+    nerdfonts
+  ];
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";

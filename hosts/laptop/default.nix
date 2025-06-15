@@ -6,6 +6,7 @@ let
   pkgs = import inputs.nixpkgs {
     inherit system;
     config.allowUnfree = true;
+    overlays = [inputs.niri.overlays.niri];
   };
 
   unstable = import inputs.nixpkgs-unstable {
@@ -21,6 +22,7 @@ in lib.nixosSystem {
     inherit pkgs unstable user inputs;
     host = { hostName = "laptop"; };
   };
+  
   modules = [
     ./configuration.nix
     ./hardware-configuration.nix
@@ -33,6 +35,8 @@ in lib.nixosSystem {
         users.${user} = ./home.nix;
       };
     }
+
+
   ];
 }
 
