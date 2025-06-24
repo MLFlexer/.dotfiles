@@ -13,6 +13,12 @@ let
   }));
 in {
 
+  imports = [ inputs.niri.nixosModules.niri ];
+
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+  };
   # Bootloader.
   boot.loader = {
     systemd-boot = {
@@ -178,7 +184,7 @@ in {
     curl
     firefox
     gcc
-    okular # pdf reader
+    kdePackages.okular # pdf reader
     # pinentry-gnome
     steam-run # to run unpatched binaies
     unzip
@@ -220,7 +226,7 @@ in {
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   nix = {
     package = pkgs.nixVersions.stable;
