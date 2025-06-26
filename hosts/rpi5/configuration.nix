@@ -56,15 +56,17 @@
   };
 
   networking.firewall.allowedTCPPorts = [
-    22
-    # 25565
+    # 22
+    12345
+    25565
+    25566
     # 3000
     # 4221
     # 
     8173
     443
     5000
-    53
+    # 53
     6969
     80
     8000
@@ -87,6 +89,11 @@
       to = 7359;
     }
   ];
+
+  networking.firewall.extraInputRules = ''
+    iptables -A INPUT -p udp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+    iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+  '';
 
   fileSystems."/" = {
     device = "/dev/nvme0n1p2";

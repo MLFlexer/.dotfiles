@@ -104,53 +104,75 @@
           };
 
           services = {
-            prowlarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:9696";
-              }];
+            prowlarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:9696"; }];
+              };
+            };
 
-            sonarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:8989";
-              }];
+            sonarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:8989"; }];
+              };
+            };
 
-            radarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:7878";
-              }];
+            radarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:7878"; }];
+              };
+            };
 
-            torrent.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:8173";
-              }];
+            torrent = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:8173"; }];
+              };
+            };
 
-            jellyfin.loadBalancer.servers = lib.mkIf config.arr.jelly.enable [{
-              url = "http://localhost:8096";
-            }];
+            jellyfin = lib.mkIf config.arr.jelly.enable {
+              loadBalancer = {
+                servers = [{ url = "http://localhost:8096"; }];
+              };
+            };
 
-            jellyseerr.loadBalancer.servers =
-              lib.mkIf config.arr.jelly.enable [{
-                url = "http://localhost:5055";
-              }];
+            jellyseerr = lib.mkIf config.arr.jelly.enable {
+              loadBalancer = {
+                servers = [{ url = "http://localhost:5055"; }];
+              };
+            };
 
-            nextcloud.loadBalancer.servers = lib.mkIf config.nextcloud.enable [{
-              url =
-                "http://localhost:${builtins.toString config.nextcloud.port}";
-            }];
+            nextcloud = lib.mkIf config.nextcloud.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.nextcloud.port
+                    }";
+                }];
+              };
+            };
 
-            home-assistant.loadBalancer.servers =
-              lib.mkIf config.home-assistant.enable [{
-                url = "http://localhost:${
-                    builtins.toString config.home-assistant.port
-                  }";
-              }];
+            home-assistant = lib.mkIf config.home-assistant.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.home-assistant.port
+                    }";
+                }];
+              };
+            };
 
-            adguardhome.loadBalancer.servers =
-              lib.mkIf config.adguardhome.enable [{
-                url = "http://localhost:${
-                    builtins.toString config.adguardhome.port
-                  }";
-              }];
+            adguardhome = lib.mkIf config.adguardhome.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.adguardhome.port
+                    }";
+                }];
+              };
+            };
           };
         };
       };

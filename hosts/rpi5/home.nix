@@ -12,7 +12,7 @@
   hasTouchpad = false;
   cli_tools.enable = true;
   gh.enable = true;
-  cli_extra.enable = false;
+  cli_extra.enable = true;
   extra_pkgs.enable = false;
 
   home.username = "mlflexer";
