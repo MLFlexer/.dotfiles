@@ -79,8 +79,8 @@ in lib.nixosSystem {
       traefik.enable = true;
 
       arr.jelly.enable = false;
-      arr.enable = false;
-      arr.container.enable = false;
+      arr.enable = true;
+      arr.container.enable = true;
     }
 
     inputs.home-manager.nixosModules.home-manager

@@ -54,6 +54,9 @@
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
+    challengeResponseAuthentication = false;
+    allowSFTP = true;
+    ports = [ 2222 ];
   };
 
   networking.firewall.allowedTCPPorts = [
