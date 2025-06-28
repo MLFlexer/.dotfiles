@@ -120,6 +120,97 @@
           configFile = "${config.arr.data_dir}/wg-mullvad.conf";
           autostart = true;
         };
+
+        system.activationScripts.setDataPermissions = ''
+          mkdir -p ${config.arr.data_dir}/movies
+          mkdir -p ${config.arr.data_dir}/shows
+          mkdir -p ${config.arr.data_dir}/downloads
+
+          chown -R root:${config.arr.group} ${config.arr.data_dir}
+          chmod -R 2777 ${config.arr.data_dir}
+
+          mkdir -p ${config.arr.container.radarr_dir}
+          chown -R radarr:${config.arr.group} ${config.arr.container.radarr_dir}
+          chmod -R 2770 ${config.arr.container.radarr_dir}
+
+          mkdir -p ${config.arr.container.sonarr_dir}
+          chown -R sonarr:${config.arr.group} ${config.arr.container.sonarr_dir}
+          chmod -R 2770 ${config.arr.container.sonarr_dir}
+           
+          mkdir -p ${config.arr.container.torrent_dir}
+          chown -R qbittorrent:${config.arr.group} ${config.arr.container.torrent_dir}
+          chmod -R 2770 ${config.arr.container.torrent_dir}
+        '';
+
+        # https://github.com/averyanalex/dotfiles/blob/e1c167cf09402b35218780e62c8a455a24d231b6/profiles/server/qbit.nix#L6
+        users.groups.${config.arr.group} = {
+          name = config.arr.group;
+          gid = 6969;
+        };
+
+        # qbittorrent
+        users.users.qbittorrent = {
+          isSystemUser = true;
+          description = "User for running qbittorrent";
+          group = config.arr.group;
+        };
+
+        systemd.services.qbittorrent = {
+          after = [ "network.target" ];
+          description = "Qbittorrent Web";
+          wantedBy = [ "multi-user.target" ];
+          path = [ pkgs.qbittorrent-nox ];
+          serviceConfig = {
+            ExecStart = ''
+              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
+                toString config.arr.container.torrent_port
+              } --profile=${config.arr.container.torrent_dir}
+            '';
+            User = "qbittorrent";
+            Group = config.arr.group;
+            MemoryMax = "1G";
+            Restart = "always";
+            UMask = "0002";
+          };
+        };
+
+        services.prowlarr = {
+          enable = true;
+          openFirewall = true;
+        };
+
+        services.radarr = {
+          enable = true;
+          group = config.arr.group;
+          openFirewall = true;
+          dataDir = config.arr.container.radarr_dir;
+        };
+
+        services.sonarr = {
+          enable = true;
+          group = config.arr.group;
+          openFirewall = true;
+          dataDir = config.arr.container.sonarr_dir;
+        };
+
+        services.bazarr = {
+          enable = true;
+          group = config.arr.group;
+          openFirewall = true;
+        };
+
+        services.lidarr = {
+          enable = false;
+          group = config.arr.group;
+          # dataDir = "";
+        };
+
+        services.readarr = {
+          enable = false;
+          group = config.arr.group;
+          # dataDir = "";
+        };
+
       };
     };
   };

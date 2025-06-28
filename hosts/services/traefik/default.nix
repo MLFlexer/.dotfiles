@@ -95,6 +95,13 @@
               entryPoints = [ "web" ];
             };
 
+            bazarr = lib.mkIf config.arr.container.enable {
+              rule =
+                "Host(`bazarr.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
+              service = "bazarr";
+              entryPoints = [ "web" ];
+            };
+
             torrent = lib.mkIf config.arr.container.enable {
               rule =
                 "Host(`torrent.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
@@ -122,6 +129,13 @@
               loadBalancer = {
                 servers =
                   [{ url = "http://${config.arr.container.local_ip}:7878"; }];
+              };
+            };
+
+            bazarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:6767"; }];
               };
             };
 
