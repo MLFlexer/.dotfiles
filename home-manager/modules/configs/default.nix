@@ -8,15 +8,17 @@
 
   };
   imports = [
-    ./helix.nix
-    ./wezterm.nix
     # ./firefox.nix
-    ./zsh.nix
     ./bat.nix
-    ./nvim.nix
-    ./git.nix
     ./gh.nix
+    ./git.nix
     ./gnome/gnome.nix
+    ./helix.nix
+    ./niri.nix
+    ./nvim.nix
+    ./waybar.nix
+    ./wezterm.nix
+    ./zsh.nix
   ];
 
 }

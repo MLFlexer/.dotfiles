@@ -25,14 +25,15 @@
 
   networking.useDHCP = lib.mkDefault true;
 
+  hardware.enableRedistributableFirmware = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.graphics.extraPackages = with pkgs; [
-    rocmPackages_5.clr.icd
-    rocmPackages_5.clr
-    rocmPackages_5.rocminfo
-    rocmPackages_5.rocm-runtime
+    rocmPackages.clr.icd
+    rocmPackages.clr
+    rocmPackages.rocminfo
+    rocmPackages.rocm-runtime
   ];
 }
