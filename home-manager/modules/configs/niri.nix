@@ -1,87 +1,132 @@
-{ config, lib, system, pkgs, inputs, ... }: {
-  options = { niri.enable = lib.mkEnableOption "Enables Niri compositor"; };
+{
+  config,
+  lib,
+  system,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  options = {
+    niri.enable = lib.mkEnableOption "Enables Niri compositor";
+  };
 
   config = lib.mkIf config.niri.enable {
 
-    home.packages = [ pkgs.wl-clipboard ];
+    home.packages = with pkgs; [
+      wl-clipboard
+      swaybg
+      swaynotificationcenter
+    ];
 
-    programs.niri.settings = {
+    programs.niri.settings =
+      let
+        wallpaper_path = builtins.toString ./gnome/img/background.png;
+        x = builtins.trace "THIS IS THE PATH: ${wallpaper_path}";
+      in
+      {
 
-      spawn-at-startup = [
-        # (makeCommand "uwsm finalize")
-        # (makeCommand "hyprlock")
-        # (makeCommand "swww-daemon")
-        {
-          command = [ "waybar" ];
-        }
-        # (makeCommand "keepassxc")
-        # (makeCommand "xwayland-satellite")
-        # (makeCommand "telegram-desktop")
-        # (makeCommand "wl-paste --type image --watch cliphist store")
-        # (makeCommand "wl-paste --type text --watch cliphist store")
-      ];
-      binds = with config.lib.niri.actions; {
-        "Mod+Return".action = spawn "wezterm";
-        "Mod+b".action = spawn "zen";
-        "Mod+Shift+E".action = quit;
+        spawn-at-startup = [
+          { command = [ "waybar" ]; }
+          {
+            command = [
+              "swaybg"
+              "--image"
+              "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" # TODO: fix path
+            ];
+          }
+          {
+            command = [ "${pkgs.swaynotificationcenter}/bin/swaync" ];
+          }
+          # (makeCommand "uwsm finalize")
+          # (makeCommand "hyprlock")
+          # (makeCommand "swww-daemon")
+          # (makeCommand "keepassxc")
+          # (makeCommand "xwayland-satellite")
+          # (makeCommand "telegram-desktop")
+          # (makeCommand "wl-paste --type image --watch cliphist store")
+          # (makeCommand "wl-paste --type text --watch cliphist store")
+        ];
+        binds = with config.lib.niri.actions; {
+          "Mod+Return".action = spawn "wezterm";
+          "Mod+b".action = spawn "zen";
+          "Mod+Shift+E".action = quit;
 
-        "Mod+U".action =
-          spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
+          "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
 
-        "Mod+Q".action = close-window;
-        "Mod+S".action = switch-preset-column-width;
-        "Mod+F".action = maximize-column;
-        # "Mod+Shift+F".action = fullscreen-window;
-        "Mod+Shift+F".action = expand-column-to-available-width;
-        "Mod+Space".action = toggle-window-floating;
-        "Mod+W".action = toggle-column-tabbed-display;
+          "Mod+Q".action = close-window;
+          "Mod+S".action = switch-preset-column-width;
+          "Mod+F".action = maximize-column;
+          # "Mod+Shift+F".action = fullscreen-window;
+          "Mod+Shift+F".action = expand-column-to-available-width;
+          "Mod+Space".action = toggle-window-floating;
+          "Mod+W".action = toggle-column-tabbed-display;
 
-        "Mod+Comma".action = consume-window-into-column;
-        "Mod+Period".action = expel-window-from-column;
-        "Mod+C".action = center-window;
-        "Mod+Tab".action = switch-focus-between-floating-and-tiling;
+          "Mod+Comma".action = consume-window-into-column;
+          "Mod+Period".action = expel-window-from-column;
+          "Mod+C".action = center-window;
+          "Mod+Tab".action = switch-focus-between-floating-and-tiling;
 
-        "Mod+Minus".action = set-column-width "-10%";
-        "Mod+Plus".action = set-column-width "+10%";
-        "Mod+Shift+Minus".action = set-window-height "-10%";
-        "Mod+Shift+Plus".action = set-window-height "+10%";
+          "Mod+Minus".action = set-column-width "-10%";
+          "Mod+Plus".action = set-column-width "+10%";
+          "Mod+Shift+Minus".action = set-window-height "-10%";
+          "Mod+Shift+Plus".action = set-window-height "+10%";
 
-        "Mod+H".action = focus-column-left;
-        "Mod+L".action = focus-column-right;
-        "Mod+J".action = focus-window-or-workspace-down;
-        "Mod+K".action = focus-window-or-workspace-up;
-        "Mod+Left".action = focus-column-left;
-        "Mod+Right".action = focus-column-right;
-        "Mod+Down".action = focus-workspace-down;
-        "Mod+Up".action = focus-workspace-up;
+          "Mod+H".action = focus-column-left;
+          "Mod+L".action = focus-column-right;
+          "Mod+J".action = focus-window-or-workspace-down;
+          "Mod+K".action = focus-window-or-workspace-up;
+          "Mod+Left".action = focus-column-left;
+          "Mod+Right".action = focus-column-right;
+          "Mod+Down".action = focus-workspace-down;
+          "Mod+Up".action = focus-workspace-up;
 
-        "Mod+Shift+H".action = move-column-left;
-        "Mod+Shift+L".action = move-column-right;
-        "Mod+Shift+K".action = move-column-to-workspace-up;
-        "Mod+Shift+J".action = move-column-to-workspace-down;
-      };
-
-      input = { keyboard = { xkb = { layout = "dk"; }; }; };
-
-      layout = {
-        focus-ring.enable = false;
-        border = {
-          enable = true;
-          width = 2;
-          # active.color = "#${config.lib.stylix.colors.base05}";
-          # inactive.color = "#${config.lib.stylix.colors.base03}";
+          "Mod+Shift+H".action = move-column-left;
+          "Mod+Shift+L".action = move-column-right;
+          "Mod+Shift+K".action = move-column-to-workspace-up;
+          "Mod+Shift+J".action = move-column-to-workspace-down;
         };
 
-        gaps = 0;
-        struts = {
-          left = 2;
-          right = 2;
-          top = 0;
-          bottom = 0;
+        input = {
+          keyboard = {
+            xkb = {
+              layout = "dk";
+            };
+          };
+          touchpad = {
+            click-method = "clickfinger";
+          };
         };
-      };
 
-    };
+        layer-rules = [
+          {
+            matches = [ { namespace = "^wallpaper$"; } ];
+
+            place-within-backdrop = true;
+          }
+
+        ];
+
+        layout = {
+          background-color = "transparent";
+          focus-ring.enable = false;
+          border = {
+            enable = true;
+            width = 2;
+            # active.color = "#${config.lib.stylix.colors.base05}";
+            # inactive.color = "#${config.lib.stylix.colors.base03}";
+          };
+
+          gaps = 0;
+          struts = {
+            left = 2;
+            right = 2;
+            top = 0;
+            bottom = 0;
+          };
+        };
+
+      };
 
     # WAYBAR
     programs.waybar = {
@@ -185,7 +230,7 @@
       #     format-icons= ["" "" "" "" ""];
       #     max-length= 25;
       # };
-      #   };        
+      #   };
       #       };
 
     };
