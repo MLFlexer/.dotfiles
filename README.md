@@ -58,3 +58,12 @@ Checkout [Building your own system tarball](https://nix-community.github.io/NixO
 ### Raspberry Pi 5
 Checkout [Building an sd-card image](https://github.com/nix-community/raspberry-pi-nix?tab=readme-ov-file#building-an-sd-card-image) for Raspberry Pi 5.
 
+
+## Discord
+Discord does not work with Krisp noise suppression on NixOS, workaround have been found [here](https://wiki.nixos.org/w/index.php?title=Discord&mobileaction=toggle_view_desktop)
+It should work if you run after closing Discord:
+
+```sh
+krisp-patcher ~/.config/discord/$DISCORD_VERSION/modules/discord_krisp/discord_krisp.node
+```
+
