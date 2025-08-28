@@ -157,7 +157,7 @@ in {
     jack.enable = true;
   };
 
-  fonts.packages = with pkgs; [ monaspace ];
+  fonts.packages = with pkgs; [ nerd-fonts.monaspace ];
   fonts.fontconfig.enable = true;
 
   users.users.${user} = {
