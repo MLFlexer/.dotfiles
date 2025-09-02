@@ -41,14 +41,5 @@ C-y = [
   ':redraw',
 ]
 
-# [keys.normal.C-y]
-# y = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE open         > /dev/null"
-# v = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE vsplit       > /dev/null"
-# h = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE hsplit       > /dev/null"
-# Y = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE open    zoom > /dev/null"
-# V = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE vsplit  zoom > /dev/null"
-# H = ":sh wezterm cli split-pane --left --percent 30 -- ~/.config/helix/wezilix.sh $WEZTERM_PANE hsplit  zoom > /dev/null"
-
-
 [keys.insert]
 C-v = ":primary-clipboard-paste-before"

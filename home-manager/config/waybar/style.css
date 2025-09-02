@@ -1,0 +1,297 @@
+@define-color foreground #cdd6f4;
+@define-color background #1a1b26;
+@define-color background-contrast #232530;
+@define-color blue #7aa2f7;
+@define-color blue-hover #6699f0;
+@define-color red #ff4d4f;
+@define-color green  #00FF7F;
+@define-color yellow #FFFF00;
+@define-color orange #FFA500;
+@define-color bluetooth-blue #0082FC;
+
+* {
+  background-color: @background;
+  color: @foreground;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  /* min-width: 24px; */
+  font-family: MonaspiceNe Nerd Font;
+  font-size: 12px;
+}
+
+tooltip {
+  background: rgba(43, 48, 59, 0.5);
+  /* border: 1px solid rgba(100, 114, 125, 0.5); */
+  padding: 0 0px;
+  margin: 0 0px;
+  min-width: 9px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modules-left {
+  margin-left: 8px;
+}
+
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces {
+  background: @background-contrast;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#workspaces button:hover {
+    background: @blue-hover;
+    color: @background;
+    font-weight: bold;
+}
+
+#workspaces button label {
+    background: transparent;
+}
+
+#workspaces button.focused {
+    background: @blue;
+    color: @background;
+    font-weight: bold;
+}
+
+#workspaces button.empty {
+  opacity: 0.8;
+}
+
+#taskbar {
+  background: @background-contrast;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 8px;
+}
+
+#taskbar button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+#taskbar button image {
+  background: @background-contrast;
+}
+
+#taskbar button:hover {
+  background: @blue-hover;
+  transition: background 0.2s, color 0.2s;
+}
+
+#taskbar button:hover image {
+  background: @blue-hover;
+  transition: background 0.2s, color 0.2s;
+}
+
+#taskbar button.active {
+  background: @blue;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+
+#taskbar button.active image {
+  background: @blue;
+  transition: background 0.2s, color 0.2s;
+}
+
+#tray,
+#cpu,
+#memory,
+#disk,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#custom-menu_icon {
+  background: @background-contrast;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  /* min-width: 9px; */
+  border-radius: 8px;
+  min-width: 12px;
+  /* margin: 0 7.5px; */
+}
+
+#custom-expand-icon {
+  margin-right: 7px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+#clock {
+  background: @background-contrast;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  /* min-width: 9px; */
+  border-radius: 8px;
+  min-width: 12px;
+  /* margin: 0 7.5px; */
+  /* margin-left: 8.75px; */
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#pulseaudio-slider slider {
+    min-height: 10px;
+    min-width: 10px;
+    border-radius: 50%;
+    background-color: @background;
+    border: 2px solid @blue;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#pulseaudio-slider slider:hover {
+    background-color: @blue-hover;
+}
+
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 100px;
+    border-radius: 5px;
+    background-color: @background-contrast;
+}
+
+#pulseaudio-slider highlight {
+    border-radius: 5px;
+    background-color: @blue;
+}
+
+#bluetooth.connected,
+#pulseaudio.bluetooth {
+  background-color: @bluetooth-blue;
+}
+
+#pulseaudio.muted {
+  background-color: @red;
+}
+
+#privacy-item {
+  background: @red;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 8px;
+}
+
+#privacy-item image {
+  background: @red;
+  color: @background;
+}
+
+#disk.s10,
+#memory.s10,
+#cpu.s10 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 10%);
+}
+
+#disk.s20,
+#memory.s20,
+#cpu.s20 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 20%);
+  }
+
+#disk.s30,
+#memory.s30,
+#cpu.s30 {
+    background: linear-gradient(to top, @green 0%, @background-contrast 30%);
+}
+
+#disk.s40,
+#memory.s40,
+#cpu.s40 {
+    background: linear-gradient(to top, @green 0%, @background-contrast 40%);
+}
+
+#disk.s50,
+#memory.s50,
+#cpu.s50 {
+    background: linear-gradient(to top, @yellow 0%, @background-contrast 50%);
+}
+
+#disk.s60,
+#memory.s60,
+#cpu.s60 {
+    background: linear-gradient(to top, @yellow 0%, @background-contrast 60%);
+}
+
+#disk.s70,
+#memory.s70,
+#cpu.s70 {
+    background: linear-gradient(to top, @orange 0%, @background-contrast 70%);
+}
+
+#disk.s80,
+#memory.s80,
+#cpu.s80 {
+    background: linear-gradient(to top, @orange 0%, @background-contrast 80%);
+}
+
+#disk.s90,
+#memory.s90,
+#cpu.s90 {
+    background: linear-gradient(to top, @red 0%, @background-contrast 90%);
+}
+
+#disk.s100,
+#memory.s100,
+#cpu.s100 {
+    background: linear-gradient(to top, @red 0%, @background-contrast 100%);
+}
+
+
+#disk.usage_hidden.hidden,
+#custom-gpu_usage_hidden.hidden,
+#memory.usage_hidden.hidden {
+  font-size: 0px;
+  min-width: 0px;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#custom-light.light-off {
+  background-color: @background-contrast;
+}
+
+#custom-light.light-on {
+  background-color: @yellow;
+}
+
+    /* font-size: 0px; */
+    /* min-width: 0px; */
+    /* min-height: 0px; */
+    /* margin: 0px; */
+    /* padding: 0px; */
+

@@ -14,8 +14,8 @@
     ./git.nix
     ./gnome/gnome.nix
     ./helix.nix
-    ./niri.nix
     ./nvim.nix
+    ./niri.nix
     ./waybar.nix
     ./wezterm.nix
     ./zsh.nix

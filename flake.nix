@@ -25,6 +25,7 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
