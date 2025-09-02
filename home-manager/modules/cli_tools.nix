@@ -7,6 +7,7 @@
     home.packages = with pkgs; [
       age
       btop
+      jq
       # atuin
       comma
       eza

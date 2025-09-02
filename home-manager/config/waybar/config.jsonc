@@ -1,0 +1,386 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": ["custom/menu_icon", "niri/workspaces", "wlr/taskbar"],
+  "modules-center": ["custom/weather", "clock", "privacy"],
+  "modules-right": [
+
+    // "custom/light",
+    "group/tray-expander",
+
+    "group/usage_drawer",
+    // "group/usage",
+
+    "network",
+    "bluetooth",
+    "upower",
+    // "pulseaudio",
+    // "cpu",
+    "battery",
+
+"group/audio"  ],
+  "niri/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "0",
+      // "active": ""
+    },
+  },
+
+  "custom/weather": {
+    "format": "{}°",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "wttrbar",
+    "return-type": "json"
+  },
+  // "custom/light": {
+  //   "exec": "bash /home/mlflexer/.config/waybar/scripts/get_light_state.sh",
+  //   "interval": 1,
+  //   "format": "{}",
+  //   "return-type": "json",
+  //   "tooltip": true,
+  //   "on-click": "bash /home/mlflexer/.config/waybar/scripts/toggle.sh",
+  // },
+
+  "custom/menu_icon": {
+    "format": "",
+    // TODO: fix script
+    "on-click": "bash /home/mlflexer/.config/walker/scripts/menu.sh",
+    "tooltip-format": "Menu\n\nTODO set keybind\n\nSuper + Alt + Space"
+  },
+
+ "wlr/taskbar" : {
+          "format" : "{icon}",
+          "icon-size" : 14,
+          "icon-theme" : "Numix-Circle",
+          "tooltip-format" : "{name}\n{title}",
+          "on-click" : "minimize-raise",
+          "on-click-middle" : "close",
+          // "ignore-list" : [ "Alacritty" ],
+          // "app_ids-mapping" : {
+          //   "firefoxdeveloperedition" : "firefox-developer-edition",
+          // },
+          // "rewrite" : {
+          //   "Firefox Web Browser" : "Firefox",
+          //   "Foot Server" : "Terminal",
+          // },
+        },
+  // "cpu": {
+  //   "interval": 5,
+  //   "format": "󰍛",
+  //   "on-click": "wezterm start --always-new-process btop"
+  // },
+  "clock": {
+    "format": "{:%A %d/%m %H:%M}",
+    "format-alt": "{:%d %B W%V %Y}",
+    "tooltip": false,
+    // "on-click-right": "omarchy-cmd-tzupdate"
+  },
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰖪",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "nm-connection-editor"
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "blueberry"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "wezterm start --always-new-process wiremix",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "󰝟",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": ["custom/expand-icon", "tray"]
+  },
+  "custom/expand-icon": {
+    "format": " ",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 12
+  },
+
+  "group/audio": {
+    "drawer": {
+    "children-class": "audio-child",
+    "transition-duration": 300,
+    "transition-left-to-right": false,
+  },
+  "modules": [
+    "pulseaudio#icon", "pulseaudio/slider"
+  ],
+  "orientation": "inherit",
+  },
+
+   "pulseaudio#icon": {
+    "format": "{icon}",
+    "format-bluetooth": "{icon} ",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "󱡒",
+      "headset": "",
+      "phone": "",
+      "phone-muted": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "","",""   
+      ]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle &> /dev/null",
+    "on-click-right": "pavucontrol",
+    "tooltip-format": "Volume: {volume}%"
+  },
+
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "inherit"
+  },
+
+  "privacy": {
+  	"icon-spacing": 4,
+  	"icon-size": 18,
+  	"transition-duration": 250,
+  	"expand": true,
+  	"modules": [
+  		{
+  			"type": "screenshare",
+  			"tooltip": true,
+  			"tooltip-icon-size": 24
+  		},
+  		{
+  			"type": "audio-in",
+  			"tooltip": true,
+  			"tooltip-icon-size": 24
+  		}
+  	],
+  	"ignore-monitor": true,
+  },
+
+  "cpu": {
+    "interval": 3,
+    "format": "{usage}% ",
+    "tooltip-format": "TODO",
+    "states": {
+      "s0": 0,
+      "s10": 10,
+      "s20": 20,
+      "s30": 30,
+      "s40": 40,
+      "s50": 50,
+      "s60": 60,
+      "s70": 70,
+      "s80": 80,
+      "s90": 90,
+      "s100": 100,
+    },
+  },
+
+  "memory#usage": {
+    "interval": 30,
+    "format": "{used:0.1f}G  ",
+    "tooltip-format": "TODO",
+    "states": {
+      "s0": 0,
+      "s10": 10,
+      "s20": 20,
+      "s30": 30,
+      "s40": 40,
+      "hidden": 50,
+    },
+  },
+
+  "memory#usage_hidden": {
+    "interval": 30,
+    "format": "{used:0.1f}G  ",
+    "tooltip-format": "TODO",
+    "states": {
+      "hidden": 0,
+      "s50": 50,
+      "s60": 60,
+      "s70": 70,
+      "s80": 80,
+      "s90": 90,
+      "s100": 100,
+    },
+  },
+
+  "disk#usage": {
+    "interval": 30,
+    "format": "{used}  ",
+    "tooltip-format": "TODO",
+    "states": {
+      "s0": 0,
+      "s10": 10,
+      "s20": 20,
+      "s30": 30,
+      "s40": 40,
+      "s50": 50,
+      "s60": 60,
+      "s70": 70,
+      "hidden": 80,
+    },
+  },
+
+  "disk#usage_hidden": {
+    "interval": 30,
+    "format": "{used}  ",
+    "tooltip-format": "TODO",
+    "states": {
+      "hidden": 0,
+      "s80": 80,
+      "s90": 90,
+      "s100": 100,
+    },
+  },
+
+//   "custom/gpu_usage": {
+//   "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
+//   "interval": 5,
+//   "format": "{}% 󰢮",
+//   "tooltip-format": "GPU Utilization: {}%",
+//   "states": {
+//     "s0": 0,
+//     "s10": 10,
+//     "s20": 20,
+//     "s30": 30,
+//     "s40": 40,
+//     "hidden": 50
+//   }
+// },
+
+// "custom/gpu_usage_hidden": {
+// "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | head -n1 | awk '{print \"{\\\"text\\\": \\\"\"$1\"\\\", \\\"tooltip\\\": \\\"GPU Utilization: \"$1\"%\\\", \\\"percentage\\\": \"$1\"}\"}'",
+//    "interval": 5,
+
+//   "return-type": "json",
+//   "format": "{}",
+//     // "tooltip-format": "GPU Utilization: {}%",
+//   "states": {
+//     "hidden": 0,
+//     "s50": 50,
+//     "s60": 60,
+//     "s70": 70,
+//     "s80": 80,
+//     "s90": 90,
+//     "s100": 100
+//   }
+// },
+
+  // TODO: laptop only
+  // "temperature#usage_hidden": {
+    
+  // },
+  // "temperature#usage": {
+    
+  // },
+  
+  "group/usage_drawer": {
+    "drawer": {
+    "children-class": "audio-child",
+    "transition-duration": 300,
+    "transition-left-to-right": false,
+  },
+  // Other modules should be visible in css if under threshhold
+  "modules": [
+    "group/usage_drawer_closed", "memory#usage", "disk#usage"
+    // , "custom/gpu_usage"
+    // , "temperature#usage"
+  ],
+  "orientation": "inherit",
+  },
+
+  // Should be visible in css if over threshhold
+  "group/usage_drawer_closed": {
+  "modules": [
+    "cpu", "memory#usage_hidden", "disk#usage_hidden"
+    // , "custom/gpu_usage_hidden"
+    // , "temperature#usage_hidden"
+  ],
+  "orientation": "inherit",
+  },
+
+//   "network": {
+//     // "interface": "wlp2s0",
+//     "format": "{ifname}",
+//     "format-wifi": "{essid} ({signalStrength}%) ",
+//     "format-ethernet": "󰈀",
+//     "format-disconnected": "󱂠",
+//     "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+//     "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+//     "tooltip-format-ethernet": "IP: {ipaddr}/{cidr}\n {bandwidthDownBytes}\n {bandwidthUpBytes}\n{ifname} ",
+//     "tooltip-format-disconnected": "Disconnected",
+//     "max-length": 50
+// }
+
+  // gamemode?
+  // idle inhibitor?
+  // Network
+  // power profiles
+  // upower???
+  // systemd failed units?
+
+  // laptop:
+  // temperature
+  // battery
+  // 
+}

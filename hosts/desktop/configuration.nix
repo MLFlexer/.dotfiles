@@ -15,6 +15,20 @@ in {
 
   imports = [ inputs.niri.nixosModules.niri ];
 
+  services.gnome.gnome-keyring.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = [ "gnome" "gtk" ];
+        niri.default = [ "gnome" "gtk" ];
+        niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+      extraPortals =
+        [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome ];
+    };
+  };
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -174,6 +188,10 @@ in {
   environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
   environment.systemPackages = with pkgs; [
+    vivaldi
+    pinta
+    mako
+    libnotify
     cachix
     # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl

@@ -1,0 +1,15 @@
+# Lock after 5 minutes
+timeout 300 'swaylock -F -i "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" -l --font "MonaspiceNe Nerd Font"'
+
+# Turn off displays after 10 minutes, and turn them back on when resumed
+timeout 600 'niri msg output DP-1 off' resume 'niri msg output DP-1 on'
+
+# Suspend after 15 minutes
+timeout 1800 'systemctl suspend'
+
+# Lock before the system goes to sleep
+before-sleep 'swaylock -F -i "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" -l --font "MonaspiceNe Nerd Font"'
+
+# Logind hooks
+lock 'swaylock -F -i "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" -l --font "MonaspiceNe Nerd Font"'
+unlock 'niri msg output DP-1 on'
