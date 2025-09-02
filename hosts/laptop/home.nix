@@ -21,7 +21,8 @@
   gh.enable = true;
   cli_extra.enable = true;
   extra_pkgs.enable = false;
-  niri.enable = false;
+  niri.enable = true;
+  waybar.enable = true;
 
   fonts.fontconfig.enable = true;
 
