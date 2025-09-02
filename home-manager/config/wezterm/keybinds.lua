@@ -4,6 +4,8 @@ local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 local keys = {
+	{key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize},
+	{key = "+", mods = "CTRL", action = wezterm.action.IncreaseFontSize},
   {
     key = 'C',
     mods = 'CTRL',

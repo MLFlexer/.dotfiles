@@ -85,6 +85,9 @@
           "Mod+Shift+L".action = move-column-right;
           "Mod+Shift+K".action = move-column-to-workspace-up;
           "Mod+Shift+J".action = move-column-to-workspace-down;
+          "Mod+Shift+Plus".action = show-hotkey-overlay;
+          "XF86MonBrightnessUp".action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "10%+";
+          "XF86MonBrightnessDown".action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "10%-";
         };
 
         input = {
@@ -108,6 +111,8 @@
         ];
 
         layout = {
+          always-center-single-column = true;
+          empty-workspace-above-first = true;
           background-color = "transparent";
           focus-ring.enable = false;
           border = {
@@ -126,6 +131,7 @@
           };
         };
 
+        screenshot-path = "/tmp/screen_shot_%Y-%m-%dT%H:%M:%S.png";
       };
 
     # WAYBAR

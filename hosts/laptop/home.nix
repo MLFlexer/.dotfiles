@@ -1,4 +1,10 @@
-{ config, pkgs, system, inputs, ... }:
+{
+  config,
+  pkgs,
+  system,
+  inputs,
+  ...
+}:
 
 {
   imports = [ ../../home-manager/modules ];
@@ -15,7 +21,7 @@
   gh.enable = true;
   cli_extra.enable = true;
   extra_pkgs.enable = false;
-  niri.enable = true;
+  niri.enable = false;
 
   fonts.fontconfig.enable = true;
 
