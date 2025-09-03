@@ -4,7 +4,7 @@
 @define-color blue #7aa2f7;
 @define-color blue-hover #6699f0;
 @define-color red #ff4d4f;
-@define-color green  #00FF7F;
+@define-color green  #3bd37e;
 @define-color yellow #FFFF00;
 @define-color orange #FFA500;
 @define-color bluetooth-blue #0082FC;
@@ -122,10 +122,11 @@ tooltip {
 #cpu,
 #memory,
 #disk,
-#battery,
 #network,
 #bluetooth,
 #pulseaudio,
+#battery,
+#power-profiles-daemon,
 #custom-menu_icon {
   background: @background-contrast;
   padding: 0 6px;
@@ -141,7 +142,7 @@ tooltip {
 }
 
 tooltip {
-  padding: 2px;
+  padding: 0 2px;
 }
 
 #custom-update {
@@ -278,7 +279,7 @@ tooltip {
   min-width: 0px;
   min-height: 0px;
   margin: 0px;
-  padding: 0px;
+  padding: 0 0px;
 }
 
 #custom-light.light-off {
@@ -289,9 +290,59 @@ tooltip {
   background-color: @yellow;
 }
 
+
+
     /* font-size: 0px; */
     /* min-width: 0px; */
     /* min-height: 0px; */
     /* margin: 0px; */
     /* padding: 0px; */
 
+
+#battery.s10 {
+    background: linear-gradient(to top, @red 0%, @background-contrast 10%);
+}
+
+#battery.s20 {
+    background: linear-gradient(to top, @orage 0%, @background-contrast 20%);
+  }
+
+#battery.s30 {
+    background: linear-gradient(to top, @yellow 0%, @background-contrast 30%);
+}
+
+#battery.s40 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 40%);
+}
+
+#battery.s50 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 50%);
+}
+
+#battery.s60 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 60%);
+}
+
+#battery.s70 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 70%);
+}
+
+#battery.s80 {
+    background: linear-gradient(to top, @blue 0%, @background-contrast 80%);
+}
+
+#battery.s90 {
+    background: linear-gradient(to top, @green 0%, @background-contrast 90%);
+}
+
+#battery.s100 {
+    background: linear-gradient(to top, @green 0%, @background-contrast 100%);
+}
+
+#power-profiles-daemon.performance {
+    background: alpha(@red, 0.6);
+}
+
+#power-profiles-daemon.power-saver {
+    background: alpha(@green, 0.6);
+}

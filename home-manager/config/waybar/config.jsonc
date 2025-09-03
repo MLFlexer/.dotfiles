@@ -3,7 +3,7 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 26,
+  "height": 16,
   "modules-left": ["custom/menu_icon", "niri/workspaces", "wlr/taskbar"],
   "modules-center": ["custom/weather", "clock", "privacy"],
   "modules-right": [
@@ -16,7 +16,8 @@
 
     "network",
     "bluetooth",
-    "upower",
+    // "upower",
+    "power-profiles-daemon",
     // "pulseaudio",
     // "cpu",
     "battery",
@@ -41,7 +42,9 @@
     },
   },
 
+  
   "custom/weather": {
+    "icon-size" : 10,
     "format": "{}°",
     "tooltip": true,
     "interval": 3600,
@@ -66,7 +69,7 @@
 
  "wlr/taskbar" : {
           "format" : "{icon}",
-          "icon-size" : 14,
+          "icon-size" : 10,
           "icon-theme" : "Numix-Circle",
           "tooltip-format" : "{name}\n{title}",
           "on-click" : "minimize-raise",
@@ -106,22 +109,43 @@
   },
   "battery": {
     "format": "{capacity}% {icon}",
-    "format-discharging": "{icon}",
-    "format-charging": "{icon}",
+    "format-discharging": "{capacity}% {icon}",
+    "format-charging": "{capacity}% {icon}",
     "format-plugged": "",
     "format-icons": {
       "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
     "format-full": "󰂅",
-    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
-    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
-    "interval": 5,
+    "tooltip-format-discharging": "{timeTo}\n{capacity}%",
+    "tooltip-format-charging": "{timeTo}\n{capacity}%",
+    "interval": 60,
     "states": {
-      "warning": 20,
-      "critical": 10
+      "s0": 0,
+      "s10": 10,
+      "s20": 20,
+      "s30": 30,
+      "s40": 40,
+      "s50": 50,
+      "s60": 60,
+      "s70": 70,
+      "s80": 80,
+      "s90": 90,
+      "s100": 100,
+    },
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
     }
   },
+
   "bluetooth": {
     "format": "",
     "format-disabled": "󰂲",
@@ -153,7 +177,7 @@
     "tooltip": false
   },
   "tray": {
-    "icon-size": 12,
+    "icon-size": 14,
     "spacing": 12
   },
 
@@ -198,19 +222,19 @@
 
   "privacy": {
   	"icon-spacing": 4,
-  	"icon-size": 18,
+  	"icon-size": 14,
   	"transition-duration": 250,
   	"expand": true,
   	"modules": [
   		{
   			"type": "screenshare",
   			"tooltip": true,
-  			"tooltip-icon-size": 24
+  			"tooltip-icon-size": 14
   		},
   		{
   			"type": "audio-in",
   			"tooltip": true,
-  			"tooltip-icon-size": 24
+  			"tooltip-icon-size": 14
   		}
   	],
   	"ignore-monitor": true,

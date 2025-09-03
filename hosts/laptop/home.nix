@@ -24,9 +24,9 @@
   niri.enable = true;
   waybar.enable = true;
 
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ nerd-fonts.monaspace ];
+  # home.packages = with pkgs; [ nerd-fonts.monaspace ];
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";
