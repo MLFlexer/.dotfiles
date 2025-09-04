@@ -12,6 +12,30 @@
     ./hardware-configuration.nix
   ];
 
+  services.gnome.gnome-keyring.enable = true;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = [
+          "gtk"
+          "gnome"
+        ];
+        niri.default = [
+          "gtk"
+          "gnome"
+        ];
+        niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
+    };
+  };
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
