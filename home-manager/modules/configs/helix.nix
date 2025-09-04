@@ -9,8 +9,13 @@ in {
       defaultEditor = true;
       package = inputs.helix-editor.packages.${system}.default;
       extraPackages = with pkgs;
-        [ nil nixfmt lua-language-server bash-language-server marksman ]
-        ++ lib.lists.optionals config.extra_pkgs.enable [
+        [
+          nil
+          nixfmt-rfc-style
+          lua-language-server
+          bash-language-server
+          marksman
+        ] ++ lib.lists.optionals config.extra_pkgs.enable [
           rust-analyzer
           llvmPackages_19.clang-unwrapped
         ];

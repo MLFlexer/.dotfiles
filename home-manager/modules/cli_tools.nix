@@ -6,6 +6,8 @@
   config = lib.mkIf config.cli_tools.enable {
     home.packages = with pkgs; [
       age
+      btop
+      jq
       # atuin
       comma
       eza

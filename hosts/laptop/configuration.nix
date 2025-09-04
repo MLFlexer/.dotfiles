@@ -1,5 +1,45 @@
-{ pkgs, unstable, user, inputs, ... }: {
-  imports = [ ./hardware-configuration.nix ];
+{
+  pkgs,
+  unstable,
+  user,
+  inputs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    inputs.niri.nixosModules.niri
+    ./hardware-configuration.nix
+  ];
+
+  services.gnome.gnome-keyring.enable = true;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = [
+          "gtk"
+          "gnome"
+        ];
+        niri.default = [
+          "gtk"
+          "gnome"
+        ];
+        niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
+    };
+  };
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+  };
 
   # Bootloader.
   boot.loader = {
@@ -38,25 +78,28 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-tour
-    cheese # webcam tool
-    gnome-music
-    gnome-terminal
-    # gedit # text editor
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-    gnome-contacts
-    simple-scan # document scanner
-    yelp # help client
-    gnome-maps
-  ]);
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
+      gnome-tour
+      cheese # webcam tool
+      gnome-music
+      gnome-terminal
+      # gedit # text editor
+      epiphany # web browser
+      geary # email reader
+      evince # document viewer
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+      gnome-contacts
+      simple-scan # document scanner
+      yelp # help client
+      gnome-maps
+    ]
+  );
 
   # Configure console keymap
   console.keyMap = "dk-latin1";
@@ -67,7 +110,7 @@
   hardware.bluetooth.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -77,21 +120,32 @@
     jack.enable = true;
   };
 
-  fonts.packages = with pkgs; [ monaspace ];
+  fonts.packages = with pkgs; [ nerd-fonts.monaspace ];
   fonts.fontconfig.enable = true;
 
   users.users.${user} = {
     isNormalUser = true;
     description = "${user} user.";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ discord ])
-      ++ (with unstable; [ wezterm element-desktop ]);
+    packages =
+      (with pkgs; [ discord ])
+      ++ (with unstable; [
+        wezterm
+        element-desktop
+      ]);
   };
 
-  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
+  environment.sessionVariables = {
+    XCURSOR_THEME = "Adwaita";
+  };
 
   environment.systemPackages = with pkgs; [
+    thunderbird
     cachix
     openssl
     gnupg
@@ -99,7 +153,7 @@
     curl
     firefox
     gcc
-    okular # pdf reader
+    kdePackages.okular # pdf reader
     # pinentry-gnome
     steam-run # to run unpatched binaies
     unzip
@@ -127,14 +181,20 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   nix = {
     package = pkgs.nixVersions.stable;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "mlflexer" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "mlflexer"
+      ];
     };
 
     gc = {
@@ -143,5 +203,4 @@
       options = "--delete-older-than 7d";
     };
   };
-  nixpkgs.config.allowUnfree = true;
 }

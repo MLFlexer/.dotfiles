@@ -17,7 +17,7 @@ in {
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra = ''
+      initContent = ''
         source $HOME/.config/zsh/.p10k.zsh
         bindkey '^[[Z' reverse-menu-complete
         autoload -z edit-command-line

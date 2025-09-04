@@ -13,6 +13,28 @@ let
   }));
 in {
 
+  imports = [ inputs.niri.nixosModules.niri ];
+
+  services.gnome.gnome-keyring.enable = true;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = [ "gtk" "gnome" ];
+        niri.default = [ "gtk" "gnome" ];
+        niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+      extraPortals =
+        [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome ];
+    };
+  };
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+  };
   # Bootloader.
   boot.loader = {
     systemd-boot = {
@@ -151,7 +173,7 @@ in {
     jack.enable = true;
   };
 
-  fonts.packages = with pkgs; [ monaspace ];
+  fonts.packages = with pkgs; [ nerd-fonts.monaspace ];
   fonts.fontconfig.enable = true;
 
   users.users.${user} = {
@@ -160,7 +182,7 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ discord krisp-patcher prismlauncher ])
-      ++ (with unstable; [ wezterm element-desktop zeroad ]);
+      ++ (with unstable; [ wezterm element-desktop ]);
   };
 
   # networking.firewall.allowedUDPPorts = [ 20595 ];
@@ -168,6 +190,10 @@ in {
   environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
 
   environment.systemPackages = with pkgs; [
+    vivaldi
+    pinta
+    mako
+    libnotify
     cachix
     # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
@@ -178,7 +204,7 @@ in {
     curl
     firefox
     gcc
-    okular # pdf reader
+    kdePackages.okular # pdf reader
     # pinentry-gnome
     steam-run # to run unpatched binaies
     unzip
@@ -220,7 +246,7 @@ in {
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   nix = {
     package = pkgs.nixVersions.stable;

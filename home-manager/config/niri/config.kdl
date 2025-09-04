@@ -1,0 +1,160 @@
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "walker" "--gapplication-service"
+spawn-at-startup "swayosd-server"
+spawn-at-startup "swayidle"
+// TODO: fix path
+spawn-at-startup "swaybg" "--image" "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png"
+// swaylock -F -i "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" -l --font "MonaspiceNe Nerd Font"
+
+    // "wl-paste --type image --watch cliphist store"
+    // "wl-paste --type text --watch cliphist store"
+
+xwayland-satellite {
+    path "/etc/profiles/per-user/mlflexer/bin/xwayland-satellite"
+}
+
+
+binds {
+    // `niri msg action` prints all actions
+    
+    Mod+Escape {spawn "bash" "/home/mlflexer/.config/walker/scripts/menu.sh";}
+    Mod+Space {spawn "walker";}
+    Mod+Return {spawn "wezterm";}
+    Mod+b {spawn "zen";}
+    mod+Shift+S { screenshot; }
+
+    Mod+Shift+E {quit;}
+    Mod+Q {close-window;}
+
+    Mod+S {switch-preset-column-width;}
+    Mod+f {toggle-window-floating;}
+    Mod+W {toggle-column-tabbed-display;}
+
+    Mod+Z {maximize-column;}
+    Mod+shift+Z { fullscreen-window; }
+    Mod+Shift+Alt+Z {expand-column-to-available-width;}
+
+    Mod+Comma {consume-window-into-column;}
+    Mod+Period {expel-window-from-column;}
+    Mod+C {center-window;}
+    Mod+Tab {switch-focus-between-floating-and-tiling;}
+
+    Mod+Minus {set-column-width "-10%";}
+    Mod+Plus {set-column-width "+10%";}
+    Mod+Shift+Minus {set-window-height "-10%";}
+    Mod+Shift+Plus {set-window-height "+10%";}
+
+    Mod+H {focus-column-or-monitor-left;}
+    Mod+L {focus-column-or-monitor-right;}
+    Mod+K {focus-window-or-workspace-up;}
+    Mod+J {focus-window-or-workspace-down;}
+    Mod+Left {focus-column-or-monitor-left;}
+    Mod+Right {focus-column-or-monitor-right;}
+    Mod+Up {focus-window-or-workspace-up;}
+    Mod+Down {focus-window-or-workspace-down;}
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-window-or-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-window-or-workspace-down; }
+    Mod+WheelScrollLeft                 {focus-column-or-monitor-left;}
+    Mod+WheelScrollRight                {focus-column-or-monitor-right;}
+    Mod+MouseBack    {focus-column-or-monitor-left;}
+    Mod+MouseForward {focus-column-or-monitor-right;}
+
+    Mod+Shift+H {move-column-left-or-to-monitor-left;}
+    Mod+Shift+L {move-column-right-or-to-monitor-right;}
+    Mod+Shift+K {move-column-to-workspace-up;}
+    Mod+Shift+J {move-column-to-workspace-down;}
+    Mod+Shift+WheelScrollUp   cooldown-ms=150 {move-column-to-workspace-up;}
+    Mod+Shift+WheelScrollDown cooldown-ms=150 {move-column-to-workspace-down;}
+    Mod+Shift+WheelScrollLeft                 {move-column-left-or-to-monitor-left;}
+    Mod+Shift+WheelScrollRight                {move-column-right-or-to-monitor-right;}
+    Mod+Shift+MouseBack    {move-column-left-or-to-monitor-left;}
+    Mod+Shift+MouseForward {move-column-right-or-to-monitor-right;}
+
+    Mod+I    {focus-workspace-previous;}
+    Alt+Tab    {focus-window-previous;}
+    // move-workspace-up
+     
+    Mod+1 {focus-workspace 1;}
+    Mod+2 {focus-workspace 2;}
+    Mod+3 {focus-workspace 3;}
+    Mod+4 {focus-workspace 4;}
+    Mod+5 {focus-workspace 5;}
+    Mod+6 {focus-workspace 6;}
+    Mod+7 {focus-workspace 7;}
+    Mod+8 {focus-workspace 8;}
+    Mod+9 {focus-workspace 9;}
+    Mod+0 {focus-workspace 10;}
+
+    XF86AudioLowerVolume { spawn "swayosd-client" "--output-volume" "lower"; }
+    XF86AudioMute { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
+    XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }
+    XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
+    XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
+}
+
+input {
+    keyboard {
+        xkb {
+        	layout "dk"
+         }
+    }
+    focus-follows-mouse
+    touchpad {
+        tap
+        natural-scroll
+        click-method "clickfinger"
+    }
+}
+
+output "eDP-1" {
+    scale 1.0
+    // position x=0, y=0
+}
+
+output "HDMI-A-1" {
+    position x=0 y=-1200
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+  
+
+layout {
+    background-color "transparent"
+    focus-ring {
+        off
+    }
+
+    border {
+        width 2
+        active-color "#7aa2f7"
+    }
+
+    tab-indicator {
+        hide-when-single-tab
+        width 6
+        corner-radius 6
+        gap 2
+        length total-proportion=1.0
+        gaps-between-tabs 8
+    }
+
+    gaps 0
+
+    struts {
+        left 2
+        right 2
+        top 0
+        bottom 0
+    }
+}
+
+switch-events {
+    lid-close { spawn "niri" "msg" "output" "eDP-1" "off"; }
+    lid-open { spawn "niri" "msg" "output" "eDP-1" "on"; }
+}
+
+

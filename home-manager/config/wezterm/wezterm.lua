@@ -40,8 +40,9 @@ local config = {
 	xcursor_theme = "Adwaita", -- fix cursor bug on gnome + wayland
 
 	max_fps = 120,
-	front_end = "WebGpu",
+	-- front_end = "WebGpu",
 	webgpu_power_preference = "HighPerformance",
+	disable_default_key_bindings = true,
 }
 
 if is_windows then
