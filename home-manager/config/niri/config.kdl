@@ -1,4 +1,3 @@
-spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "walker" "--gapplication-service"
@@ -10,6 +9,10 @@ spawn-at-startup "swaybg" "--image" "/home/mlflexer/repos/.dotfiles/home-manager
 
     // "wl-paste --type image --watch cliphist store"
     // "wl-paste --type text --watch cliphist store"
+
+xwayland-satellite {
+    path "/etc/profiles/per-user/mlflexer/bin/xwayland-satellite"
+}
 
 
 binds {
@@ -100,10 +103,6 @@ input {
     touchpad {
         click-method "clickfinger"
     }
-}
-
-environment {
-    DISPLAY ":0"
 }
 
 layer-rule {

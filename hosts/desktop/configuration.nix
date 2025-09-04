@@ -16,13 +16,15 @@ in {
   imports = [ inputs.niri.nixosModules.niri ];
 
   services.gnome.gnome-keyring.enable = true;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
   xdg = {
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
       config = {
-        common.default = [ "gnome" "gtk" ];
-        niri.default = [ "gnome" "gtk" ];
+        common.default = [ "gtk" "gnome" ];
+        niri.default = [ "gtk" "gnome" ];
         niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
       };
       extraPortals =
@@ -180,7 +182,7 @@ in {
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = (with pkgs; [ discord krisp-patcher prismlauncher ])
-      ++ (with unstable; [ wezterm element-desktop zeroad ]);
+      ++ (with unstable; [ wezterm element-desktop ]);
   };
 
   # networking.firewall.allowedUDPPorts = [ 20595 ];

@@ -67,7 +67,7 @@
  "wlr/taskbar" : {
           "format" : "{icon}",
           "icon-size" : 14,
-          "icon-theme" : "Numix-Circle",
+          "icon-theme" : "Adwaita",
           "tooltip-format" : "{name}\n{title}",
           "on-click" : "minimize-raise",
           "on-click-middle" : "close",
