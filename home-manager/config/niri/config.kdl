@@ -111,10 +111,6 @@ output "eDP-1" {
     scale 1.0
 }
 
-environment {
-    DISPLAY ":0"
-}
-
 layer-rule {
     match namespace="^wallpaper$"
     place-within-backdrop true
