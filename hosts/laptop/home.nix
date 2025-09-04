@@ -1,4 +1,10 @@
-{ config, pkgs, system, inputs, ... }:
+{
+  config,
+  pkgs,
+  system,
+  inputs,
+  ...
+}:
 
 {
   imports = [ ../../home-manager/modules ];
@@ -16,10 +22,11 @@
   cli_extra.enable = true;
   extra_pkgs.enable = false;
   niri.enable = true;
+  waybar.enable = true;
 
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ nerd-fonts.monaspace ];
+  # home.packages = with pkgs; [ nerd-fonts.monaspace ];
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";

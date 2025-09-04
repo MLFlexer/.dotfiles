@@ -1,10 +1,21 @@
-{ pkgs, config, lib, modulesPath, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
 
@@ -20,15 +31,12 @@
     fsType = "vfat";
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/cb09ce52-0f1e-4bc2-96e1-b2a407e57b97"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/cb09ce52-0f1e-4bc2-96e1-b2a407e57b97"; } ];
 
   networking.useDHCP = lib.mkDefault true;
 
   hardware.enableRedistributableFirmware = true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd

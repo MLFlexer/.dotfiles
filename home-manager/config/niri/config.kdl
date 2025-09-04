@@ -101,8 +101,18 @@ input {
     }
     focus-follows-mouse
     touchpad {
+        tap
+        natural-scroll
         click-method "clickfinger"
     }
+}
+
+output "eDP-1" {
+    scale 1.0
+}
+
+environment {
+    DISPLAY ":0"
 }
 
 layer-rule {
@@ -140,4 +150,10 @@ layout {
         bottom 0
     }
 }
+
+switch-events {
+    lid-close { spawn "niri" "msg" "output" "eDP-1" "off"; }
+    lid-open { spawn "niri" "msg" "output" "eDP-1" "on"; }
+}
+
 
