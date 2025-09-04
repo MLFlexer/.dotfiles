@@ -1,4 +1,4 @@
-{ config, lib, system, pkgs, inputs, ... }:
+{ config, lib, system, pkgs, unstable, inputs, ... }:
 let config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
 in {
 
@@ -15,7 +15,7 @@ in {
       pkgs.swaylock
       pkgs.swayidle
       pkgs.swaybg
-      pkgs.xwayland-satellite
+      unstable.xwayland-satellite
       pkgs.wttrbar
       pkgs.networkmanagerapplet
       pkgs.networkmanager
