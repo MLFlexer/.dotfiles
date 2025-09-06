@@ -1,8 +1,20 @@
-{ config, lib, system, pkgs, unstable, inputs, ... }:
-let config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
-in {
+{
+  config,
+  lib,
+  system,
+  pkgs,
+  unstable,
+  inputs,
+  ...
+}:
+let
+  config_sym_dir = config.lib.file.mkOutOfStoreSymlink config.config_dir;
+in
+{
 
-  options = { niri.enable = lib.mkEnableOption "Enables Niri compositor"; };
+  options = {
+    niri.enable = lib.mkEnableOption "Enables Niri compositor";
+  };
 
   config = lib.mkIf config.niri.enable {
 
@@ -12,7 +24,7 @@ in {
       pkgs.impala
       pkgs.walker
       pkgs.swayosd
-      pkgs.swaylock
+      pkgs.swaylock-effects
       pkgs.swayidle
       pkgs.swaybg
       unstable.xwayland-satellite
@@ -20,8 +32,8 @@ in {
       pkgs.networkmanagerapplet
       pkgs.networkmanager
     ];
-    # inputs.pkgs_unstable.wiremix 
-    # pamixer    
+    # inputs.pkgs_unstable.wiremix
+    # pamixer
 
     home.file = {
       "niri" = {
@@ -41,6 +53,12 @@ in {
         source = "${config_sym_dir}/swayidle";
         recursive = true;
         target = ".config/swayidle";
+      };
+      "swaylock" = {
+        enable = true;
+        source = "${config_sym_dir}/swaylock";
+        recursive = true;
+        target = ".config/swaylock";
       };
     };
   };
