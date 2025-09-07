@@ -1,17 +1,34 @@
-{ pkgs, unstable, user, inputs, ... }:
+{
+  pkgs,
+  unstable,
+  user,
+  inputs,
+  ...
+}:
 let
-  krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
-    libraries = with pkgs.python3Packages; [ capstone pyelftools ];
-    flakeIgnore = [
-      "E501" # line too long (82 > 79 characters)
-      "F403" # 'from module import *' used; unable to detect undefined names
-      "F405" # name may be undefined, or defined from star imports: module
-    ];
-  } (builtins.readFile (pkgs.fetchurl {
-    url = "https://pastebin.com/raw/8tQDsMVd";
-    sha256 = "sha256-IdXv0MfRG1/1pAAwHLS2+1NESFEz2uXrbSdvU9OvdJ8=";
-  }));
-in {
+  krisp-patcher =
+    pkgs.writers.writePython3Bin "krisp-patcher"
+      {
+        libraries = with pkgs.python3Packages; [
+          capstone
+          pyelftools
+        ];
+        flakeIgnore = [
+          "E501" # line too long (82 > 79 characters)
+          "F403" # 'from module import *' used; unable to detect undefined names
+          "F405" # name may be undefined, or defined from star imports: module
+        ];
+      }
+      (
+        builtins.readFile (
+          pkgs.fetchurl {
+            url = "https://pastebin.com/raw/8tQDsMVd";
+            sha256 = "sha256-IdXv0MfRG1/1pAAwHLS2+1NESFEz2uXrbSdvU9OvdJ8=";
+          }
+        )
+      );
+in
+{
 
   imports = [ inputs.niri.nixosModules.niri ];
 
@@ -23,14 +40,23 @@ in {
       enable = true;
       xdgOpenUsePortal = true;
       config = {
-        common.default = [ "gtk" "gnome" ];
-        niri.default = [ "gtk" "gnome" ];
+        common.default = [
+          "gtk"
+          "gnome"
+        ];
+        niri.default = [
+          "gtk"
+          "gnome"
+        ];
         niri."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
       };
-      extraPortals =
-        [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome ];
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
     };
   };
+
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -41,16 +67,18 @@ in {
       enable = true;
 
       windows = {
-        "windows" = let
-          # To determine the name of the windows boot drive, boot into edk2 first, then run
-          # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
-          # which alias corresponds to which EFI partition.
-          boot-drive = "FS1";
-        in {
-          title = "Windows";
-          efiDeviceHandle = boot-drive;
-          sortKey = "a_windows";
-        };
+        "windows" =
+          let
+            # To determine the name of the windows boot drive, boot into edk2 first, then run
+            # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
+            # which alias corresponds to which EFI partition.
+            boot-drive = "FS1";
+          in
+          {
+            title = "Windows";
+            efiDeviceHandle = boot-drive;
+            sortKey = "a_windows";
+          };
       };
 
       edk2-uefi-shell.enable = true;
@@ -70,11 +98,13 @@ in {
         "nvidia-suspend.service"
         "nvidia-hibernate.service"
       ];
-      wantedBy = [ "systemd-suspend.service" "systemd-hibernate.service" ];
+      wantedBy = [
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+      ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart =
-          "${pkgs.procps}/bin/pkill -f -STOP ${pkgs.gnome-shell}/bin/gnome-shell";
+        ExecStart = "${pkgs.procps}/bin/pkill -f -STOP ${pkgs.gnome-shell}/bin/gnome-shell";
       };
     };
     services."gnome-resume" = {
@@ -84,11 +114,13 @@ in {
         "systemd-hibernate.service"
         "nvidia-resume.service"
       ];
-      wantedBy = [ "systemd-suspend.service" "systemd-hibernate.service" ];
+      wantedBy = [
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+      ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart =
-          "${pkgs.procps}/bin/pkill -f -CONT ${pkgs.gnome-shell}/bin/gnome-shell";
+        ExecStart = "${pkgs.procps}/bin/pkill -f -CONT ${pkgs.gnome-shell}/bin/gnome-shell";
       };
     };
   };
@@ -133,7 +165,8 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [ gnome-tour ])
+  environment.gnome.excludePackages =
+    (with pkgs; [ gnome-tour ])
     ++ (with pkgs; [
       cheese # webcam tool
       gnome-music
@@ -179,15 +212,29 @@ in {
   users.users.${user} = {
     isNormalUser = true;
     description = "${user} user.";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [ discord krisp-patcher prismlauncher ])
-      ++ (with unstable; [ wezterm element-desktop ]);
+    packages =
+      (with pkgs; [
+        discord
+        krisp-patcher
+        prismlauncher
+      ])
+      ++ (with unstable; [
+        wezterm
+        element-desktop
+      ]);
   };
 
   # networking.firewall.allowedUDPPorts = [ 20595 ];
 
-  environment.sessionVariables = { XCURSOR_THEME = "Adwaita"; };
+  environment.sessionVariables = {
+    XCURSOR_THEME = "Adwaita";
+  };
 
   environment.systemPackages = with pkgs; [
     vivaldi
@@ -198,7 +245,7 @@ in {
     # (cutter.withPlugins (ps: with ps; [ jsdec rz-ghidra sigdb ]))
     openssl
     gnupg
-    # obs-studio 
+    # obs-studio
     # anki-bin
     cacert
     curl
@@ -222,8 +269,7 @@ in {
   ];
 
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/${user}/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/${user}/.steam/root/compatibilitytools.d";
   };
 
   programs.steam = {
@@ -252,8 +298,14 @@ in {
     package = pkgs.nixVersions.stable;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "mlflexer" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "mlflexer"
+      ];
     };
 
     gc = {

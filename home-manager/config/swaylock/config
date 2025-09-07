@@ -12,7 +12,7 @@ fade-in=0.1
 
 indicator
 
-indicator-radius=200
+indicator-radius=300
 
 indicator-thickness=20
 indicator-caps-lock

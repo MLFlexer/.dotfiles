@@ -1,14 +1,13 @@
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "wl-paste --type image --watch cliphist store"
+spawn-at-startup "wl-paste --type text --watch cliphist store"
 spawn-at-startup "walker" "--gapplication-service"
 spawn-at-startup "swayosd-server"
 spawn-at-startup "swayidle"
 // TODO: fix path
 spawn-at-startup "swaybg" "--image" "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png"
-// swaylock -F -i "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png" -l --font "MonaspiceNe Nerd Font"
 
-    // "wl-paste --type image --watch cliphist store"
-    // "wl-paste --type text --watch cliphist store"
 
 xwayland-satellite {
     path "/etc/profiles/per-user/mlflexer/bin/xwayland-satellite"
@@ -20,8 +19,11 @@ binds {
     
     Mod+Escape {spawn "bash" "/home/mlflexer/.config/walker/scripts/menu.sh";}
     Mod+Space {spawn "walker";}
-    Mod+Return {spawn "wezterm";}
-    Mod+b {spawn "zen";}
+    Mod+Return {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "wezterm";}
+    Mod+Shift+Return {spawn "wezterm";}
+    Mod+b {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "zen-beta";}
+    Mod+Shift+B {spawn "zen-beta";}
+    Mod+d {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "discord";}
     mod+Shift+S { screenshot; }
 
     Mod+Shift+E {quit;}

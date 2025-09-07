@@ -1,6 +1,7 @@
 theme = "tokyonight_storm"
 
 [editor]
+rulers = [80] 
 cursorline = true
 color-modes = true
 auto-save = true
