@@ -3,3 +3,7 @@ name = "nix"
 formatter = {command = "nixfmt"}
 auto-format = true
 
+
+[[language]]
+name = "c"
+auto-format = true 
