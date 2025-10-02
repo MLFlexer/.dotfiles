@@ -31,6 +31,7 @@ in
       pkgs.wttrbar
       pkgs.networkmanagerapplet
       pkgs.networkmanager
+      pkgs.pavucontrol
     ];
     # inputs.pkgs_unstable.wiremix
     # pamixer

@@ -133,7 +133,10 @@
     ];
     shell = pkgs.zsh;
     packages =
-      (with pkgs; [ discord ])
+      (with pkgs; [
+        discord
+        zotero
+      ])
       ++ (with unstable; [
         wezterm
         element-desktop
@@ -145,6 +148,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    lazydocker
     thunderbird
     cachix
     openssl
