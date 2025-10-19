@@ -1,4 +1,10 @@
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
   options = {
     cli_tools.enable = lib.mkEnableOption "Enables common cli tools";
   };
@@ -20,6 +26,7 @@
       # zoxide
       # nixfmt
       yazi
+      ouch
     ];
   };
 }
