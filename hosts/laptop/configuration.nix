@@ -130,14 +130,18 @@
       "networkmanager"
       "wheel"
       "docker"
+      "dialout"
     ];
     shell = pkgs.zsh;
     packages =
       (with pkgs; [
         discord
         zotero
+        localsend
+        libreoffice
       ])
       ++ (with unstable; [
+        imhex
         wezterm
         element-desktop
       ]);

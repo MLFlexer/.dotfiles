@@ -1,35 +1,45 @@
-{ pkgs, config, lib, pkgs_unstable, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  pkgs_unstable,
+  ...
+}:
+{
   options = {
     cli_extra.enable = lib.mkEnableOption "Enables extra cli tools";
   };
 
   config = lib.mkIf config.cli_extra.enable {
 
-    home.packages = (with pkgs; [
-      # broot
-      # choose
-      # difftastic
-      # du-dust
-      dust
-      # erdtree
-      # fselect
-      # fx
-      # grex
-      ntfy-sh
-      # procs
-      # sd
-      tealdeer
-      gnumake
-      # xclip
-      # xsv
+    home.packages =
+      (with pkgs; [
+        # broot
+        # choose
+        # difftastic
+        # du-dust
+        dust
+        # erdtree
+        # fselect
+        # fx
+        # grex
+        ntfy-sh
+        # procs
+        # sd
+        tealdeer
+        gnumake
+        # xclip
+        # xsv
 
-      act
-      ffmpeg
-      pandoc
-      hyperfine
-      texliveMedium
-    ]) ++ (with pkgs_unstable;
-      [
+        act
+        ffmpeg
+        pandoc
+        hyperfine
+        texliveMedium
+        numbat
+        hexyl
+      ])
+      ++ (with pkgs_unstable; [
         # ollama
 
         # nodejs
