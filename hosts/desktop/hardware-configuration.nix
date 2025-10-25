@@ -35,22 +35,23 @@
     "pcie_aspm=off"
     "pcie_port_pm=off"
   ];
-  boot.supportedFilesystems = [ "ntfs" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/4fa97e83-f840-4632-944d-fc38e32427ae";
+    # device = "/dev/disk/by-uuid/4fa97e83-f840-4632-944d-fc38e32427ae";
+    device = "/dev/disk/by-uuid/c56fc36d-96ef-4881-a95c-cd91bb50d345";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/A5C1-10EF";
+    # device = "/dev/disk/by-uuid/A5C1-10EF";
+    device = "/dev/disk/by-uuid/6A2C-C454";
     fsType = "vfat";
   };
 
-  fileSystems."/sandisk" = {
-    device = "/dev/disk/by-uuid/f431743a-286e-4cfe-b835-170f412cf0ad";
-    fsType = "ext4";
-  };
+  # fileSystems."/sandisk" = {
+  # device = "/dev/disk/by-uuid/f431743a-286e-4cfe-b835-170f412cf0ad";
+  # fsType = "ext4";
+  # };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/f13185d5-ce2f-4be4-97e9-1b4f9514bbb4"; } ];
 
