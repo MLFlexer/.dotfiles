@@ -130,11 +130,18 @@
       "networkmanager"
       "wheel"
       "docker"
+      "dialout"
     ];
     shell = pkgs.zsh;
     packages =
-      (with pkgs; [ discord ])
+      (with pkgs; [
+        discord
+        zotero
+        localsend
+        libreoffice
+      ])
       ++ (with unstable; [
+        imhex
         wezterm
         element-desktop
       ]);
@@ -145,6 +152,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    lazydocker
     thunderbird
     cachix
     openssl

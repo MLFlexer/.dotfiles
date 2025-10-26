@@ -3,13 +3,11 @@ name = "nix"
 formatter = {command = "nixfmt"}
 auto-format = true
 
-# [[language]]
-# name = "c"
-# scope = "source.c"
-# injection-regex = "c"
-# file-types = ["c"] # TODO: ["h"]
-# comment-token = "//"
-# block-comment-tokens = { start = "/*", end = "*/" }
-# language-servers = [ "clangd" ]
-# roots = []
-# indent = { tab-width = 16, unit = "\t" }
+
+[[language]]
+name = "c"
+auto-format = true 
+
+[[language]]
+name = "nasm"
+comment-token = "#"
