@@ -72,7 +72,7 @@ in
             # To determine the name of the windows boot drive, boot into edk2 first, then run
             # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
             # which alias corresponds to which EFI partition.
-            boot-drive = "FS1";
+            boot-drive = "FS0";
           in
           {
             title = "Windows";

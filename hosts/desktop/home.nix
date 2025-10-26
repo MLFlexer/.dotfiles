@@ -1,4 +1,10 @@
-{ config, pkgs, system, inputs, ... }:
+{
+  config,
+  pkgs,
+  system,
+  inputs,
+  ...
+}:
 
 {
   imports = [ ../../home-manager/modules ];
@@ -16,6 +22,7 @@
   extra_pkgs.enable = false;
   niri.enable = true;
   waybar.enable = true;
+  yazi.enable = true;
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";
