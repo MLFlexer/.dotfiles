@@ -1,4 +1,11 @@
-{ pkgs, unstable, user, raspberry-pi-nix, ... }: {
+{
+  pkgs,
+  unstable,
+  user,
+  raspberry-pi-nix,
+  ...
+}:
+{
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "dk-latin1";
@@ -7,7 +14,9 @@
   networking = {
     hostName = "rpi5";
     useDHCP = true;
-    interfaces = { wlan0.useDHCP = true; };
+    interfaces = {
+      wlan0.useDHCP = true;
+    };
     wireless = {
       enable = true;
       userControlled.enable = true;
@@ -35,12 +44,14 @@
       "mediagroup"
     ];
     shell = pkgs.zsh;
-    packages = (with pkgs; [
-      cachix
-      tmux
-      btop
-      # stable
-    ]) ++ (with unstable; [ wezterm ]);
+    packages =
+      (with pkgs; [
+        cachix
+        tmux
+        btop
+        # stable
+      ])
+      ++ (with unstable; [ wezterm ]);
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdXjmV661jKgb8bOQ8MqpOlNTfRSo/AneI4KqJ6dhcf malthemlarsen@gmail.com"
@@ -66,7 +77,7 @@
     25566
     # 3000
     # 4221
-    # 
+    #
     8173
     443
     5000
@@ -108,18 +119,29 @@
     "/mnt/usbdrive2" = {
       device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
       fsType = "ext4";
-      options = [ "defaults" "nofail" ];
+      options = [
+        "defaults"
+        "nofail"
+      ];
     };
   };
 
-  users.groups.usbdrive2 = { name = "usbdrive2"; };
+  users.groups.usbdrive2 = {
+    name = "usbdrive2";
+  };
   systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
 
   nix = {
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "mlflexer" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "mlflexer"
+      ];
     };
 
     gc = {
@@ -140,7 +162,7 @@
     rpi-imager
     yazi
   ];
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
   # raspberry-pi-nix = {
   #   kernel-version = "v6_6_51";
   #   board = "bcm2712";

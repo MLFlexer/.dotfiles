@@ -1,4 +1,10 @@
-{ lib, config, unstable, ... }: {
+{
+  lib,
+  config,
+  unstable,
+  ...
+}:
+{
 
   options = {
     immich.enable = lib.mkEnableOption "Enables immich";
@@ -10,14 +16,10 @@
 
     services.immich = {
       enable = true;
-      package = unstable.immich;
+      # package = unstable.immich;
       openFirewall = true;
-      database.enableVectors = false;
-      # allowDHCP = true;
+      # database.enableVectors = false;
       port = config.immich.port;
-      # settings = {
-      #   http.address = "0.0.0.0:${builtins.toString config.immich.port}";
-      # };
     };
   };
 }
