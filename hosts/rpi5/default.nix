@@ -77,6 +77,7 @@ in lib.nixosSystem {
       adguardhome.enable = true;
       nextcloud.enable = true;
       traefik.enable = true;
+      # immich.enable = true;
 
       arr.jelly.enable = true;
       arr.enable = true;
