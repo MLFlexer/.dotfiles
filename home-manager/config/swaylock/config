@@ -1,0 +1,18 @@
+ignore-empty-password
+
+clock
+timestr=%R
+datestr=%a, %e of %B
+
+font="MonaspiceNe Nerd Font"
+
+image=/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png
+
+fade-in=0.1
+
+indicator
+
+indicator-radius=300
+
+indicator-thickness=20
+indicator-caps-lock

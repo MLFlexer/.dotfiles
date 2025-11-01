@@ -4,6 +4,18 @@ local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 local keys = {
+	{key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize},
+	{key = "+", mods = "CTRL", action = wezterm.action.IncreaseFontSize},
+  {
+    key = 'C',
+    mods = 'CTRL',
+    action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection',
+  },
+  {
+    key = 'V',
+    mods = 'CTRL',
+    action = wezterm.action.PasteFrom 'Clipboard',
+  },  	
 
     -- Because of kitty protocol bug: https://github.com/nushell/nushell/issues/14783
     { key = "Delete", action = act.SendKey { key = "Delete" } },
@@ -194,6 +206,7 @@ local keys = {
 		mods = "LEADER",
 		action = act.ToggleFullScreen,
 	},
+	  { key = 'L', mods = 'CTRL', action = wezterm.action.ShowDebugOverlay },
 }
 
 local function tab_switch_keys(key_table, modifier)

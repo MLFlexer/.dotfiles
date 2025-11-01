@@ -1,5 +1,7 @@
-{ lib, config, ... }:
-let wallpaper = builtins.toString (./img/background.png);
+{ lib, config, inputs, ... }:
+let
+  wallpaper = builtins.toString inputs.self
+    + "/home-manager/modules/configs/gnome/img/background.png";
 in {
   options = { gnome.enable = lib.mkEnableOption "Enables Gnome config"; };
 

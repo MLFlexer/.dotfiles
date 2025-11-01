@@ -20,7 +20,7 @@ return {
 	command_palette_bg_color = color_scheme.background,
 	command_palette_fg_color = color_scheme.foreground,
 	char_select_bg_color = color_scheme.background,
-	char_select_fg_color = color_scheme.tab_bar.active_tab.fg_color,
+	char_select_fg_color = color_scheme.tab_bar.active_tab.bg_color,
 	colors = colors,
 }
 

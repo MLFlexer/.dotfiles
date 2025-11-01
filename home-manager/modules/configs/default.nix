@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
 
   options = {
     isDesktop = lib.mkOption { default = false; };
@@ -8,15 +9,18 @@
 
   };
   imports = [
-    ./helix.nix
-    ./wezterm.nix
     # ./firefox.nix
-    ./zsh.nix
     ./bat.nix
-    ./nvim.nix
-    ./git.nix
     ./gh.nix
+    ./git.nix
     ./gnome/gnome.nix
+    ./helix.nix
+    ./nvim.nix
+    ./niri.nix
+    ./waybar.nix
+    ./wezterm.nix
+    ./zsh.nix
+    ./yazi.nix
   ];
 
 }

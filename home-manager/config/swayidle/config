@@ -1,0 +1,15 @@
+# Lock after 5 minutes
+timeout 300 'swaylock'
+
+# Turn off displays after 10 minutes, and turn them back on when resumed
+timeout 600 'bash /home/mlflexer/.config/niri/scripts/outputs_off.sh' resume 'bash /home/mlflexer/.config/niri/scripts/outputs_on.sh'
+
+# Suspend after 15 minutes
+timeout 1800 'systemctl suspend'
+
+# Lock before the system goes to sleep
+before-sleep 'swaylock'
+
+# Logind hooks
+lock 'swaylock'
+unlock 'bash /home/mlflexer/.config/niri/scripts/outputs_on.sh'
