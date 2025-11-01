@@ -88,27 +88,27 @@ lib.nixosSystem {
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
     ./configuration.nix
 
-    ../services
-    {
-      home-assistant.enable = true;
-      adguardhome.enable = true;
-      nextcloud.enable = true;
-      traefik.enable = true;
-      immich.enable = true;
+    # ../services
+    # {
+    #   home-assistant.enable = true;
+    #   adguardhome.enable = true;
+    #   nextcloud.enable = true;
+    #   traefik.enable = true;
+    #   immich.enable = true;
 
-      arr.jelly.enable = true;
-      arr.enable = true;
-      arr.container.enable = true;
-    }
+    #   arr.jelly.enable = true;
+    #   arr.enable = true;
+    #   arr.container.enable = true;
+    # }
 
-    inputs.home-manager.nixosModules.home-manager
-    {
-      home-manager = {
-        extraSpecialArgs = { inherit inputs system unstable; };
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${user} = ./home.nix;
-      };
-    }
+    # inputs.home-manager.nixosModules.home-manager
+    # {
+    #   home-manager = {
+    #     extraSpecialArgs = { inherit inputs system unstable; };
+    #     useGlobalPkgs = true;
+    #     useUserPackages = true;
+    #     users.${user} = ./home.nix;
+    #   };
+    # }
   ];
 }
