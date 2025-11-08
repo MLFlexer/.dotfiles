@@ -9,17 +9,23 @@
       "https://nix-community.cachix.org"
       "https://mlflexer.cachix.org"
       "https://niri.cachix.org"
+
+      "https://nixos-raspberrypi.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "mlflexer.cachix.org-1:9tD5WIKif3nAUHHq6wTYFlg1bMq1z5uF0+h5UqICsQQ="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
     extra-trusted-public-keys = [
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
-    trusted-users = [ "root" "mlflexer" ];
+    trusted-users = [
+      "root"
+      "mlflexer"
+    ];
   };
 
   inputs = {
@@ -40,7 +46,9 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    nixos-raspberrypi = { url = "github:nvmd/nixos-raspberrypi/main"; };
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+    };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
@@ -63,8 +71,10 @@
     };
   };
 
-  outputs = { ... }@inputs: {
-    nixosConfigurations = (import ./hosts { inherit inputs; });
-    homeConfigurations = (import ./home-manager { inherit inputs; });
-  };
+  outputs =
+    { ... }@inputs:
+    {
+      nixosConfigurations = (import ./hosts { inherit inputs; });
+      homeConfigurations = (import ./home-manager { inherit inputs; });
+    };
 }
