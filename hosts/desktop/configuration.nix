@@ -126,7 +126,7 @@ in
   };
 
   # Emulate arm to cross compile raspberry pi 5
-  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "desktop_nixos";
   networking.networkmanager.enable = true;
