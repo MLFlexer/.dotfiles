@@ -173,6 +173,7 @@
     gnome-system-monitor
     gnomeExtensions.vitals # system monitoring
     inputs.zen-browser.packages.${system}.default
+    vivaldi
   ];
 
   programs = {
