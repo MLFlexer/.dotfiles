@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
 
   options = {
     isDesktop = lib.mkOption { default = false; };
@@ -19,6 +20,7 @@
     ./waybar.nix
     ./wezterm.nix
     ./zsh.nix
+    ./yazi.nix
   ];
 
 }
