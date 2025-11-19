@@ -7,7 +7,13 @@
 }:
 
 {
-  imports = [ ../../home-manager/modules ];
+  imports = [
+    # inputs.niri.homeModules.niri
+    "${inputs.hm-unstable}/modules/programs/quickshell.nix"
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
+    ../../home-manager/modules
+  ];
 
   helix.enable = true;
   git.enable = true;
@@ -22,11 +28,7 @@
   cli_extra.enable = true;
   extra_pkgs.enable = false;
   niri.enable = true;
-  waybar.enable = true;
-
-  # fonts.fontconfig.enable = true;
-
-  # home.packages = with pkgs; [ nerd-fonts.monaspace ];
+  waybar.enable = false;
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";

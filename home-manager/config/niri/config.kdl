@@ -1,24 +1,17 @@
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
-spawn-at-startup "wl-paste --type image --watch cliphist store"
-spawn-at-startup "wl-paste --type text --watch cliphist store"
-spawn-at-startup "walker" "--gapplication-service"
-spawn-at-startup "swayosd-server"
-spawn-at-startup "swayidle"
-// TODO: fix path
-spawn-at-startup "swaybg" "--image" "/home/mlflexer/repos/.dotfiles/home-manager/modules/configs/gnome/img/background.png"
 
+// Add to the top of ~/.config/niri.config.kdls
+include "dms/binds.kdl"
 
-xwayland-satellite {
-    path "/etc/profiles/per-user/mlflexer/bin/xwayland-satellite"
-}
+// xwayland-satellite {
+//     path "/etc/profiles/per-user/mlflexer/bin/xwayland-satellite"
+// }
 
 
 binds {
     // `niri msg action` prints all actions
     
-    Mod+Escape {spawn "bash" "/home/mlflexer/.config/walker/scripts/menu.sh";}
-    Mod+Space {spawn "walker";}
+    Mod+Escape {spawn "dms" "ipc" "call" "powermenu" "toggle";}
+    // Mod+Space {spawn "walker";}
     Mod+Return {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "wezterm";}
     Mod+Shift+Return {spawn "wezterm";}
     Mod+b {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "zen-beta";}
@@ -26,7 +19,7 @@ binds {
     Mod+d {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "discord";}
     mod+Shift+S { screenshot; }
 
-    Mod+Shift+E {quit;}
+    // Mod+Shift+E {quit;}
     Mod+Q {close-window;}
 
     Mod+S {switch-preset-column-width;}
@@ -88,11 +81,6 @@ binds {
     Mod+9 {focus-workspace 9;}
     Mod+0 {focus-workspace 10;}
 
-    XF86AudioLowerVolume { spawn "swayosd-client" "--output-volume" "lower"; }
-    XF86AudioMute { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
-    XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }
-    XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
-    XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
 }
 
 input {
@@ -109,19 +97,19 @@ input {
     }
 }
 
-output "eDP-1" {
-    scale 1.0
-    // position x=0, y=0
-}
+// output "eDP-1" {
+//     scale 1.0
+//     // position x=0, y=0
+// }
 
-output "HDMI-A-1" {
-    position x=0 y=-1200
-}
+// output "HDMI-A-1" {
+//     position x=0 y=-1200
+// }
 
-layer-rule {
-    match namespace="^wallpaper$"
-    place-within-backdrop true
-}
+// layer-rule {
+//     match namespace="^wallpaper$"
+//     place-within-backdrop true
+// }
   
 
 layout {
@@ -154,9 +142,15 @@ layout {
     }
 }
 
-switch-events {
-    lid-close { spawn "niri" "msg" "output" "eDP-1" "off"; }
-    lid-open { spawn "niri" "msg" "output" "eDP-1" "on"; }
-}
+// switch-events {
+//     lid-close { spawn "niri" "msg" "output" "eDP-1" "off"; }
+//     lid-open { spawn "niri" "msg" "output" "eDP-1" "on"; }
+// }
 
 
+
+spawn-at-startup "dms" "run"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+
+include "dms/colors.kdl"
+include "dms/layout.kdl"

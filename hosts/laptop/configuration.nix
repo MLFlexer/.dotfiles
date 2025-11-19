@@ -10,7 +10,15 @@
   imports = [
     inputs.niri.nixosModules.niri
     ./hardware-configuration.nix
+    inputs.dankMaterialShell.nixosModules.greeter
   ];
+
+  programs.dankMaterialShell.greeter = {
+    enable = true;
+    compositor.name = "niri"; # or set to hyprland
+    configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
+    quickshell.package = unstable.quickshell;
+  };
 
   services.gnome.gnome-keyring.enable = true;
   services.dbus.enable = true;
@@ -139,6 +147,7 @@
         zotero
         localsend
         libreoffice
+        thunderbird
       ])
       ++ (with unstable; [
         imhex
@@ -152,8 +161,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    swappy
     lazydocker
-    thunderbird
     cachix
     openssl
     gnupg
@@ -163,15 +172,15 @@
     gcc
     kdePackages.okular # pdf reader
     # pinentry-gnome
-    steam-run # to run unpatched binaies
+    # steam-run # to run unpatched binaies
     unzip
     vim
     vlc
     wget
     zip
-    gnome-weather
-    gnome-system-monitor
-    gnomeExtensions.vitals # system monitoring
+    # gnome-weather
+    # gnome-system-monitor
+    # gnomeExtensions.vitals # system monitoring
     inputs.zen-browser.packages.${system}.default
     vivaldi
   ];

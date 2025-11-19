@@ -19,7 +19,10 @@
     extra-trusted-public-keys = [
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
-    trusted-users = [ "root" "mlflexer" ];
+    trusted-users = [
+      "root"
+      "mlflexer"
+    ];
   };
 
   inputs = {
@@ -35,12 +38,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hm-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # raspberry-pi-nix = {
     #   url = "github:tstat/raspberry-pi-nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    nixos-raspberrypi = { url = "github:nvmd/nixos-raspberrypi/main"; };
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+    };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
@@ -51,9 +61,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Window manager stuff
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dgop.follows = "dgop";
+      inputs.dms-cli.follows = "dms-cli";
     };
 
     # comma integration
@@ -63,8 +91,10 @@
     };
   };
 
-  outputs = { ... }@inputs: {
-    nixosConfigurations = (import ./hosts { inherit inputs; });
-    homeConfigurations = (import ./home-manager { inherit inputs; });
-  };
+  outputs =
+    { ... }@inputs:
+    {
+      nixosConfigurations = (import ./hosts { inherit inputs; });
+      homeConfigurations = (import ./home-manager { inherit inputs; });
+    };
 }

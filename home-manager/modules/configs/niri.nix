@@ -17,21 +17,44 @@ in
   };
 
   config = lib.mkIf config.niri.enable {
+    # programs.niri.enable = true;
+    programs.dankMaterialShell = {
+      enable = true;
+      quickshell.package = unstable.quickshell;
+      # niri = {
+      #   # enableKeybinds = true; # Automatic keybinding configuration
+      #   # enableSpawn = true; # Auto-start DMS with niri
+      # };
+      default.settings = {
+        theme = "dark";
+        # dynamicTheming = true;
+        # Add any other settings here
+      };
+
+      plugins = {
+        # myPlugin = {
+        #   enable = true;
+        #   src = ./path/to/plugin;
+        # };
+      };
+
+    };
 
     home.packages = [
       pkgs.wl-clipboard
-      pkgs.blueberry
-      pkgs.impala
-      pkgs.walker
-      pkgs.swayosd
-      pkgs.swaylock-effects
-      pkgs.swayidle
-      pkgs.swaybg
+      pkgs.swappy
+      # pkgs.blueberry
+      # pkgs.impala
+      # pkgs.walker
+      # pkgs.swayosd
+      # pkgs.swaylock-effects
+      # pkgs.swayidle
+      # pkgs.swaybg
       unstable.xwayland-satellite
-      pkgs.wttrbar
-      pkgs.networkmanagerapplet
-      pkgs.networkmanager
-      pkgs.pavucontrol
+      # pkgs.wttrbar
+      # pkgs.networkmanagerapplet
+      # pkgs.networkmanager
+      # pkgs.pavucontrol
     ];
     # inputs.pkgs_unstable.wiremix
     # pamixer
@@ -43,24 +66,24 @@ in
         recursive = true;
         target = ".config/niri";
       };
-      "walker" = {
-        enable = true;
-        source = "${config_sym_dir}/walker";
-        recursive = true;
-        target = ".config/walker";
-      };
-      "swayidle" = {
-        enable = true;
-        source = "${config_sym_dir}/swayidle";
-        recursive = true;
-        target = ".config/swayidle";
-      };
-      "swaylock" = {
-        enable = true;
-        source = "${config_sym_dir}/swaylock";
-        recursive = true;
-        target = ".config/swaylock";
-      };
+      # "walker" = {
+      #   enable = true;
+      #   source = "${config_sym_dir}/walker";
+      #   recursive = true;
+      #   target = ".config/walker";
+      # };
+      # "swayidle" = {
+      #   enable = true;
+      #   source = "${config_sym_dir}/swayidle";
+      #   recursive = true;
+      #   target = ".config/swayidle";
+      # };
+      # "swaylock" = {
+      #   enable = true;
+      #   source = "${config_sym_dir}/swaylock";
+      #   recursive = true;
+      #   target = ".config/swaylock";
+      # };
     };
   };
 }
