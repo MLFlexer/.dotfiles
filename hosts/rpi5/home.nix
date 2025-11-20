@@ -1,4 +1,10 @@
-{ config, pkgs, system, inputs, ... }:
+{
+  config,
+  pkgs,
+  system,
+  inputs,
+  ...
+}:
 
 {
   imports = [ ../../home-manager/modules ];
@@ -12,12 +18,12 @@
   hasTouchpad = false;
   cli_tools.enable = true;
   gh.enable = true;
-  cli_extra.enable = false;
+  cli_extra.enable = true;
   extra_pkgs.enable = false;
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
   programs.home-manager.enable = true;
 
   programs = {

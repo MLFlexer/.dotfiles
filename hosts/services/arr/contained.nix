@@ -5,8 +5,9 @@
       enable = lib.mkEnableOption "Enables arr container";
       container_name = lib.mkOption { default = "arr"; };
       mullvad_config = lib.mkOption {
-        default =
-          "/home/mlflexer/repos/.dotfiles/hosts/services/arr/mullvad.conf";
+        type = lib.types.path;
+        default = builtins.toPath ./mullvad.conf;
+        # "/home/mlflexer/repos/.dotfiles/hosts/services/arr/mullvad.conf";
       };
       radarr_dir = lib.mkOption { default = "${config.arr.data_dir}/radarr"; };
       sonarr_dir = lib.mkOption { default = "${config.arr.data_dir}/sonarr"; };
@@ -15,6 +16,8 @@
       torrent_port = lib.mkOption { default = 8173; };
       local_ip = lib.mkOption { default = "192.168.100.1"; };
       host_ip = lib.mkOption { default = "192.168.100.2"; };
+
+      mullvad_ip = lib.mkOption { default = "45.129.56.67"; };
       host_mount = lib.mkOption { default = "/mnt/arr"; };
       external_interface =
         lib.mkOption { default = "end0"; }; # WARN: remember to set this
@@ -44,6 +47,7 @@
       };
 
       config = { ... }: {
+        networking.firewall.enable = false;
         networking.nftables = {
           enable = true;
           tables = {
@@ -53,25 +57,16 @@
                 chain input {
                   type filter hook input priority 0; policy drop;
                   
-                  # Base allowances
-                  ct state { established, related } accept
+                  # Localhost -> Container
                   iifname "lo" accept
+
+                  # Accept replies to connections we initiated
+                  ct state { established, related } accept
                   
-                  # Allow host and LAN
-                  # ip saddr 192.168.0.0/24 tcp dport { 9696,  8173, 7878, 8989 } accept
-                  # ip saddr ${config.arr.container.host_ip} tcp dport { 9696,  8173, 7878, 8989 } accept
-
-                  ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
-                                    
-
-                  # ip saddr ${config.arr.container.host_ip} accept
-
-                  # Allow host and LAN
+                  # Host/LAN -> Container
                   ip saddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
 
-                  # Allow VPN interface traffic
-                  # iifname "wg-mullvad" accept
-
+                  # VPN -> Container
                   iifname "wg-mullvad" accept
 
                   log prefix "INPUT-DROP: " level warn
@@ -81,29 +76,31 @@
                 chain output {
                   type filter hook output priority 0; policy drop;
                   
-                  # Base allowances
-                  ct state { established, related } accept
+                  # Container -> Localhost
                   oifname "lo" accept
+
+                  # Allow replies from remote to our packets
+                  ct state { established, related } accept
                   
-                  # VPN traffic allowance
-                  oifname "wg-mullvad" accept
-                  
-                  # Host/LAN fallback
+                  # Container -> Host/LAN
                   ip daddr { ${config.arr.container.host_ip}, 192.168.0.0/24 } accept
 
-                  # mullvad port for initial connection
-                  oifname "eth0" udp dport 51820 accept
+                  # Wireguard Handshake
+                  # Container -> mullvad
+                  ip daddr {${config.arr.container.mullvad_ip}} udp dport 51820 oifname "eth0" accept
 
-                  oifname "wg-mullvad" udp dport 53 accept
-                  oifname "wg-mullvad" tcp dport 53 accept
+                  # Container -> VPN
+                  oifname "wg-mullvad" accept
                   
                   log prefix "OUTPUT-DROP: " level warn                  
-                  drop
+                  reject
                 }
 
                 chain forward {
                   type filter hook forward priority 0; policy drop;
+
                   ct state { established, related } accept
+                  # Container <-> VPN
                   iifname "wg-mullvad" accept
                   oifname "wg-mullvad" accept
                   drop
@@ -112,14 +109,15 @@
             };
           };
         };
-        networking.firewall.enable = false;
 
         # Mullvad
-        environment.etc."wg-mullvad.conf".text =
-          builtins.readFile config.arr.container.mullvad_config;
+        # environment.etc."wg-mullvad.conf".source =
+        # builtins.readFile config.arr.container.mullvad_config;
+        # config.arr.container.mullvad_config;
 
+        # The mullvad config must be placed in /mnt/arr/wg-mullvad.conf on the host
         networking.wg-quick.interfaces.wg-mullvad = {
-          configFile = "/etc/wg-mullvad.conf";
+          configFile = "${config.arr.data_dir}/wg-mullvad.conf";
           autostart = true;
         };
 
@@ -129,54 +127,55 @@
           mkdir -p ${config.arr.data_dir}/downloads
 
           chown -R root:${config.arr.group} ${config.arr.data_dir}
-          chmod -R 770 ${config.arr.data_dir}
+          chmod -R 2777 ${config.arr.data_dir}
 
           mkdir -p ${config.arr.container.radarr_dir}
           chown -R radarr:${config.arr.group} ${config.arr.container.radarr_dir}
-          chmod -R 770 ${config.arr.container.radarr_dir}
+          chmod -R 2770 ${config.arr.container.radarr_dir}
 
           mkdir -p ${config.arr.container.sonarr_dir}
           chown -R sonarr:${config.arr.group} ${config.arr.container.sonarr_dir}
-          chmod -R 770 ${config.arr.container.sonarr_dir}
+          chmod -R 2770 ${config.arr.container.sonarr_dir}
            
           mkdir -p ${config.arr.container.torrent_dir}
           chown -R qbittorrent:${config.arr.group} ${config.arr.container.torrent_dir}
-          chmod -R 770 ${config.arr.container.torrent_dir}
+          chmod -R 2770 ${config.arr.container.torrent_dir}
         '';
 
-        # qbittorrent
-        # systemd.services.qbittorrent = {
-        #   after = [ "network.target" ];
-        #   description = "Qbittorrent Web";
-        #   wantedBy = [ "multi-user.target" ];
-        #   path = [ pkgs.qbittorrent-nox ];
-        #   serviceConfig = {
-        #     ExecStart = ''
-        #       ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
-        #         toString config.arr.container.torrent_port
-        #       } --profile=${config.arr.container.torrent_dir}
-        #     '';
-        #     User = "qbittorrent";
-        #     Group = config.arr.group;
-        #     MemoryMax = "1G";
-        #     Restart = "always";
-        #   };
-        # };
-
-        # users.users.qbittorrent = {
-        #   isSystemUser = true;
-        #   description = "User for running qbittorrent";
-        #   group = config.arr.group;
-        # };
-
-        networking.firewall.allowedTCPPorts =
-          [ config.arr.container.torrent_port ];
-
         # https://github.com/averyanalex/dotfiles/blob/e1c167cf09402b35218780e62c8a455a24d231b6/profiles/server/qbit.nix#L6
-        users.groups.${config.arr.group} = { name = config.arr.group; };
+        users.groups.${config.arr.group} = {
+          name = config.arr.group;
+          gid = 6969;
+        };
+
+        # qbittorrent
+        users.users.qbittorrent = {
+          isSystemUser = true;
+          description = "User for running qbittorrent";
+          group = config.arr.group;
+        };
+
+        systemd.services.qbittorrent = {
+          after = [ "network.target" ];
+          description = "Qbittorrent Web";
+          wantedBy = [ "multi-user.target" ];
+          path = [ pkgs.qbittorrent-nox ];
+          serviceConfig = {
+            ExecStart = ''
+              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
+                toString config.arr.container.torrent_port
+              } --profile=${config.arr.container.torrent_dir}
+            '';
+            User = "qbittorrent";
+            Group = config.arr.group;
+            MemoryMax = "1G";
+            Restart = "always";
+            UMask = "0002";
+          };
+        };
 
         services.prowlarr = {
-          enable = false;
+          enable = true;
           openFirewall = true;
         };
 
@@ -195,8 +194,9 @@
         };
 
         services.bazarr = {
-          enable = false;
+          enable = true;
           group = config.arr.group;
+          openFirewall = true;
         };
 
         services.lidarr = {
@@ -210,6 +210,7 @@
           group = config.arr.group;
           # dataDir = "";
         };
+
       };
     };
   };

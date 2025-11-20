@@ -9,6 +9,7 @@
     ./nextcloud.nix
     ./arr
     ./traefik
+    ./immich.nix
   ];
 
 }
