@@ -67,7 +67,6 @@ binds {
     Mod+Shift+MouseForward {move-column-right-or-to-monitor-right;}
 
     Mod+I    {focus-workspace-previous;}
-    Alt+Tab    {focus-window-previous;}
     // move-workspace-up
      
     Mod+1 {focus-workspace 1;}
