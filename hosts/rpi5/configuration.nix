@@ -115,6 +115,10 @@
     fsType = "ext4";
   };
 
+  swapDevices = [
+  { device = "/var/lib/swapfile"; size = 16 * 1024; } # For an 8GB swap file (size is in MiB)
+];
+
   fileSystems = {
     "/mnt/usbdrive2" = {
       device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
@@ -154,6 +158,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    helix
     git
     bluez
     bluez-tools

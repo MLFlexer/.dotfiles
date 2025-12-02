@@ -14,11 +14,14 @@
 
   config = lib.mkIf config.immich.enable {
 
+    services.postgresql.enable = true;
     services.immich = {
       enable = true;
+      machine-learning.enable = false;
       # package = unstable.immich;
       openFirewall = true;
       # database.enableVectors = false;
+      # database.enableVectorChord = false;
       port = config.immich.port;
     };
   };

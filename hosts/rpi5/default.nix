@@ -67,6 +67,11 @@ lib.nixosSystem {
         kernelBundle = pkgs.linuxAndFirmware.v6_6_74;
       in
       {
+        imports = with nixos-raspberrypi.nixosModules; [
+          trusted-nix-caches
+          # nixpkgs-rpi
+          # nixos-raspberrypi.lib.inject-overlays
+        ];
         boot = {
           loader.raspberryPi.firmwarePackage = kernelBundle.raspberrypifw;
           kernelPackages = kernelBundle.linuxPackages_rpi5;
@@ -95,7 +100,7 @@ lib.nixosSystem {
       adguardhome.enable = true;
       nextcloud.enable = true;
       traefik.enable = true;
-      immich.enable = true;
+      immich.enable = false;
 
       arr.jelly.enable = true;
       arr.enable = true;
