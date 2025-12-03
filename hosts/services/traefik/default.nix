@@ -95,6 +95,13 @@
               entryPoints = [ "web" ];
             };
 
+            bazarr = lib.mkIf config.arr.container.enable {
+              rule =
+                "Host(`bazarr.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
+              service = "bazarr";
+              entryPoints = [ "web" ];
+            };
+
             torrent = lib.mkIf config.arr.container.enable {
               rule =
                 "Host(`torrent.local`)"; # Local DNS rewrite in adguard: adguard -> filters -> DNS rewrites
@@ -104,53 +111,82 @@
           };
 
           services = {
-            prowlarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:9696";
-              }];
+            prowlarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:9696"; }];
+              };
+            };
 
-            sonarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:8989";
-              }];
+            sonarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:8989"; }];
+              };
+            };
 
-            radarr.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:7878";
-              }];
+            radarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:7878"; }];
+              };
+            };
 
-            torrent.loadBalancer.servers =
-              lib.mkIf config.arr.container.enable [{
-                url = "http://${config.arr.container.local_ip}:8173";
-              }];
+            bazarr = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:6767"; }];
+              };
+            };
 
-            jellyfin.loadBalancer.servers = lib.mkIf config.arr.jelly.enable [{
-              url = "http://localhost:8096";
-            }];
+            torrent = lib.mkIf config.arr.container.enable {
+              loadBalancer = {
+                servers =
+                  [{ url = "http://${config.arr.container.local_ip}:8173"; }];
+              };
+            };
 
-            jellyseerr.loadBalancer.servers =
-              lib.mkIf config.arr.jelly.enable [{
-                url = "http://localhost:5055";
-              }];
+            jellyfin = lib.mkIf config.arr.jelly.enable {
+              loadBalancer = {
+                servers = [{ url = "http://localhost:8096"; }];
+              };
+            };
 
-            nextcloud.loadBalancer.servers = lib.mkIf config.nextcloud.enable [{
-              url =
-                "http://localhost:${builtins.toString config.nextcloud.port}";
-            }];
+            jellyseerr = lib.mkIf config.arr.jelly.enable {
+              loadBalancer = {
+                servers = [{ url = "http://localhost:5055"; }];
+              };
+            };
 
-            home-assistant.loadBalancer.servers =
-              lib.mkIf config.home-assistant.enable [{
-                url = "http://localhost:${
-                    builtins.toString config.home-assistant.port
-                  }";
-              }];
+            nextcloud = lib.mkIf config.nextcloud.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.nextcloud.port
+                    }";
+                }];
+              };
+            };
 
-            adguardhome.loadBalancer.servers =
-              lib.mkIf config.adguardhome.enable [{
-                url = "http://localhost:${
-                    builtins.toString config.adguardhome.port
-                  }";
-              }];
+            home-assistant = lib.mkIf config.home-assistant.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.home-assistant.port
+                    }";
+                }];
+              };
+            };
+
+            adguardhome = lib.mkIf config.adguardhome.enable {
+              loadBalancer = {
+                servers = [{
+                  url = "http://localhost:${
+                      builtins.toString config.adguardhome.port
+                    }";
+                }];
+              };
+            };
           };
         };
       };
