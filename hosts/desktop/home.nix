@@ -8,10 +8,11 @@
 
 {
   imports = [
+    inputs.dms.homeModules.dank-material-shell
     # inputs.niri.homeModules.niri
-    "${inputs.hm-unstable}/modules/programs/quickshell.nix"
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
+    # "${inputs.hm-unstable}/modules/programs/quickshell.nix"
+    # inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+    # inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
     ../../home-manager/modules
   ];
   helix.enable = true;
@@ -27,12 +28,12 @@
   cli_extra.enable = true;
   extra_pkgs.enable = false;
   niri.enable = true;
-  # waybar.enable = true;
+  waybar.enable = false;
   yazi.enable = true;
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   programs.home-manager.enable = true;
 
   programs = {

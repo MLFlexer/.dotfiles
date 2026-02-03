@@ -18,14 +18,16 @@ in
 
   config = lib.mkIf config.niri.enable {
     # programs.niri.enable = true;
-    programs.dankMaterialShell = {
+    programs.dank-material-shell = {
       enable = true;
-      quickshell.package = unstable.quickshell;
+      # quickshell.package = unstable.quickshell;
+      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+
       # niri = {
       #   # enableKeybinds = true; # Automatic keybinding configuration
       #   # enableSpawn = true; # Auto-start DMS with niri
       # };
-      default.settings = {
+      settings = {
         theme = "dark";
         # dynamicTheming = true;
         # Add any other settings here

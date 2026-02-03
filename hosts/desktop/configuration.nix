@@ -32,16 +32,29 @@ in
 
   imports = [
     inputs.niri.nixosModules.niri
-    inputs.dankMaterialShell.nixosModules.greeter
+    inputs.dms.nixosModules.greeter
   ];
 
-  programs.dankMaterialShell.greeter = {
+  programs.dank-material-shell.greeter = {
     enable = true;
-    compositor.name = "niri"; # or set to hyprland
+    compositor.name = "niri"; # Or "hyprland" or "sway"
     configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
     quickshell.package = unstable.quickshell;
-
   };
+  # programs.dankMaterialShell.greeter = {
+  #   enable = true;
+  #   package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  #   compositor.name = "niri"; # or set to hyprland
+  #   configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
+  #   quickshell.package = unstable.quickshell;
+  # };
+
+  # services.displayManager.dms-greeter = {
+
+  #   enable = true;
+  #   compositor.name = "niri";
+  #   package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  # };
 
   services.gnome.gnome-keyring.enable = true;
   services.dbus.enable = true;
@@ -269,7 +282,7 @@ in
     inputs.zen-browser.packages.${system}.default
 
     # for gaming
-    protonup # NOTE: remember to run protonup when installing imperatively, see nixos gaming video from vimjoyer.
+    protonup-ng # NOTE: remember to run protonup when installing imperatively, see nixos gaming video from vimjoyer.
   ];
 
   environment.sessionVariables = {
@@ -296,7 +309,7 @@ in
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   nix = {
     package = pkgs.nixVersions.stable;
