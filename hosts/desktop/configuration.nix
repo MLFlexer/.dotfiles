@@ -30,7 +30,18 @@ let
 in
 {
 
-  imports = [ inputs.niri.nixosModules.niri ];
+  imports = [
+    inputs.niri.nixosModules.niri
+    inputs.dankMaterialShell.nixosModules.greeter
+  ];
+
+  programs.dankMaterialShell.greeter = {
+    enable = true;
+    compositor.name = "niri"; # or set to hyprland
+    configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
+    quickshell.package = unstable.quickshell;
+
+  };
 
   services.gnome.gnome-keyring.enable = true;
   services.dbus.enable = true;
@@ -66,21 +77,13 @@ in
     systemd-boot = {
       enable = true;
 
-      windows = {
-        "windows" =
-          let
-            # To determine the name of the windows boot drive, boot into edk2 first, then run
-            # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
-            # which alias corresponds to which EFI partition.
-            boot-drive = "FS0";
-          in
-          {
-            title = "Windows";
-            efiDeviceHandle = boot-drive;
-            sortKey = "a_windows";
-          };
+      extraEntries = {
+        "windows.conf" = ''
+          title Windows
+          efi /EFI/Microsoft/Boot/bootmgfw.efi
+          sort-key a_windows
+        '';
       };
-
       edk2-uefi-shell.enable = true;
       edk2-uefi-shell.sortKey = "z_edk2";
     };
@@ -237,6 +240,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    swappy
     vivaldi
     pinta
     mako
