@@ -6,20 +6,24 @@
   };
 
   config = lib.mkIf config.git.enable {
+    programs.delta = {
+      enable = true;
+      options = {
+
+        syntax-theme = "tokoyonight_moon";
+        line-numbers = true;
+      };
+    };
     programs.git = {
       enable = true;
-      delta = {
-        enable = true;
-        options = {
-          syntax-theme = "tokoyonight_moon";
-          line-numbers = true;
+      settings = {
+        user = {
+          email = "75012728+MLFlexer@users.noreply.github.com";
+          name = "MLFlexer";
+
         };
-      };
-      userEmail = "75012728+MLFlexer@users.noreply.github.com";
-      userName = "MLFlexer";
-      ignores = [ ".direnv" ];
-      # follows: https://blog.gitbutler.com/how-git-core-devs-configure-git/
-      extraConfig = {
+
+        # follows: https://blog.gitbutler.com/how-git-core-devs-configure-git/
         diff = {
           algorithm = "histogram";
           colorMoved = true;
@@ -61,6 +65,7 @@
         };
 
       };
+      ignores = [ ".direnv" ];
     };
 
     programs.lazygit = {
