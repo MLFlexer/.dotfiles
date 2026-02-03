@@ -1,6 +1,9 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
 
-  options = { git.enable = lib.mkEnableOption "Enables Git config"; };
+  options = {
+    git.enable = lib.mkEnableOption "Enables Git config";
+  };
 
   config = lib.mkIf config.git.enable {
     programs.git = {
@@ -64,10 +67,12 @@
       enable = true;
       settings = {
         git = {
-          paging = {
-            colorArg = "always";
-            pager = "delta --paging=never";
-          };
+          pagers = [
+            {
+              colorArg = "always";
+              pager = "delta --paging=never";
+            }
+          ];
         };
       };
     };
