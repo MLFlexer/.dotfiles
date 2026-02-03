@@ -8,10 +8,7 @@
 
 {
   imports = [
-    # inputs.niri.homeModules.niri
-    "${inputs.hm-unstable}/modules/programs/quickshell.nix"
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
+    inputs.dms.homeModules.dank-material-shell
     ../../home-manager/modules
   ];
 
@@ -32,7 +29,7 @@
 
   home.username = "mlflexer";
   home.homeDirectory = "/home/mlflexer";
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   programs.home-manager.enable = true;
 
   programs = {

@@ -10,10 +10,11 @@
   imports = [
     inputs.niri.nixosModules.niri
     ./hardware-configuration.nix
-    inputs.dankMaterialShell.nixosModules.greeter
+    inputs.dms.nixosModules.greeter
   ];
+  services.udev.packages = [ pkgs.openocd ];
 
-  programs.dankMaterialShell.greeter = {
+  programs.dank-material-shell.greeter = {
     enable = true;
     compositor.name = "niri"; # or set to hyprland
     configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
@@ -77,10 +78,11 @@
     LC_TIME = "da_DK.UTF-8";
   };
 
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+
   services.xserver = {
     enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     xkb.layout = "dk";
   };
   # Enable touchpad support (enabled default in most desktopManager).
@@ -199,7 +201,7 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "${user}" ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   nix = {
     package = pkgs.nixVersions.stable;
