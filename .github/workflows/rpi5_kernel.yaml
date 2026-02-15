@@ -21,7 +21,7 @@ jobs:
       - uses: cachix/install-nix-action@v31
       - uses: cachix/cachix-action@v14
         with:
-          # name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          name: "${{ secrets.CACHIX_CACHE_NAME }}"
           # # if you chose signing key for write access
           # signingkey: "${{ secrets.cachix_signing_key }}"
           # # if you chose api tokens for write access or if you have a private cache
@@ -63,7 +63,7 @@ jobs:
       - uses: cachix/install-nix-action@v31
       - uses: cachix/cachix-action@v14
         with:
-          # name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          name: "${{ secrets.CACHIX_CACHE_NAME }}"
           # # if you chose signing key for write access
           # signingkey: "${{ secrets.cachix_signing_key }}"
           # # if you chose api tokens for write access or if you have a private cache
@@ -90,7 +90,7 @@ jobs:
       - uses: cachix/install-nix-action@v31
       - uses: cachix/cachix-action@v14
         with:
-          # name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          name: "${{ secrets.CACHIX_CACHE_NAME }}"
           # # if you chose signing key for write access
           # signingkey: "${{ secrets.cachix_signing_key }}"
           # # if you chose api tokens for write access or if you have a private cache

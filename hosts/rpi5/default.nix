@@ -16,7 +16,6 @@ let
 in
 lib.nixosSystem {
   inherit system;
-  nixpkgs = inputs.nixpkgs;  # ADD THIS LINE - force it to use YOUR nixpkgs
   specialArgs = {
     inherit
       unstable
