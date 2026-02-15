@@ -11,6 +11,7 @@
   console.keyMap = "dk-latin1";
 
   users.users.root.initialPassword = "root";
+  networking.hosts."127.0.0.1" = [ "matrix.mlflexer.online" ];
   networking = {
     hostName = "rpi5";
     useDHCP = true;
@@ -167,7 +168,7 @@
     rpi-imager
     yazi
   ];
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   # raspberry-pi-nix = {
   #   kernel-version = "v6_6_51";
   #   board = "bcm2712";

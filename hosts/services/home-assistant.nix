@@ -9,7 +9,7 @@
   config = lib.mkIf config.home-assistant.enable {
     services.home-assistant = {
       enable = true;
-      extraComponents = [ "esphome" "met" "wiz" "local_todo" "nordpool" ];
+      extraComponents = [ "esphome" "met" "wiz" "local_todo" "nordpool" "tplink_tapo" "tplink" ];
       customComponents = with pkgs.home-assistant-custom-components;
         [ adaptive_lighting ];
       customLovelaceModules =

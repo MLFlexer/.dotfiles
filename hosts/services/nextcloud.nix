@@ -43,14 +43,5 @@
       https = false; # done via. proxy
     };
 
-    # TODO: move this 
-    # needed to serve php
-    services.nginx.virtualHosts.${config.nextcloud.domain} = {
-      listen = [{
-        addr = "127.0.0.1";
-        port = config.nextcloud.port;
-      }];
-    };
-
   };
 }

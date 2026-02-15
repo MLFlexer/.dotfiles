@@ -91,16 +91,20 @@ lib.nixosSystem {
       }
     )
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-    inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.page-size-16k
+    # inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.page-size-16k
     ./configuration.nix
 
     ../services
     {
+      system.stateVersion = "25.11";
       home-assistant.enable = true;
       adguardhome.enable = true;
       nextcloud.enable = true;
-      traefik.enable = true;
+      traefik.enable = false;
+      nginx.enable = true;
+      wireguard.enable = true;
       immich.enable = false;
+      matrix.enable = true;
 
       arr.jelly.enable = true;
       arr.enable = true;

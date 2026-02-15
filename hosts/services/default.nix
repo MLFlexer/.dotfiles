@@ -7,9 +7,12 @@
     ./searxng.nix
     ./adguard.nix
     ./nextcloud.nix
+    ./matrix
     ./arr
     ./traefik
+    ./nginx/nginx.nix
     ./immich.nix
+    ./wireguard.nix
   ];
 
 }
