@@ -82,8 +82,8 @@ let
       script = ''
         echo "Key missing, generating key"
         echo "lk-jwt-service: $(livekit-server generate-keys | tail -1 | awk '{print $3}')" > "${keyFile}"
-        chmod 640 "${keyFile}"
-        chown livekit:lk-jwt-service "${keyFile}"
+        # chmod 640 "${keyFile}"
+        # chown livekit:lk-jwt-service "${keyFile}"
       '';
       serviceConfig.Type = "oneshot";
       unitConfig.ConditionPathExists = "!${keyFile}";

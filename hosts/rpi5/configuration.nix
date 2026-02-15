@@ -10,6 +10,13 @@
   i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "dk-latin1";
 
+  fileSystems."/boot" =
+  { device = "/dev/disk/by-uuid/2178-694E";
+    fsType = "vfat";
+    # These options ensure the permissions are correct for a FAT partition
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
+
   users.users.root.initialPassword = "root";
   networking.hosts."127.0.0.1" = [ "matrix.mlflexer.online" ];
   networking = {

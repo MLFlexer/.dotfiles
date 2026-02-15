@@ -1,3 +1,4 @@
+# FROM: https://github.com/nvmd/nixos-raspberrypi/pull/99
 name: Build and Push to cachix
 
 on:
@@ -37,12 +38,13 @@ jobs:
           - raspberrypiWirelessFirmware
           - raspberrypi-utils
           - raspberrypi-udev-rules
-          - pisugar-power-manager-rs
+          # - pisugar-power-manager-rs
           - ffmpeg_7-headless
-          - kodi-gbm
-          - rpicam-apps
+          # - kodi-gbm
+          # - rpicam-apps
           - libcamera
           - libpisp
+          - libraspberrypi
 
     runs-on: ubuntu-24.04-arm
 

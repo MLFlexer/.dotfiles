@@ -77,6 +77,10 @@ lib.nixosSystem {
           kernelPackages = kernelBundle.linuxPackages_rpi5;
         };
 
+        boot.loader.grub.configurationLimit = 2;
+        nix.settings.auto-optimise-store = true;
+        
+
         nixpkgs.overlays = lib.mkAfter [
           (self: super: {
             # This is used in (modulesPath + "/hardware/all-firmware.nix") when at least
