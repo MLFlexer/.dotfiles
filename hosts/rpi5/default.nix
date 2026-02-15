@@ -16,6 +16,7 @@ let
 in
 lib.nixosSystem {
   inherit system;
+  nixpkgs = inputs.nixpkgs;  # ADD THIS LINE - force it to use YOUR nixpkgs
   specialArgs = {
     inherit
       unstable
@@ -64,7 +65,7 @@ lib.nixosSystem {
         ...
       }:
       let
-        kernelBundle = pkgs.linuxAndFirmware.v6_6_74;
+        kernelBundle = pkgs.linuxAndFirmware.v6_12_25;
       in
       {
         imports = with nixos-raspberrypi.nixosModules; [

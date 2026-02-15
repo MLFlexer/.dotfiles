@@ -95,10 +95,10 @@ let
 
   # MAUTRIX ------------------------------
 
-  services.mautrix-discord = {
-    enable = true;
-    dataDir = "/mnt/usbdrive2/mautrix/discord";
-  };
+  # services.mautrix-discord = {
+  #   enable = true;
+  #   dataDir = "/mnt/usbdrive2/mautrix/discord";
+  # };
 
 
 
