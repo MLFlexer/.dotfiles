@@ -15,7 +15,7 @@
   #   fsType = "vfat";
   # };
 
-  fileSystems."/boot" = {
+  fileSystems."/boot/firmware" = {
     device = "/dev/disk/by-uuid/4BE3-15FF";
     fsType = "vfat";
     # options = [ "fmask=0077" "dmask=0077" ]; # Recommended for security on boot partitions
