@@ -10,11 +10,6 @@
   i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "dk-latin1";
 
-  # fileSystems."/boot" = {
-  #   device = "/dev/disk/by-uuid/2178-694E";
-  #   fsType = "vfat";
-  # };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/4BE3-15FF";
     fsType = "vfat";
@@ -22,15 +17,8 @@
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/8b57d8e1-2422-44bd-bc49-38af5feb820b";
-    # device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
     fsType = "ext4";
   };
-
-  # fileSystems."/mnt/nvme" = {
-  #   device = "/dev/disk/by-uuid/f4b9e8f5-9181-4d59-8ac3-cedeac9e8d81";
-  #   # device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-  #   fsType = "ext4";
-  # };
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/820d1ec4-7d6e-46cf-bcdd-0f6a138a19b4"; }
@@ -155,18 +143,6 @@
     iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
   '';
 
-  # fileSystems."/" = {
-  #   device = "/dev/nvme0n1p2";
-  #   fsType = "ext4";
-  # };
-
-  # swapDevices = [
-  #   {
-  #     device = "/var/lib/swapfile";
-  #     size = 16 * 1024;
-  #   } # For an 8GB swap file (size is in MiB)
-  # ];
-
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -190,14 +166,14 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    # helix
+    helix
     git
     # bluez
     # bluez-tools
     unzip
     raspberrypi-eeprom
     rpi-imager
-    # yazi
+    yazi
   ];
   system.stateVersion = "25.11";
   # raspberry-pi-nix = {
