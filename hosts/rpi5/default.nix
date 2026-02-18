@@ -48,6 +48,10 @@ lib.nixosSystem {
               value = "3";
             };
 
+            nvme = {
+              enable = true;
+            };
+
           };
 
         };
@@ -76,9 +80,16 @@ lib.nixosSystem {
           # nixos-raspberrypi.lib.inject-overlays
         ];
         boot = {
-          loader.raspberryPi.firmwarePackage = kernelBundle.raspberrypifw;
+          # loader.raspberry-pi.firmwarePackage = kernelBundle.raspberrypifw;
           kernelPackages = kernelBundle.linuxPackages_rpi5;
         };
+        boot.loader.raspberry-pi.firmwarePath = "/boot";
+        boot.loader.raspberry-pi.bootloader = "kernel";
+        boot.kernelParams = [
+          "root=UUID=8b57d8e1-2422-44bd-bc49-38af5feb820b"
+          "rootfstype=ext4"
+          "rootwait"
+        ];
 
         # boot.loader.grub.configurationLimit = 2;
         # nix.settings.auto-optimise-store = true;
@@ -97,7 +108,7 @@ lib.nixosSystem {
       }
     )
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-    # inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.page-size-16k
+    inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.page-size-16k
     ./configuration.nix
 
     ../services

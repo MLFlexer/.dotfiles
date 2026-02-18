@@ -15,16 +15,22 @@
   #   fsType = "vfat";
   # };
 
-  fileSystems."/boot/firmware" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/4BE3-15FF";
     fsType = "vfat";
-    # options = [ "fmask=0077" "dmask=0077" ]; # Recommended for security on boot partitions
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/f4b9e8f5-9181-4d59-8ac3-cedeac9e8d81";
+    device = "/dev/disk/by-uuid/8b57d8e1-2422-44bd-bc49-38af5feb820b";
+    # device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
     fsType = "ext4";
   };
+
+  # fileSystems."/mnt/nvme" = {
+  #   device = "/dev/disk/by-uuid/f4b9e8f5-9181-4d59-8ac3-cedeac9e8d81";
+  #   # device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
+  #   fsType = "ext4";
+  # };
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/820d1ec4-7d6e-46cf-bcdd-0f6a138a19b4"; }
@@ -102,10 +108,11 @@
 
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
-    challengeResponseAuthentication = false;
+    settings.PasswordAuthentication = true;
+    # settings.PasswordAuthentication = false;
+    # challengeResponseAuthentication = false;
     allowSFTP = true;
-    ports = [ 2222 ];
+    # ports = [ 2222 ];
   };
 
   networking.firewall.allowedTCPPorts = [
