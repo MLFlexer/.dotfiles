@@ -131,14 +131,14 @@ lib.nixosSystem {
       arr.container.enable = false;
     }
 
-    # inputs.home-manager.nixosModules.home-manager
-    # {
-    #   home-manager = {
-    #     extraSpecialArgs = { inherit inputs system unstable; };
-    #     useGlobalPkgs = true;
-    #     useUserPackages = true;
-    #     users.${user} = ./home.nix;
-    #   };
-    # }
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager = {
+        extraSpecialArgs = { inherit inputs system unstable; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user} = ./home.nix;
+      };
+    }
   ];
 }
