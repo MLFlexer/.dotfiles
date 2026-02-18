@@ -45,6 +45,7 @@ jobs:
           - libcamera
           - libpisp
           - libraspberrypi
+          - jemalloc
 
     runs-on: ubuntu-24.04-arm
 
