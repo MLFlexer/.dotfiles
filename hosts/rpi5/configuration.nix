@@ -24,22 +24,22 @@
     { device = "/dev/disk/by-uuid/820d1ec4-7d6e-46cf-bcdd-0f6a138a19b4"; }
   ];
 
-  # fileSystems = {
-  #   "/mnt/usbdrive2" = {
-  #     device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
-  #     fsType = "ext4";
-  #     options = [
-  #       "defaults"
-  #       "nofail"
-  #     ];
-  #   };
-  # };
+  fileSystems = {
+    "/mnt/usbdrive2" = {
+      device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
+      fsType = "ext4";
+      options = [
+        "defaults"
+        "nofail"
+      ];
+    };
+  };
 
   users.groups.usbdrive2 = {
     name = "usbdrive2";
   };
 
-  # systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
+  systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
 
   users.users.root.initialPassword = "root";
   networking.hosts."127.0.0.1" = [ "matrix.mlflexer.online" ];
@@ -168,13 +168,16 @@
     vim
     helix
     git
-    # bluez
-    # bluez-tools
+    bluez
+    bluez-tools
     unzip
     raspberrypi-eeprom
     rpi-imager
     yazi
   ];
+
+  hardware.bluetooth.enable = true;
+
   system.stateVersion = "25.11";
   # raspberry-pi-nix = {
   #   kernel-version = "v6_6_51";

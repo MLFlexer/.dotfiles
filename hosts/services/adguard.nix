@@ -19,6 +19,10 @@
       port = config.adguardhome.port;
       settings = {
         http.address = "0.0.0.0:${builtins.toString config.adguardhome.port}";
+        users = [{
+          name = "admin";
+          password = "$2y$05$ZSmxS54ZBjJbtzwRB4ChZ.S8qe7wlgvAQzUdcgKMDx8ki9AWVNBFG";
+        }];
       };
     };
   };

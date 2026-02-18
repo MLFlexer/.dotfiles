@@ -52,6 +52,12 @@ lib.nixosSystem {
               enable = true;
             };
 
+            # bluetooth
+            krnbt = {
+              enable = true;
+              value = "on";
+            };
+
           };
 
           dt-overlays.vc4-kms-v3d.enable = false;
@@ -87,7 +93,7 @@ lib.nixosSystem {
           kernelPackages = kernelBundle.linuxPackages_rpi5;
         };
         boot.loader.raspberry-pi.firmwarePath = "/boot";
-        # boot.loader.raspberry-pi.bootloader = "kernel";
+        boot.loader.raspberry-pi.bootloader = "kernel";
         boot.kernelParams = [
           "root=UUID=8b57d8e1-2422-44bd-bc49-38af5feb820b"
           "rootfstype=ext4"
@@ -117,18 +123,18 @@ lib.nixosSystem {
     ../services
     {
       system.stateVersion = "25.11";
-      home-assistant.enable = false;
-      adguardhome.enable = false;
+      home-assistant.enable = true;
+      adguardhome.enable = true;
       nextcloud.enable = false;
       traefik.enable = false;
-      nginx.enable = false;
+      nginx.enable = true;
       wireguard.enable = false;
       immich.enable = false;
       matrix.enable = false;
 
-      arr.jelly.enable = false;
-      arr.enable = false;
-      arr.container.enable = false;
+      arr.jelly.enable = true;
+      arr.enable = true;
+      arr.container.enable = true;
     }
 
     inputs.home-manager.nixosModules.home-manager

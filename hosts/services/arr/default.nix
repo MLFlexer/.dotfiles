@@ -22,6 +22,7 @@
     # TODO: mkdir if container
     system.activationScripts.setDataPermissions = ''
       mkdir -p /mnt/arr
+      mkdir -p ${config.arr.data_dir}
 
       chown -R root:${config.arr.group} ${config.arr.data_dir}
       chmod -R 2777 ${config.arr.data_dir}
