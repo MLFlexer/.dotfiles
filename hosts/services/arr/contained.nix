@@ -17,7 +17,8 @@
       local_ip = lib.mkOption { default = "192.168.100.1"; };
       host_ip = lib.mkOption { default = "192.168.100.2"; };
 
-      mullvad_ip = lib.mkOption { default = "45.129.56.67"; };
+      mullvad_ip = lib.mkOption { default = "185.204.1.203"; };
+      mullvad_ip_out = lib.mkOption { default = "10.71.204.239"; };
       host_mount = lib.mkOption { default = "/mnt/arr"; };
       external_interface =
         lib.mkOption { default = "end0"; }; # WARN: remember to set this
@@ -148,31 +149,31 @@
           gid = 6969;
         };
 
-        # qbittorrent
-        users.users.qbittorrent = {
-          isSystemUser = true;
-          description = "User for running qbittorrent";
+        services.qbittorrent = {
+          enable = true;
+          package = pkgs.qbittorrent-nox;
           group = config.arr.group;
+          webuiPort = config.arr.container.torrent_port;
+          openFirewall = true;
+          profileDir = config.arr.container.torrent_dir;
+          extraArgs = [ "--confirm-legal-notice" ];
+          serverConfig = {
+            BitTorrent = {
+      "Session\\AnonymousModeEnabled" = true;
+      "Session\\GlobalMaxRatio" = 0;
+      "Session\\Interface" = "wg-mullvad";
+      "Session\\InterfaceAddress" = config.arr.container.mullvad_ip_out;
+      "Session\\InterfaceName" = "wg-mullvad";
+    };
+  Preferences = {
+    WebUI = {
+      Username = "admin"; 
+      Password_PBKDF2 = "@ByteArray(FB1GXcS9ElicV6MtPtttow==:rDRk7bG4xKsBCLylLwo4bC/cx8s8joHrll8CP1PrNj7XyBtSwjCTqpNjHaIjXa/xmYag6ySPORInk9bV8h4UaQ==)";
+    };
+  };
+};
         };
-
-        systemd.services.qbittorrent = {
-          after = [ "network.target" ];
-          description = "Qbittorrent Web";
-          wantedBy = [ "multi-user.target" ];
-          path = [ pkgs.qbittorrent-nox ];
-          serviceConfig = {
-            ExecStart = ''
-              ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=${
-                toString config.arr.container.torrent_port
-              } --profile=${config.arr.container.torrent_dir}
-            '';
-            User = "qbittorrent";
-            Group = config.arr.group;
-            MemoryMax = "1G";
-            Restart = "always";
-            UMask = "0002";
-          };
-        };
+systemd.services.qbittorrent.serviceConfig.UMask = "0002";
 
         services.prowlarr = {
           enable = true;
@@ -185,6 +186,7 @@
           openFirewall = true;
           dataDir = config.arr.container.radarr_dir;
         };
+systemd.services.radarr.serviceConfig.UMask = "0002";
 
         services.sonarr = {
           enable = true;
@@ -192,12 +194,14 @@
           openFirewall = true;
           dataDir = config.arr.container.sonarr_dir;
         };
+systemd.services.sonarr.serviceConfig.UMask = "0002";
 
         services.bazarr = {
           enable = true;
           group = config.arr.group;
           openFirewall = true;
         };
+systemd.services.bazarr.serviceConfig.UMask = "0002";
 
         services.lidarr = {
           enable = false;
