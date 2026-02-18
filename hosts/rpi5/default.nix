@@ -123,18 +123,20 @@ lib.nixosSystem {
     ../services
     {
       system.stateVersion = "25.11";
+
+      nginx.enable = true;
       home-assistant.enable = true;
       adguardhome.enable = true;
-      nextcloud.enable = false;
-      traefik.enable = false;
-      nginx.enable = true;
       wireguard.enable = false;
+      nextcloud.enable = false;
       immich.enable = false;
       matrix.enable = false;
 
       arr.jelly.enable = true;
       arr.enable = true;
       arr.container.enable = true;
+
+      traefik.enable = false;
     }
 
     inputs.home-manager.nixosModules.home-manager
