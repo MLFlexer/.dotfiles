@@ -57,7 +57,7 @@ lib.nixosSystem {
         };
       };
 
-      boot.initrd.kernelModules = [
+      boot.initrd.availableKernelModules = [
         "nvme"
         "pcie_brcmstb"
       ];
