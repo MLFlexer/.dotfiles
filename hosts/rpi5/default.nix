@@ -53,7 +53,10 @@ lib.nixosSystem {
         };
       };
 
-      boot.initrd.kernelModules = [ "nvme" ];
+      boot.initrd.kernelModules = [
+        "nvme"
+        "pcie_brcmstb"
+      ];
 
     }
     (
@@ -77,9 +80,8 @@ lib.nixosSystem {
           kernelPackages = kernelBundle.linuxPackages_rpi5;
         };
 
-        boot.loader.grub.configurationLimit = 2;
-        nix.settings.auto-optimise-store = true;
-        
+        # boot.loader.grub.configurationLimit = 2;
+        # nix.settings.auto-optimise-store = true;
 
         nixpkgs.overlays = lib.mkAfter [
           (self: super: {
@@ -101,18 +103,18 @@ lib.nixosSystem {
     ../services
     {
       system.stateVersion = "25.11";
-      home-assistant.enable = true;
-      adguardhome.enable = true;
-      nextcloud.enable = true;
+      home-assistant.enable = false;
+      adguardhome.enable = false;
+      nextcloud.enable = false;
       traefik.enable = false;
-      nginx.enable = true;
-      wireguard.enable = true;
+      nginx.enable = false;
+      wireguard.enable = false;
       immich.enable = false;
-      matrix.enable = true;
+      matrix.enable = false;
 
-      arr.jelly.enable = true;
-      arr.enable = true;
-      arr.container.enable = true;
+      arr.jelly.enable = false;
+      arr.enable = false;
+      arr.container.enable = false;
     }
 
     inputs.home-manager.nixosModules.home-manager

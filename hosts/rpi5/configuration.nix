@@ -10,12 +10,42 @@
   i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "dk-latin1";
 
-  fileSystems."/boot" =
-  { device = "/dev/disk/by-uuid/2178-694E";
+  # fileSystems."/boot" = {
+  #   device = "/dev/disk/by-uuid/2178-694E";
+  #   fsType = "vfat";
+  # };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/4BE3-15FF";
     fsType = "vfat";
-    # These options ensure the permissions are correct for a FAT partition
-    options = [ "fmask=0022" "dmask=0022" ];
+    # options = [ "fmask=0077" "dmask=0077" ]; # Recommended for security on boot partitions
   };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/f4b9e8f5-9181-4d59-8ac3-cedeac9e8d81";
+    fsType = "ext4";
+  };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/820d1ec4-7d6e-46cf-bcdd-0f6a138a19b4"; }
+  ];
+
+  # fileSystems = {
+  #   "/mnt/usbdrive2" = {
+  #     device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
+  #     fsType = "ext4";
+  #     options = [
+  #       "defaults"
+  #       "nofail"
+  #     ];
+  #   };
+  # };
+
+  users.groups.usbdrive2 = {
+    name = "usbdrive2";
+  };
+
+  # systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
 
   users.users.root.initialPassword = "root";
   networking.hosts."127.0.0.1" = [ "matrix.mlflexer.online" ];
@@ -118,30 +148,17 @@
     iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
   '';
 
-  fileSystems."/" = {
-    device = "/dev/nvme0n1p2";
-    fsType = "ext4";
-  };
+  # fileSystems."/" = {
+  #   device = "/dev/nvme0n1p2";
+  #   fsType = "ext4";
+  # };
 
-  swapDevices = [
-  { device = "/var/lib/swapfile"; size = 16 * 1024; } # For an 8GB swap file (size is in MiB)
-];
-
-  fileSystems = {
-    "/mnt/usbdrive2" = {
-      device = "/dev/disk/by-uuid/6def3262-e479-4b32-b6f1-14a19989c546";
-      fsType = "ext4";
-      options = [
-        "defaults"
-        "nofail"
-      ];
-    };
-  };
-
-  users.groups.usbdrive2 = {
-    name = "usbdrive2";
-  };
-  systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
+  # swapDevices = [
+  #   {
+  #     device = "/var/lib/swapfile";
+  #     size = 16 * 1024;
+  #   } # For an 8GB swap file (size is in MiB)
+  # ];
 
   nix = {
     settings = {
