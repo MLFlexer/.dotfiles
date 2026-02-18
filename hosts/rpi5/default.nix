@@ -54,6 +54,9 @@ lib.nixosSystem {
 
           };
 
+          dt-overlays.vc4-kms-v3d.enable = false;
+          # graphics.enable = false;
+
         };
       };
 
@@ -84,7 +87,7 @@ lib.nixosSystem {
           kernelPackages = kernelBundle.linuxPackages_rpi5;
         };
         boot.loader.raspberry-pi.firmwarePath = "/boot";
-        boot.loader.raspberry-pi.bootloader = "kernel";
+        # boot.loader.raspberry-pi.bootloader = "kernel";
         boot.kernelParams = [
           "root=UUID=8b57d8e1-2422-44bd-bc49-38af5feb820b"
           "rootfstype=ext4"
@@ -128,14 +131,14 @@ lib.nixosSystem {
       arr.container.enable = false;
     }
 
-    inputs.home-manager.nixosModules.home-manager
-    {
-      home-manager = {
-        extraSpecialArgs = { inherit inputs system unstable; };
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${user} = ./home.nix;
-      };
-    }
+    # inputs.home-manager.nixosModules.home-manager
+    # {
+    #   home-manager = {
+    #     extraSpecialArgs = { inherit inputs system unstable; };
+    #     useGlobalPkgs = true;
+    #     useUserPackages = true;
+    #     users.${user} = ./home.nix;
+    #   };
+    # }
   ];
 }

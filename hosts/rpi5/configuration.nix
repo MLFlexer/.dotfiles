@@ -190,14 +190,14 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    helix
+    # helix
     git
-    bluez
-    bluez-tools
+    # bluez
+    # bluez-tools
     unzip
     raspberrypi-eeprom
     rpi-imager
-    yazi
+    # yazi
   ];
   system.stateVersion = "25.11";
   # raspberry-pi-nix = {
