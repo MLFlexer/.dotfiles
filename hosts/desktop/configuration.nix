@@ -8,6 +8,8 @@
 let
   krisp-patcher =
     pkgs.writers.writePython3Bin "krisp-patcher"
+
+      # krisp-patcher ~/.config/discord/<version>/modules/discord_krisp/discord_krisp.node
       {
         libraries = with pkgs.python3Packages; [
           capstone
@@ -41,6 +43,7 @@ in
     configHome = "/home/mlflexer"; # optionally copyies that users DMS settings (and wallpaper if set) to the greeters data directory as root before greeter starts
     quickshell.package = unstable.quickshell;
   };
+
   # programs.dankMaterialShell.greeter = {
   #   enable = true;
   #   package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -59,6 +62,8 @@ in
   services.gnome.gnome-keyring.enable = true;
   services.dbus.enable = true;
   security.polkit.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
   xdg = {
     portal = {
       enable = true;
