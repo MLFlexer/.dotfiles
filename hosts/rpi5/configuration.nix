@@ -42,7 +42,6 @@
   systemd.tmpfiles.rules = [ "d /mnt/usbdrive2 0755 usbdrive2 usbdrive2 -" ];
 
   users.users.root.initialPassword = "root";
-  networking.hosts."127.0.0.1" = [ "matrix.mlflexer.online" ];
   networking = {
     hostName = "rpi5";
     useDHCP = true;

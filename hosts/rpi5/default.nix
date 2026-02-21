@@ -129,8 +129,8 @@ lib.nixosSystem {
       adguardhome.enable = true;
       wireguard.enable = false;
       nextcloud.enable = false;
-      immich.enable = false;
-      matrix.enable = false;
+      immich.enable = true;
+      matrix.enable = true;
 
       arr.jelly.enable = true;
       arr.enable = true;
