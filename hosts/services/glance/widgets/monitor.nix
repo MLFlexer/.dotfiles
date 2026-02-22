@@ -12,13 +12,13 @@ let
       enabled = config.adguardhome.enable;
       title = "AdGuard Home";
       url = "https://${config.adguardhome.domain}/";
-      icon = "sh:adguard";
+      icon = "sh:adguard-home";
     }
     {
       enabled = config.home-assistant.enable;
       title = "Home-assistant";
       url = "https://${config.home-assistant.domain}/";
-      icon = "sh:homeassistant";
+      icon = "sh:home-assistant";
     }
     {
       enabled = config.matrix.enable;

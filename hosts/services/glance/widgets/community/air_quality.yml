@@ -1,7 +1,7 @@
 - type: custom-api
   title: Air Quality
   cache: 10m
-  url: https://api.waqi.info/feed/geo:${LAT};${LON}/?token=${YOUR_TOKEN}
+  url: https://api.waqi.info/feed/geo:${LAT};${LON}/?token=${AIR_QUALITY_TOKEN}
   template: |
     {{ $aqi := printf "%03s" (.JSON.String "data.aqi") }}
     {{ $aqiraw := .JSON.String "data.aqi" }}

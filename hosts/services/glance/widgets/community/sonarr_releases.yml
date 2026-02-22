@@ -1,6 +1,6 @@
 - type: custom-api
   title: Media Releases
-  title-url: ${RADARR_URL}
+  title-url: http://radarr.local
   cache: 30m
   options:
     service: radarr          # sonarr, radarr, or lidarr
@@ -11,9 +11,9 @@
     interval: 20             # optional, days
     #sort-time: asc          # optional, asc or desc (default)
     #cover-proxy: "https://proxy.example.com/radarrcover" # optional
-    api-base-url: ${RADARR_API_URL}
-    key: ${RADARR_KEY}
-    url: ${RADARR_URL}       # optional
+    api-base-url: http://127.0.0.1:8989
+    key: ${SONARR_KEY}
+    url: http://radarr.local       # optional
   template: |
     {{ $collapseAfter := .Options.IntOr "collapse-after" 5 }}
     {{ $showGrabbed := .Options.BoolOr "show-grabbed" false }}
