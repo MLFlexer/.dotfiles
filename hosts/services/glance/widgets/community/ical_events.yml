@@ -1,0 +1,76 @@
+- type: custom-api
+  title: iCal Events
+  cache: 15m
+  url: http://glances-ical-api:8076/events
+  parameters:
+    url: https://example.com/cal.ics
+    limit: 5
+  template: |
+    {{ $events := .JSON.Array "events" }}
+    {{ $count  := len $events }}
+    {{ $limit  := 3 }}  <!-- how many upcoming to show before collapse -->
+
+    {{ if eq $count 0 }}
+      <div style="padding:8px 10px; border-radius:10px; background:var(--surface-2);">
+        No entries found.
+      </div>
+    {{ end }}
+
+    <!-- 1) Ongoing first (never collapsible) -->
+    <ul class="list list-gap-10">
+      {{ range $i, $e := $events }}
+        {{ $ongoing := $e.Bool "ongoing" }}
+        {{ if $ongoing }}
+          {{ $start := $e.String "start" | parseTime "rfc3339" }}
+          {{ $end   := $e.String "end"   | parseTime "rfc3339" }}
+          {{ $name  := $e.String "name" }}
+          {{ $url   := $e.String "url" }}
+          <li>
+            <div class="flex items-center justify-between gap-10">
+              <!-- Left: name (highlight) + absolute date -->
+              <div>
+                {{ if $url }}
+                  <a class="size-h3 color-highlight block text-truncate" href="{{ $url }}" target="_blank" rel="noreferrer" title="{{ $name }}">{{ $name }}</a>
+                {{ else }}
+                  <span class="size-h3 color-highlight block text-truncate" title="{{ $name }}">{{ $name }}</span>
+                {{ end }}
+                <div style="font-size:.85em;">{{ $start | formatTime "Mon, 02 Jan 2006" }}</div>
+              </div>
+              <!-- Right: relative time until END -->
+              <div class="size-h3 color-primary" style="white-space:nowrap;">
+                ends <span {{ $end | toRelativeTime }}></span>
+              </div>
+            </div>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+
+    <!-- 2) Upcoming, collapsible after $limit -->
+    {{ $shown := 0 }}
+    <ul class="list list-gap-10 collapsible-container" data-collapse-after="{{ $limit }}">
+      {{ range $i, $e := $events }}
+        {{ $ongoing := $e.Bool "ongoing" }}
+        {{ if not $ongoing }}
+          {{ $start := $e.String "start" | parseTime "rfc3339" }}
+          {{ $name  := $e.String "name" }}
+          {{ $url   := $e.String "url" }}
+          <li {{ if ge $shown $limit }}class="collapsible-item"{{ end }}>
+            <div class="flex items-center justify-between gap-10">
+              <!-- Left: name (highlight) + absolute date -->
+              <div>
+                {{ if $url }}
+                  <a class="size-h3 color-highlight block text-truncate" href="{{ $url }}" target="_blank" rel="noreferrer" title="{{ $name }}">{{ $name }}</a>
+                {{ else }}
+                  <span class="size-h3 color-highlight block text-truncate" title="{{ $name }}">{{ $name }}</span>
+                {{ end }}
+                <div style="font-size:.85em;">{{ $start | formatTime "Mon, 02 Jan 2006" }}</div>
+              </div>
+              <!-- Right: relative time until START -->
+              <div class="size-h3 color-primary" style="white-space:nowrap;" {{ $start | toRelativeTime }}></div>
+            </div>
+          </li>
+          {{ $shown = add $shown 1 }}
+        {{ end }}
+      {{ end }}
+    </ul>

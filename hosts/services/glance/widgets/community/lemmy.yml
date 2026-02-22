@@ -1,0 +1,30 @@
+- type: custom-api
+  title: L/${LEMMY_COMMUNITY}
+  cache: 10m
+  url: https://lemmy.world/api/v3/post/list?community_name=${LEMMY_COMMUNITY}&type_=${LEMMY_POST_TYPE}&sort=${LEMMY_POST_SORT}&limit=${LEMMY_POST_LIMIT}
+  options:
+    COLLAPSE_AFTER_COUNT: 5
+  headers:
+    Accept: application/json
+  template: |
+    {{ $collapse_after_count := .Options.IntOr "COLLAPSE_AFTER_COUNT" 5 }}
+
+    <ul class="list list-gap-14 collapsible-container" data-collapse-after="{{ $collapse_after_count }}">
+    {{ range.JSON.Array "posts" }}
+      <li>
+        <a href="{{ .String "post.ap_id" }}" class="size-title-dynamic color-primary-if-not-visited" target="_blank" rel="noreferrer">
+          {{ .String "post.name" }}
+        </a>
+        <ul class="list-horizontal-text flex-nowrap">
+          <li class="min-width-0">{{ .String "post.published" | parseTime "rfc3339" | toRelativeTime }}</li>
+          <li class="min-width-0">{{ .Int "counts.score" }} pts</li>
+          <li class="min-width-0">{{ .Int "counts.comments" }} comments</li>
+          <li class="min-width-0 text-truncate">
+            <a class="visited-indicator" target="_blank" rel="noreferrer" href="{{ .String "post.url" }}">Source</a>
+          </li>
+        </ul>
+      </li>
+    {{ else }}
+      <li class="text-compact color-muted">No posts found.</li>
+    {{ end }}
+    </ul>
