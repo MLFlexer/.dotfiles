@@ -131,6 +131,7 @@ lib.nixosSystem {
       nextcloud.enable = false;
       immich.enable = true;
       matrix.enable = true;
+      glance.enable = true;
 
       arr.jelly.enable = true;
       arr.enable = true;

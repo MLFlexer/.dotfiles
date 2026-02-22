@@ -35,6 +35,7 @@
           config.nextcloud.domain
           config.matrix.domain
           config.immich.domain
+          config.glance.domain
           "discord.bridge.mlflexer.online"
           "instagram.bridge.mlflexer.online"
           "messenger.bridge.mlflexer.online"
@@ -130,6 +131,12 @@
                 return 200 '${builtins.toJSON { "m.server" = "instagram.bridge.mlflexer.online:443"; }}';
             '';
           };
+        };
+
+        "${config.glance.domain}" = lib.mkIf config.glance.enable {
+          forceSSL = true;
+          useACMEHost = "mlflexer.online";
+          locations."/".proxyPass = "http://localhost:${toString config.glance.port}";
         };
 
         "${config.arr.jellyfin.domain}" = lib.mkIf config.arr.jelly.enable {

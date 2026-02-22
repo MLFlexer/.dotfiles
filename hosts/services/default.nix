@@ -1,6 +1,9 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
 
-  options = { user = lib.mkOption { default = "mlflexer"; }; };
+  options = {
+    user = lib.mkOption { default = "mlflexer"; };
+  };
 
   imports = [
     ./home-assistant.nix
@@ -9,6 +12,7 @@
     ./nextcloud.nix
     ./matrix
     ./arr
+    ./glance
     ./traefik
     ./nginx/nginx.nix
     ./immich.nix

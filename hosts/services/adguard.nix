@@ -1,4 +1,5 @@
-{ lib, config, ... }: {
+{ lib, config, ... }:
+{
 
   options = {
     adguardhome.enable = lib.mkEnableOption "Enables adguardhome";
@@ -7,10 +8,12 @@
   };
 
   config = lib.mkIf config.adguardhome.enable {
-    networking.firewall.allowedUDPPortRanges = [{
-      from = 53;
-      to = 53;
-    }];
+    networking.firewall.allowedUDPPortRanges = [
+      {
+        from = 53;
+        to = 53;
+      }
+    ];
 
     services.adguardhome = {
       enable = true;
@@ -19,10 +22,12 @@
       port = config.adguardhome.port;
       settings = {
         http.address = "0.0.0.0:${builtins.toString config.adguardhome.port}";
-        users = [{
-          name = "admin";
-          password = "$2y$05$ZSmxS54ZBjJbtzwRB4ChZ.S8qe7wlgvAQzUdcgKMDx8ki9AWVNBFG";
-        }];
+        users = [
+          {
+            name = "admin";
+            password = "$2y$05$UmVYrretTeQPumbvKT49Yu7WKgZlrw.eu0w4ZYYdvbjho8.j4W0qy";
+          }
+        ];
         log = {
           max_size = 1024;
           max_age = 1;
@@ -32,34 +37,34 @@
           enabled = true;
         };
         filtering = {
-      rewrites = [
-        {
-          domain = "prowlarr.local";
-          answer = "192.168.0.42";
-          enabled = true;
-        }
-        {
-          domain = "sonarr.local";
-          answer = "192.168.0.42";
-          enabled = true;
-        }
-        {
-          domain = "radarr.local";
-          answer = "192.168.0.42";
-          enabled = true;
-        }
-        {
-          domain = "bazarr.local";
-          answer = "192.168.0.42";
-          enabled = true;
-        }
-        {
-          domain = "torrent.local";
-          answer = "192.168.0.42";
-          enabled = true;
-        }
-      ];
-    };
+          rewrites = [
+            {
+              domain = "prowlarr.local";
+              answer = "192.168.0.42";
+              enabled = true;
+            }
+            {
+              domain = "sonarr.local";
+              answer = "192.168.0.42";
+              enabled = true;
+            }
+            {
+              domain = "radarr.local";
+              answer = "192.168.0.42";
+              enabled = true;
+            }
+            {
+              domain = "bazarr.local";
+              answer = "192.168.0.42";
+              enabled = true;
+            }
+            {
+              domain = "torrent.local";
+              answer = "192.168.0.42";
+              enabled = true;
+            }
+          ];
+        };
       };
     };
   };
