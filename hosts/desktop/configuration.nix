@@ -60,7 +60,10 @@ in
   # };
 
   services.gnome.gnome-keyring.enable = true;
-  services.dbus.enable = true;
+  services.dbus = {
+    enable = true;
+    packages = [ pkgs.gcr ];
+  };
   security.polkit.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.login.enableGnomeKeyring = true;

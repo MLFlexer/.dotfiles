@@ -27,7 +27,7 @@ in
           lua-language-server
           bash-language-server
           marksman
-          clang-tools
+          # clang-tools
         ]
         ++ lib.lists.optionals config.extra_pkgs.enable [
           rust-analyzer

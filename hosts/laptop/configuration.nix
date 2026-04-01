@@ -24,6 +24,8 @@
   services.gnome.gnome-keyring.enable = true;
   services.dbus.enable = true;
   security.polkit.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
   xdg = {
     portal = {
       enable = true;
@@ -56,7 +58,7 @@
     efi.canTouchEfiVariables = true;
   };
   # Emulate arm to cross compile raspberry pi 5
-  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "laptop_nixos";
   networking.networkmanager.enable = true;
