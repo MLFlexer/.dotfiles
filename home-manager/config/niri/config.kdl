@@ -17,6 +17,8 @@ binds {
     Mod+b {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "zen-beta";}
     Mod+Shift+B {spawn "zen-beta";}
     Mod+d {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "discord";}
+    Mod+Shift+E {spawn "element-desktop";}
+    Mod+e {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "element-desktop";}
     mod+Shift+S { screenshot; }
 
     // Mod+Shift+E {quit;}
