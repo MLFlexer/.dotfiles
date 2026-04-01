@@ -155,3 +155,9 @@ spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 
 include "dms/colors.kdl"
 include "dms/layout.kdl"
+
+include "dms/cursor.kdl"
+
+include "dms/windowrules.kdl"
+
+include "dms/outputs.kdl"
