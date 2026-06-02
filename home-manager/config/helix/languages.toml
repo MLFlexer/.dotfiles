@@ -11,3 +11,15 @@ auto-format = true
 [[language]]
 name = "nasm"
 comment-token = "#"
+
+[[language]]
+name = "kconfig"
+scope = "source.kconfig"
+file-types = [
+  "Kconfig",
+  "Kconfig.debug",
+  { glob = "Kconfig" },
+  { glob = "Kconfig.*" },
+  { glob = ".config" },
+  { glob = "/Kconfig.*" }
+]

@@ -25,7 +25,7 @@
         # grex
         ntfy-sh
         # procs
-        # sd
+        sd
         tealdeer
         gnumake
         # xclip

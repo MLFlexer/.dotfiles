@@ -1,0 +1,158 @@
+theme = TokyoNight Storm
+# custom-shader = shaders/cursor_sweep.glsl
+# custom-shader-animation = always
+
+font-family = "MonaspiceNe Nerd Font"
+font-family = "Monaspace Neon"
+# font-family = "Adwaita Mono"
+font-size = 10
+font-thicken = false
+
+window-save-state = always
+gtk-titlebar-hide-when-maximized = false
+unfocused-split-opacity = 0.9
+gtk-titlebar-style = tabs
+# gtk-custom-css = ~/.config/ghostty/style.css
+shell-integration = zsh
+
+
+adjust-cursor-thickness        = 1
+cursor-style                   = block
+cursor-style-blink             = false
+
+bold-color                     = bright
+link-url                       = true
+
+# Mimicking your harfbuzz_features: {"calt", "liga", "dlig", "ss01"..."ss08"}
+font-feature = calt
+font-feature = liga
+font-feature = dlig
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+font-feature = ss05
+font-feature = ss06
+font-feature = ss07
+font-feature = ss08
+
+cursor-style = block
+keybind = ctrl+shift+space>|=new_split:right
+keybind = ctrl+shift+space>-=new_split:down
+keybind = ctrl+shift+space>z=toggle_split_zoom
+keybind = ctrl+shift+space>shift+z=toggle_fullscreen
+keybind = ctrl+shift+space>t=new_tab
+keybind = ctrl+shift+space>n=new_window
+keybind = ctrl+shift+space>w=close_surface
+
+keybind = ctrl+shift+space>r=reload_config
+keybind = ctrl+shift+space>l=clear_screen
+
+
+
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+
+keybind = ctrl+shift+space>space=activate_key_table:quick_term
+keybind = chain=toggle_quick_terminal
+
+keybind = ctrl+shift+space>shift+?=toggle_command_palette
+keybind = ctrl+shift+space>f=toggle_tab_overview
+
+
+
+keybind = ctrl+shift+space>s=activate_key_table:search
+keybind = chain=search_selection
+keybind = chain=toggle_readonly
+
+keybind = search/s=start_search
+keybind = search/n=navigate_search:next
+keybind = search/shift+n=navigate_search:previous
+# keybind = search/n=end_search
+keybind = search/escape=deactivate_key_table
+keybind = chain=toggle_readonly
+
+keybind = ctrl+shift+space>v=activate_key_table:visual
+keybind = visual/escape=deactivate_key_table
+keybind = visual/k=jump_to_prompt:1
+keybind = visual/j=jump_to_prompt:-1
+
+
+
+keybind = æ=text:[
+keybind = ø=text:]
+keybind = shift+æ=text:{
+keybind = shift+ø=text:}
+
+keybind = ctrl+shift+space>æ=activate_key_table:danish
+keybind = danish/escape=deactivate_key_table
+keybind = danish/æ=text:æ
+keybind = danish/ø=text:ø
+keybind = danish/shift+æ=text:Æ
+keybind = danish/shift+ø=text:Ø
+
+# scroll_to_top
+# scroll_to_bottom
+# scroll_to_selection
+# scroll_page_fractional
+# adjust_selection
+
+
+
+#
+# write_scrollback_file
+# write_screen_file
+# write_selection_file
+#
+#
+# goto_tab
+# move_tab
+
+# paste_from_clipboard
+# paste_from_selection
+# copy_to_clipboard
+# copy_url_to_clipboard
+#
+# increase_font_size
+# decrease_font_size
+# reset_font_size
+# set_font_size switch between presentation and normal
+# show_on_screen_keyboard
+# 
+# resize_split
+# equalize_splits
+# reset_window_size
+#
+# undo
+# redo
+#
+#
+#
+#
+#
+#
+# selection-word-chars
+# split-divider-color 
+# notify-on-command-finish
+# notify-on-command-finish-after
+# scrollback-limit
+# resize-overlay-position bottom-right
+# resize-overlay-duration
+#
+# clipboard-trim-trailing-spaces
+#
+# quick-terminal-position
+# undo-timeout
+# <quick-terminal-size
+#
+# command-palette-entry
+#
+# app-notifications
+#
+# desktop-notifications
+#
+# 
+
+

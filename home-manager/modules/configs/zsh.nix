@@ -20,6 +20,10 @@ in
 
     programs.zoxide.enable = true;
     programs.carapace.enable = true;
+    programs.ghostty = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     programs.zsh = {
       enable = true;

@@ -60,7 +60,7 @@
   # Emulate arm to cross compile raspberry pi 5
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  networking.hostName = "laptop_nixos";
+  networking.hostName = "laptop-nixos";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
@@ -132,7 +132,10 @@
     jack.enable = true;
   };
 
-  fonts.packages = with pkgs; [ nerd-fonts.monaspace ];
+  fonts.packages = with pkgs; [
+    monaspace
+    nerd-fonts.monaspace
+  ];
   fonts.fontconfig.enable = true;
 
   users.users.${user} = {
@@ -156,6 +159,7 @@
       ++ (with unstable; [
         imhex
         wezterm
+        ghostty
         element-desktop
       ]);
   };
@@ -173,6 +177,7 @@
     cacert
     curl
     firefox
+    bluez
     gcc
     kdePackages.okular # pdf reader
     # pinentry-gnome

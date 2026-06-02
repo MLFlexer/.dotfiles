@@ -19,6 +19,7 @@
     ./niri.nix
     ./waybar.nix
     ./wezterm.nix
+    ./ghostty.nix
     ./zsh.nix
     ./yazi.nix
   ];

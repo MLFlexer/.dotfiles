@@ -12,7 +12,7 @@ binds {
     
     Mod+Escape {spawn "dms" "ipc" "call" "powermenu" "toggle";}
     // Mod+Space {spawn "walker";}
-    Mod+Return {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "wezterm";}
+    Mod+Return {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "ghostty";}
     Mod+Shift+Return {spawn "wezterm";}
     Mod+b {spawn "bash" "/home/mlflexer/.config/niri/scripts/run_or_raise.sh" "zen-beta";}
     Mod+Shift+B {spawn "zen-beta";}

@@ -31,6 +31,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     inputs.nix-index-database.hmModules.nix-index # comma integration
     ./modules
     {
+      ghostty.enable = true;
       nvim.enable = true;
       helix.enable = true;
       git.enable = true;
