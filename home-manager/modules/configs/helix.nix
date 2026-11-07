@@ -18,7 +18,8 @@ in
     programs.helix = {
       enable = true;
       defaultEditor = true;
-      package = inputs.helix-editor.packages.${system}.default;
+      # package = inputs.helix-editor.packages.${system}.default;
+      # package = inputs.helix-editor.packages.${system}.default;
       extraPackages =
         with pkgs;
         [

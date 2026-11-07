@@ -6,9 +6,17 @@ let
   user = "mlflexer";
   config_dir = "/home/${user}/repos/.dotfiles/home-manager/config";
 
-in inputs.home-manager.lib.homeManagerConfiguration {
+in
+inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
-  extraSpecialArgs = { inherit config_dir pkgs_unstable inputs system; };
+  extraSpecialArgs = {
+    inherit
+      config_dir
+      pkgs_unstable
+      inputs
+      system
+      ;
+  };
   modules = [
     inputs.nix-index-database.hmModules.nix-index # comma integration
     ./modules
@@ -47,4 +55,3 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     }
   ];
 }
-

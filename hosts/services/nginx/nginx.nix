@@ -19,6 +19,9 @@
       80
       443
     ];
+
+    users.users.nginx.extraGroups = [ "acme" ];
+
     security.acme = {
       acceptTerms = true;
       defaults.email = "malthemlarsen@gmail.com";
@@ -34,8 +37,14 @@
           config.adguardhome.domain
           config.nextcloud.domain
           config.matrix.domain
+          config.freshrss.domain
+          "freshrss.mlflexer.online"
           config.immich.domain
+          config.stalwart.domain
           config.glance.domain
+          config.mealie.domain
+          config.searx.domain
+          config.filebrowser.domain
           "discord.bridge.mlflexer.online"
           "instagram.bridge.mlflexer.online"
           "messenger.bridge.mlflexer.online"
@@ -59,9 +68,45 @@
           };
         };
 
+        "${config.stalwart.domain}" = lib.mkIf config.stalwart.enable {
+          useACMEHost = "mlflexer.online";
+          forceSSL = true;
+
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString config.stalwart.port}";
+            proxyWebsockets = true;
+          };
+
+          locations."/admin" = {
+            proxyPass = "http://127.0.0.1:${toString config.stalwart.port}";
+            proxyWebsockets = true;
+          };
+
+        };
+
         "${config.nextcloud.domain}" = lib.mkIf config.nextcloud.enable {
           useACMEHost = "mlflexer.online";
           forceSSL = true;
+        };
+
+        "${config.searx.domain}" = lib.mkIf config.searx.enable {
+          useACMEHost = "mlflexer.online";
+          forceSSL = true;
+          locations."/".proxyPass = "http://localhost:${toString config.searx.port}";
+          basicAuth = {
+            mlflexer = "u*%J%4&LpV371x";
+          };
+        };
+
+        "${config.freshrss.domain}" = lib.mkIf config.freshrss.enable {
+          useACMEHost = "mlflexer.online";
+          forceSSL = true;
+        };
+
+        "${config.filebrowser.domain}" = lib.mkIf config.filebrowser.enable {
+          useACMEHost = "mlflexer.online";
+          forceSSL = true;
+          locations."/".proxyPass = "http://localhost:${toString config.filebrowser.port}";
         };
 
         "${config.matrix.domain}" = lib.mkIf config.matrix.enable {
@@ -136,7 +181,14 @@
         "${config.glance.domain}" = lib.mkIf config.glance.enable {
           forceSSL = true;
           useACMEHost = "mlflexer.online";
-          locations."/".proxyPass = "http://localhost:${toString config.glance.port}";
+          locations."/" = {
+            proxyPass = "http://localhost:${toString config.glance.port}";
+            extraConfig = ''
+              proxy_buffering off;
+              proxy_connect_timeout 60s;
+              proxy_read_timeout 60s;
+            '';
+          };
         };
 
         "${config.arr.jellyfin.domain}" = lib.mkIf config.arr.jelly.enable {
@@ -165,6 +217,12 @@
           forceSSL = true;
           useACMEHost = "mlflexer.online";
           locations."/".proxyPass = "http://localhost:${toString config.adguardhome.port}";
+        };
+
+        "${config.mealie.domain}" = lib.mkIf config.mealie.enable {
+          forceSSL = true;
+          useACMEHost = "mlflexer.online";
+          locations."/".proxyPass = "http://localhost:${toString config.mealie.port}";
         };
 
         "${config.immich.domain}" = lib.mkIf config.immich.enable {
@@ -207,9 +265,128 @@
           addSSL = false;
           locations."/".proxyPass = "http://${config.arr.container.local_ip}:8173";
         };
+        "openthread.local" = {
+          addSSL = false;
+          locations."/".proxyPass = "http://localhost:8082";
+        };
       };
     };
 
-    users.users.nginx.extraGroups = [ "acme" ];
+    services.crowdsec-firewall-bouncer = {
+      enable = true;
+
+      # 1. Disable the failing auto-registration service
+      registerBouncer.enable = false;
+
+      # 2. Use the "secrets" option from your list to point to your key
+      secrets.apiKeyPath = "/var/lib/crowdsec/bouncer_key";
+
+      settings = {
+        # 3. Explicitly point to your Local API (from your previous config)
+        api_url = "http://127.0.0.1:8081";
+
+        # 4. Use the nftables mode (standard for RPi/NixOS)
+        # mode = "nftables";
+      };
+    };
+
+    services.crowdsec = {
+      enable = true;
+
+      settings = {
+        # This is the "API client section" the error was complaining about
+        general.api = {
+          client.credentials_path = "/var/lib/crowdsec/local_api_credentials.yaml";
+          server = {
+            enable = true;
+            listen_uri = "127.0.0.1:8081"; # Note the port 8081 from your example
+          };
+        };
+
+        # Explicit paths for the LAPI and CAPI credential files
+        lapi.credentialsFile = "/var/lib/crowdsec/local_api_credentials.yaml";
+        # capi.credentialsFile = "/var/lib/crowdsec/online_api_credentials.yaml";
+
+        # console = {
+        #   tokenFile = "/home/mlflexer/repos/.dotfiles/hosts/services/nginx/.crowdsec_token";
+        # };
+      };
+
+      hub = {
+        collections = [
+          "crowdsecurity/linux"
+          "crowdsecurity/nginx"
+          "crowdsecurity/base-http-scenarios"
+          "crowdsecurity/http-cve"
+          "crowdsecurity/appsec-generic-rules"
+          "crowdsecurity/nextcloud"
+          "crowdsecurity/home-assistant"
+          "LePresidente/jellyfin"
+          "LePresidente/jellyseerr"
+          "gauth-fr/immich"
+          "LePresidente/adguardhome"
+          "schiz0phr3ne/sonarr"
+          "schiz0phr3ne/radarr"
+          "schiz0phr3ne/prowlarr"
+          "crowdsecurity/whitelist-good-actors"
+        ];
+
+        parsers = [
+          "crowdsecurity/jellyfin-whitelist"
+          "crowdsecurity/jellyseerr-whitelist"
+        ];
+      };
+
+      localConfig = {
+        acquisitions = [
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=nginx.service" ];
+            labels.type = "nginx";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=jellyfin.service" ];
+            labels.type = "jellyfin";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=home-assistant.service" ];
+            labels.type = "home-assistant";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=immich-server.service" ];
+            labels.type = "immich";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=adguardhome.service" ];
+            labels.type = "adguardhome";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=phpfpm-nextcloud.service" ];
+            labels.type = "nextcloud";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=sonarr.service" ];
+            labels.type = "sonarr";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=radarr.service" ];
+            labels.type = "radarr";
+          }
+          {
+            source = "journalctl";
+            journalctl_filter = [ "_SYSTEMD_UNIT=prowlarr.service" ];
+            labels.type = "prowlarr";
+          }
+        ];
+      };
+    };
+
   };
 }

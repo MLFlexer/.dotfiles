@@ -20,6 +20,9 @@ in
   };
 
   config = lib.mkIf config.matrix.enable {
+    users.users.matrix-synapse.extraGroups = [
+      "mautrix-discord"
+    ];
 
     services.matrix-synapse = {
       enable = true;

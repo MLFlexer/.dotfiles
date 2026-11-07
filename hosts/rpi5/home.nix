@@ -8,7 +8,7 @@
 
 {
   imports = [ ../../home-manager/modules ];
-  helix.enable = false;
+  helix.enable = true;
   git.enable = true;
   wezterm.enable = false;
   zsh.enable = true;

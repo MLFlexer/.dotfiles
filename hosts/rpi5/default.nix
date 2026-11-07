@@ -25,6 +25,51 @@ lib.nixosSystem {
       ;
   };
   modules = [
+    (import "${inputs.nixpkgs-master}/nixos/modules/services/home-automation/openthread-border-router.nix")
+    (
+      { pkgs, ... }:
+      {
+        services.matter-server.enable = true;
+        users.groups.otbr = { };
+        users.users.otbr = {
+          isSystemUser = true;
+          group = "otbr";
+          extraGroups = [
+            "dialout"
+            "tty"
+          ];
+        };
+        services.openthread-border-router.package =
+          inputs.nixpkgs-master.legacyPackages.aarch64-linux.openthread-border-router;
+        services.openthread-border-router = {
+          enable = true;
+          openFirewall = true;
+          radio = {
+            device = "/dev/ttyUSB0";
+            baudRate = 460800;
+          };
+          web.enable = false;
+
+          rest.listenPort = 8091;
+          backboneInterfaces = [ "end0" ];
+        };
+        # networking.firewall.trustedInterfaces = [ "wpan0" ];
+        # networking.firewall.extraCommands = ''
+        #   # We use -I (Insert) at position 1 to jump the queue of the otbr-firewall script
+
+        #   # 1. Allow ICMPv6 (Neighbor Discovery) - This is what wakes up 'Sleepy' devices
+        #   ip6tables -I INPUT 1 -i wpan0 -p icmpv6 -j ACCEPT
+
+        #   # 2. Allow Matter traffic (UDP 5540 & 5353)
+        #   ip6tables -I INPUT 2 -i wpan0 -p udp --dport 5540 -j ACCEPT
+        #   ip6tables -I INPUT 3 -i wpan0 -p udp --dport 5353 -j ACCEPT
+
+        #   # 3. Handle the Forwarding chain (where the OTBR DROP rule lives)
+        #   # This ensures Matter commands can pass through to your Matter Server
+        #   ip6tables -I FORWARD 1 -i wpan0 -j ACCEPT
+        # '';
+      }
+    )
     # raspberry-pi-nix.nixosModules.raspberry-pi
     # raspberry-pi-nix.nixosModules.sd-image
 
@@ -127,11 +172,16 @@ lib.nixosSystem {
       nginx.enable = true;
       home-assistant.enable = true;
       adguardhome.enable = true;
+      mealie.enable = true;
       wireguard.enable = false;
       nextcloud.enable = false;
       immich.enable = true;
       matrix.enable = true;
-      glance.enable = true;
+      glance.enable = false;
+      filebrowser.enable = true;
+      searx.enable = true;
+      freshrss.enable = false;
+      stalwart.enable = false;
 
       arr.jelly.enable = true;
       arr.enable = true;

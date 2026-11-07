@@ -7,8 +7,12 @@
 
   imports = [
     ./home-assistant.nix
-    ./searxng.nix
+    ./searxng
+    ./filebrowser.nix
+    ./stalwart
+    ./mealie.nix
     ./adguard.nix
+    ./freshrss
     ./nextcloud.nix
     ./matrix
     ./arr

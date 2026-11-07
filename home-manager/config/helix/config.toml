@@ -42,5 +42,5 @@ C-y = [
   ':redraw',
 ]
 
-[keys.insert]
-C-v = ":primary-clipboard-paste-before"
+# [keys.insert]
+# C-v = ":primary-clipboard-paste-before"

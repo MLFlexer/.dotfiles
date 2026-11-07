@@ -4,5 +4,6 @@ home-manager/config/zsh/.zcompdump
 home-manager/config/zsh/plugins
 home-manager/config/zsh/.zsh_history
 *.env
+*.crowdsec_token
 result
 *mullvad.conf

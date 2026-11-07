@@ -135,6 +135,19 @@
       from = 7359;
       to = 7359;
     }
+
+    {
+      from = 5353;
+      to = 5353;
+    }
+    {
+      from = 5540;
+      to = 5540;
+    }
+    {
+      from = 5683;
+      to = 5683;
+    }
   ];
 
   networking.firewall.extraInputRules = ''
